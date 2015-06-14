@@ -1,0 +1,290 @@
+一、StringRequest
+1. 创建一个RequestQueue对象。
+2. 创建一个StringRequest对象。
+3. 将StringRequest对象添加到RequestQueue里面。
+
+Get方式
+RequestQueue mQueue = Volley.newRequestQueue(context);
+StringRequest stringRequest = new StringRequest("http://www.baidu.com",
+    new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.d("TAG", response);
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("TAG", error.getMessage(), error);
+        }
+    });
+mQueue.add(stringRequest);
+
+Post方式
+RequestQueue mQueue = Volley.newRequestQueue(context);
+StringRequest stringRequest = new StringRequest(Method.POST, url,  listener, errorListener) {
+	@Override
+	protected Map<String, String> getParams() throws AuthFailureError {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("params1", "value1");
+		map.put("params2", "value2");
+		return map;
+	}
+};
+mQueue.add(stringRequest);
+
+
+二、JsonRequest
+JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://m.weather.com.cn/data/101010100.html", null,
+		new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				Log.d("TAG", response.toString());
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.e("TAG", error.getMessage(), error);
+			}
+		});
+
+
+三、ImageRequest
+1. 创建一个RequestQueue对象。
+2. 创建一个Request对象。
+3. 将Request对象添加到RequestQueue里面。
+RequestQueue mQueue = Volley.newRequestQueue(context);
+ImageRequest imageRequest = new ImageRequest(
+		"http://developer.android.com/images/home/aw_dac.png",
+		new Response.Listener<Bitmap>() {
+			@Override
+			public void onResponse(Bitmap response) {
+				imageView.setImageBitmap(response);
+			}
+		}, 0, 0, Config.RGB_565, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				imageView.setImageResource(R.drawable.default_image);
+			}
+		});
+
+ImageRequest的构造函数接收六个参数，
+第一个参数就是图片的URL地址，这个没什么需要解释的。
+第二个参数是图片请求成功的回调，这里我们把返回的Bitmap参数设置到ImageView中。
+第三第四个参数分别用于指定允许图片最大的宽度和高度，如果指定的网络图片的宽度或高度大于这里的最大值，则会对图片进行压缩，指定成0的话就表示不管图片有多大，都不会进行压缩。
+第五个参数用于指定图片的颜色属性，Bitmap.Config下的几个常量都可以在这里使用，其中ARGB_8888可以展示最好的颜色属性，每个图片像素占据4个字节的大小，而RGB_565则表示每个图片像素占据2个字节大小。
+第六个参数是图片请求失败的回调，这里我们当请求失败时在ImageView中显示一张默认图片。
+最后将这个ImageRequest对象添加到RequestQueue里
+
+
+四、ImageLoader
+由于ImageLoader已经不是继承自Request的了，所以它的用法也和我们之前学到的内容有所不同，总结起来大致可以分为以下四步：
+1. 创建一个RequestQueue对象。
+2. 创建一个ImageLoader对象。
+3. 获取一个ImageListener对象。
+4. 调用ImageLoader的get()方法加载网络上的图片。
+RequestQueue mQueue = Volley.newRequestQueue(context);
+ImageLoader imageLoader = new ImageLoader(mQueue, new ImageCache() {
+	@Override
+	public void putBitmap(String url, Bitmap bitmap) {
+	}
+	@Override
+	public Bitmap getBitmap(String url) {
+		return null;
+	}
+});
+
+ImageLoader的构造函数接收两个参数，第一个参数就是RequestQueue对象，第二个参数是一个ImageCache对象，
+这里我们先new出一个空的ImageCache的实现即可。
+ImageListener listener = ImageLoader.getImageListener(imageView,R.drawable.default_image, R.drawable.failed_image);
+
+最后，调用ImageLoader的get()方法来加载图片
+imageLoader.get("http://img.my.csdn.net/uploads/201404/13/1397393290_5765.jpeg", listener);
+get()方法接收两个参数，第一个参数就是图片的URL地址，第二个参数则是刚刚获取到的ImageListener对象。当然，如果你想对图片的大小进行限制，也可以使用get()方法的重载，指定图片允许的最大宽度和高度
+imageLoader.get("http://img.my.csdn.net/uploads/201404/13/1397393290_5765.jpeg",listener, 200, 200);
+
+其实写一个ImageCache也非常简单，但是如果想要写一个性能非常好的ImageCache，最好就要借助Android提供的LruCache功能
+public class BitmapCache implements ImageCache {
+	private LruCache<String, Bitmap> mCache;
+	public BitmapCache() {
+		int maxSize = 10 * 1024 * 1024;
+		mCache = new LruCache<String, Bitmap>(maxSize) {
+			@Override
+			protected int sizeOf(String key, Bitmap bitmap) {
+				return bitmap.getRowBytes() * bitmap.getHeight();
+			}
+		};
+	}
+	@Override
+	public Bitmap getBitmap(String url) {
+		return mCache.get(url);
+	}
+	@Override
+	public void putBitmap(String url, Bitmap bitmap) {
+		mCache.put(url, bitmap);
+	}
+}
+这里我们将缓存图片的大小设置为10M。接着修改创建ImageLoader实例的代码，第二个参数传入BitmapCache的实例
+ImageLoader imageLoader = new ImageLoader(mQueue, new BitmapCache());
+
+
+五、NetworkImageView
+1. 创建一个RequestQueue对象。
+2. 创建一个ImageLoader对象。
+3. 在布局文件中添加一个NetworkImageView控件。
+4. 在代码中获取该控件的实例。
+5. 设置要加载的图片地址。
+第一第二步和ImageLoader的用法是完全一样的
+<com.android.volley.toolbox.NetworkImageView
+    android:id="@+id/network_image_view"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center_horizontal" />
+
+networkImageView = (NetworkImageView) findViewById(R.id.network_image_view);
+networkImageView.setDefaultImageResId(R.drawable.default_image);
+networkImageView.setErrorImageResId(R.drawable.failed_image);
+networkImageView.setImageUrl("http://img.my.csdn.net/uploads/201404/13/1397393290_5765.jpeg",imageLoader);
+由于NetworkImageView是一个控件，在加载图片的时候它会自动获取自身的宽高，然后对比网络图片的宽度，再决定是否需要对图片进行压缩
+如果你不想对图片进行压缩的话，其实也很简单，只需要在布局文件中把NetworkImageView的layout_width和layout_height都设置成wrap_content就可以了
+
+
+六、扩展Volley
+StringRequest源码
+/**
+ * A canned request for retrieving the response body at a given URL as a String.
+ */
+public class StringRequest extends Request<String> {
+    private final Listener<String> mListener;
+
+    /**
+     * Creates a new request with the given method.
+     *
+     * @param method the request {@link Method} to use
+     * @param url URL to fetch the string at
+     * @param listener Listener to receive the String response
+     * @param errorListener Error listener, or null to ignore errors
+     */
+    public StringRequest(int method, String url, Listener<String> listener, ErrorListener errorListener) {
+        super(method, url, errorListener);
+        mListener = listener;
+    }
+
+    /**
+     * Creates a new GET request.
+     *
+     * @param url URL to fetch the string at
+     * @param listener Listener to receive the String response
+     * @param errorListener Error listener, or null to ignore errors
+     */
+    public StringRequest(String url, Listener<String> listener, ErrorListener errorListener) {
+        this(Method.GET, url, listener, errorListener);
+    }
+
+    @Override
+    protected void deliverResponse(String response) {
+        mListener.onResponse(response);
+    }
+
+    @Override
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+        String parsed;
+        try {
+            parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+        } catch (UnsupportedEncodingException e) {
+            parsed = new String(response.data);
+        }
+        return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
+    }
+}
+
+扩展成xml请求
+public class XMLRequest extends Request<XmlPullParser> {
+	private final Listener<XmlPullParser> mListener;
+	public XMLRequest(int method, String url, Listener<XmlPullParser> listener, ErrorListener errorListener) {
+		super(method, url, errorListener);
+		mListener = listener;
+	}
+
+	public XMLRequest(String url, Listener<XmlPullParser> listener, ErrorListener errorListener) {
+		this(Method.GET, url, listener, errorListener);
+	}
+
+	@Override
+	protected Response<XmlPullParser> parseNetworkResponse(NetworkResponse response) {
+		try {
+			String xmlString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			XmlPullParser xmlPullParser = factory.newPullParser();
+			xmlPullParser.setInput(new StringReader(xmlString));
+			return Response.success(xmlPullParser, HttpHeaderParser.parseCacheHeaders(response));
+		} catch (UnsupportedEncodingException e) {
+			return Response.error(new ParseError(e));
+		} catch (XmlPullParserException e) {
+			return Response.error(new ParseError(e));
+		}
+	}
+
+	@Override
+	protected void deliverResponse(XmlPullParser response) {
+		mListener.onResponse(response);
+	}
+}
+
+扩展Gson request
+public class GsonRequest<T> extends Request<T> {
+	private final Listener<T> mListener;
+	private Gson mGson;
+	private Class<T> mClass;
+	public GsonRequest(int method, String url, Class<T> clazz, Listener<T> listener, ErrorListener errorListener) {
+		super(method, url, errorListener);
+		mGson = new Gson();
+		mClass = clazz;
+		mListener = listener;
+	}
+
+	public GsonRequest(String url, Class<T> clazz, Listener<T> listener, ErrorListener errorListener) {
+		this(Method.GET, url, clazz, listener, errorListener);
+	}
+
+	@Override
+	protected Response<T> parseNetworkResponse(NetworkResponse response) {
+		try {
+			String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+			return Response.success(mGson.fromJson(jsonString, mClass), HttpHeaderParser.parseCacheHeaders(response));
+		} catch (UnsupportedEncodingException e) {
+			return Response.error(new ParseError(e));
+		}
+	}
+
+	@Override
+	protected void deliverResponse(T response) {
+		mListener.onResponse(response);
+	}
+}
+
+
+七、使用Cookies
+
+Volley中没有直接的API来设置cookies，Volley的设计理念就是提供干净、简洁的API来实现RESTful HTTP请求，不提供设置cookies是合理的。
+下面是修改后的VolleyController类，这个类修改了getRequestQueue()方法，包含了设置cookie方法
+// http client instance
+private DefaultHttpClient mHttpClient;
+public RequestQueue getRequestQueue() {
+  if (mRequestQueue == null) {
+    mHttpClient = new DefaultHttpClient();
+    mRequestQueue = Volley.newRequestQueue(this, new HttpClientStack(mHttpClient));
+  }
+  return mRequestQueue;
+}
+/**
+ * Method to set a cookie
+ */
+public void setCookie() {
+  CookieStore cs = mHttpClient.getCookieStore();
+  // create a cookie
+  cs.addCookie(new BasicClientCookie2("cookie", "spooky"));
+}
+// add the cookie before adding the request to the queue
+setCookie();
+// add the request to the queue
+mRequestQueue.add(request);

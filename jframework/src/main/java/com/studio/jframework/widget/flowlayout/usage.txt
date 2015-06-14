@@ -1,0 +1,64 @@
+1.动态添加内容
+package com.studio.jframework.widget.flowlayout;
+private void addLabels() {
+	LayoutInflater inflater = LayoutInflater.from(this);
+	for (int i = 0; i < labelStrings.size(); i++) {
+		TextView textView = (TextView) inflater.inflate(R.layout.label_item, labels_group, false);
+		String keyWord = labelStrings.get(i);
+		textView.setText(keyWord);
+		textView.setOnClickListener(new MyLabelClickListener(keyWord));
+		labels_group.addView(textView);
+	}
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/btn_background"/>
+
+
+2.静态添加
+//在xml文件中，在布局标签内按顺序添加组件即可
+<com.example.flowlayout.FlowLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:id="@+id/flow_layout">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/btn_background"
+        android:text="hello" />
+
+    <Button
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:text="I love you" />
+
+    <Button
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:text="I" />
+
+    <Button
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:text="McDonals" />
+
+    <Button
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:text="PizzaHub" />
+</com.example.flowlayout.FlowLayout>
