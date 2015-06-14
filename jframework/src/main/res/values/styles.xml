@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="bottom_default_toast_animation" parent="@android:style/Animation.Toast">
+        <item name="android:windowEnterAnimation">@anim/up_and_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+    <style name="top_default_toast_animation" parent="@android:style/Animation.Toast">
+        <item name="android:windowEnterAnimation">@anim/down_and_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+</resources>

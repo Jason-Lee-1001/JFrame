@@ -1,0 +1,9 @@
+method1:
+FullWidthToast toast = new FullWidthToast(this);
+toast.setBackgroundColor(Color.WHITE).setTextColor(Color.BLACK).setText("Toast Text")
+    .setImage(getResources().getDrawable(R.mipmap.ic_launcher))
+    .setDuration(Toast.LENGTH_LONG).setGravity(Gravity.CENTER)
+    .setAnimation(R.style.top_default_toast_animation).show();
+
+method2:
+FullWidthToast.makeToast(this,"Toast Text", Toast.LENGTH_SHORT).show();

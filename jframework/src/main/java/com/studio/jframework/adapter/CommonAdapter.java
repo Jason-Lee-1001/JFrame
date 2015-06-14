@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by Jason<p/>
- * ListView和GridView的万能适配器，对于多布局同样适合<p/>
+ * ListView和GridView的万能适配器，不需单独配置ViewHolder，对于多布局同样适合<p/>
  * Usage:<p/>
  * listView.setAdapter(new CommonAdapter(this, listData){...});
  */

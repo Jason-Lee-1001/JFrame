@@ -18,7 +18,7 @@ public class LogUtils {
     }
 
     /**
-     * the class will print log depend on the value of BuildConfig.DEBUG
+     * The class will print log depend on the value of BuildConfig.DEBUG
      * you may change it during runtime
      *
      * @param enable enable or disable to print log
@@ -28,6 +28,7 @@ public class LogUtils {
     }
 
     /**
+     * Get the instance of this class
      * @return the LogUtil singleton
      */
     private static LogUtils getSingleton() {
@@ -55,8 +56,7 @@ public class LogUtils {
             if (st.getClassName().equals(this.getClass().getName())) {
                 continue;
             }
-            return "[ ->Line " + st.getLineNumber() + " "
-                    + st.getMethodName() + "() ]";
+            return "[ ->Line " + st.getLineNumber() + " " + st.getMethodName() + "() ]";
         }
         return null;
     }
