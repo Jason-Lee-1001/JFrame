@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
                         .setAnimation(R.style.top_default_toast_animation).show();
                 break;
             case R.id.button2:
-                FullWidthToast.makeToast(this,"ceshi2", Toast.LENGTH_SHORT).show();
+                FullWidthToast.makeToast(this,"ceshi2", Toast.LENGTH_SHORT, null).show();
                 break;
             default:
         }
