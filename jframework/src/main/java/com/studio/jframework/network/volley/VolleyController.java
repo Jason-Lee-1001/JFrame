@@ -15,7 +15,7 @@ import com.studio.jframework.utils.MD5Utils;
 /**
  * Created by Jason<p/>
  * Usage:<p/>
- * Request request = new Request(...);<p/>
+ * VolleyRequest request = new VolleyRequest(...);<p/>
  * VolleyController.getInstance(activity).addToQueue(request);<p/>
  */
 public class VolleyController {
@@ -35,9 +35,9 @@ public class VolleyController {
      * @param context Context
      * @return the instance of this class
      */
-    public synchronized static VolleyController getInstance(Context context) {
+    public synchronized static VolleyController getInstance(Context context, boolean isEncryptKey) {
         if (INSTANCE == null) {
-            INSTANCE = new VolleyController(context);
+            INSTANCE = new VolleyController(context, isEncryptKey);
         }
         return INSTANCE;
     }
@@ -99,7 +99,7 @@ public class VolleyController {
      *
      * @param context Context
      */
-    private VolleyController(Context context) {
+    private VolleyController(Context context, final boolean isEncryptKey) {
         mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
@@ -113,14 +113,14 @@ public class VolleyController {
                     @Override
                     public void putBitmap(String url, Bitmap bitmap) {
                         String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_1);
-                        memoryCache.put(key, bitmap);
+                        memoryCache.put((isEncryptKey && key != null) ? key : url, bitmap);
                         fileUtils.saveBitmap(key, bitmap);
                     }
 
                     @Override
                     public Bitmap getBitmap(String url) {
                         String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_1);
-                        Bitmap bitmap = memoryCache.get(key);
+                        Bitmap bitmap = memoryCache.get((isEncryptKey && key != null) ? key : url);
                         if (bitmap == null) {
                             bitmap = fileUtils.readBitmap(key);
                         }

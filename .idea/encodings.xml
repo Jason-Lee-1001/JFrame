@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/studio/jason/jframe/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/android/volley/Cache.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/android/volley/RequestQueue.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/async/ExecutorHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/async/task/DownloadAsyncTask.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/async/task/UploadAsyncTask.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/CrashHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/ExitAppUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/FileUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/IntentHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/LogUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/NetwrokUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/PackageUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/RegularExpUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/SharePreferencesUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/widget/toast/FullWidthToast.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/widget/toast/usage.txt" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

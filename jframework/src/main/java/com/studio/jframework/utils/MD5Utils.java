@@ -53,7 +53,6 @@ public class MD5Utils {
                         'c', 'd', 'e', 'f'};
                 try {
                     byte[] strTemp = string.getBytes();
-                    // 使用MD5创建MessageDigest对象
                     MessageDigest mdTemp = MessageDigest.getInstance("MD5");
                     mdTemp.update(strTemp);
                     byte[] md = mdTemp.digest();
@@ -62,8 +61,6 @@ public class MD5Utils {
                     int k = 0;
                     for (int i = 0; i < j; i++) {
                         byte b = md[i];
-                        // System.out.println((int)b);
-                        // 将没个数(int)b进行双字节加密
                         str[k++] = hexDigits[b >> 4 & 0xf];
                         str[k++] = hexDigits[b & 0xf];
                     }

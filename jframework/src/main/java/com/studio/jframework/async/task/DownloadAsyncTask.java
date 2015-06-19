@@ -1,4 +1,4 @@
-package com.studio.jframework.network.async;
+package com.studio.jframework.async.task;
 
 import android.os.AsyncTask;
 

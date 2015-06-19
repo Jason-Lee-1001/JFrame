@@ -204,7 +204,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     /**
      * Gain crash info from file if exist
      *
-     * @return crash info, will return null if file not exist
+     * @return Crash info, will return null if file not exist
      */
     public static String getCrashInfo() {
         String info = null;
