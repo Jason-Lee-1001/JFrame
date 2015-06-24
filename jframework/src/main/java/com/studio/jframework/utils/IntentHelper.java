@@ -9,9 +9,9 @@ import android.provider.Settings;
 
 /**
  * Created by Jason
- *
+ * <p/>
  * need to be tested
- *
+ * <p/>
  * IntentHelper is designed for opening native application.
  * Such as call phone, open gallery, open settings .....
  */
@@ -87,7 +87,7 @@ public class IntentHelper {
             intent.setAction(Settings.ACTION_SETTINGS);
             try {
                 context.startActivity(intent);
-            }catch (ActivityNotFoundException e){
+            } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
         }

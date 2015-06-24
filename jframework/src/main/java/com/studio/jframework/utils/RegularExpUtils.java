@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Jason
- *
+ * <p/>
  * need to be tested
- *
+ * <p/>
  * Provide the most common regular expression methods
  */
 public class RegularExpUtils {

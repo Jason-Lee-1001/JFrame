@@ -1,0 +1,11 @@
+1.To enable SwipeBackLayout, you can simply make your Activity extend SwipeBackActivity:
+2.In onCreate method, setContentView() should be called as usual.
+3.You will have access to the getSwipeBackLayout() method so you can customize the SwipeBackLayout.
+    such as enable listening gesture: setEnableGesture.
+4.Make window translucent by adding <item name="android:windowIsTranslucent">true</item> to your
+    theme except the first activity, you need to specify another theme style for the first activity.
+    Example:
+        <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
+        <style name="AppSecTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+            <item name="android:windowIsTranslucent">true</item>
+        </style>

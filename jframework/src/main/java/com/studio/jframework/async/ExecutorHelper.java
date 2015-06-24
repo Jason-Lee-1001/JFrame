@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by Jason<p/>
- *
  * Usage:<p/>
  * ExecutorHelper helper = new ExecutorHelper(4);<p/>
  * helper.execute(new BackgroundTask(){...});<p/>
@@ -18,6 +17,7 @@ public class ExecutorHelper {
 
     /**
      * Initialize the thread pool and specify the thread counts
+     *
      * @param num Indicate the number of threads you want in the thread pool
      */
     public ExecutorHelper(int num) {
@@ -31,6 +31,7 @@ public class ExecutorHelper {
 
     /**
      * Get how many threads in the pool
+     *
      * @return The size of the thread pool
      */
     public int getThreadsCount() {
@@ -39,7 +40,8 @@ public class ExecutorHelper {
 
     /**
      * Get the ExecutorService instance
-      * @return The ExecutorService instance
+     *
+     * @return The ExecutorService instance
      */
     public ExecutorService getThreadPool() {
         return this.mThreadPool;
@@ -47,6 +49,7 @@ public class ExecutorHelper {
 
     /**
      * Get a thread from the pool and execute the task
+     *
      * @param task The BackgroundTask instance, just new it
      */
     public void execute(BackgroundTask task) {

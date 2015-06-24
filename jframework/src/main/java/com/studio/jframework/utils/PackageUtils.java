@@ -12,17 +12,16 @@ import java.util.List;
 
 /**
  * Created by Jason
- *
+ * <p/>
  * need to be tested
- *
  */
 public class PackageUtils {
 
-	/**
+    /**
      * Check if the service is running
      *
      * @param context Context
-     * @param cls The service class
+     * @param cls     The service class
      * @return Will return true if the service is running, false otherwise
      */
     public static boolean isServiceRunning(Context context, Class<?> cls) {
@@ -58,7 +57,7 @@ public class PackageUtils {
     /**
      * Get the app icon drawable with the specify package name
      *
-     * @param context Context
+     * @param context     Context
      * @param packageName The package name fo the application
      * @return The drawable of the application
      */
@@ -81,11 +80,11 @@ public class PackageUtils {
     /**
      * Check if the specify application was installed or not
      *
-     * @param context Context
+     * @param context     Context
      * @param packageName The package name you want to check
      * @return Will return true if the application is installed, false otherwise
      */
-    public static boolean isPkgAvilible(Context context, String packageName) {
+    public static boolean isAppInstalled(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
         List<PackageInfo> packageInfo = packageManager.getInstalledPackages(0);
         List<String> packageNames = new ArrayList<>();

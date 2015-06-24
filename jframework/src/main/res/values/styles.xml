@@ -8,4 +8,10 @@
         <item name="android:windowEnterAnimation">@anim/down_and_fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+    <style name="SwipeBackLayout">
+        <item name="edge_size">40dp</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
 </resources>

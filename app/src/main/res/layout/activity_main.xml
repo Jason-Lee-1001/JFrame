@@ -20,18 +20,6 @@
         android:layout_marginLeft="49dp"
         android:layout_marginStart="49dp"
         android:layout_marginTop="62dp"
-        android:onClick="performClick"
         android:text="New Button" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_marginLeft="49dp"
-        android:layout_marginStart="49dp"
-        android:layout_toEndOf="@+id/button1"
-        android:layout_toRightOf="@+id/button1"
-        android:onClick="performClick"
-        android:text="New Button" />
 </RelativeLayout>

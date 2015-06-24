@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * Created by Jason
- *
+ * <p/>
  * need to be fix
  */
 public class FileUtils {
@@ -134,6 +134,6 @@ public class FileUtils {
     }
 
     public String getEncryptKey(String url) {
-        return MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_1);
+        return MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
     }
 }

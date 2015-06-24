@@ -9,11 +9,11 @@ public class MD5Utils {
     /**
      * Method 1
      */
-    public static final int ENCRYPT_METHOD_1 = 1;
+    public static final int ENCRYPT_METHOD_A = 1;
     /**
      * Method 2
      */
-    public static final int ENCRYPT_METHOD_2 = 2;
+    public static final int ENCRYPT_METHOD_B = 2;
 
     /**
      * MD5 Encrypt
@@ -23,7 +23,7 @@ public class MD5Utils {
      */
     public static String get32bitsMD5(String string, int method) {
         switch (method) {
-            case ENCRYPT_METHOD_1: {
+            case ENCRYPT_METHOD_A: {
                 MessageDigest messageDigest = null;
                 try {
                     messageDigest = MessageDigest.getInstance("MD5");
@@ -45,7 +45,7 @@ public class MD5Utils {
                 }
                 return md5StrBuff.toString();
             }
-            case ENCRYPT_METHOD_2: {
+            case ENCRYPT_METHOD_B: {
                 char hexDigits[] = {
                         '0', '1', '2', '3',
                         '4', '5', '6', '7',

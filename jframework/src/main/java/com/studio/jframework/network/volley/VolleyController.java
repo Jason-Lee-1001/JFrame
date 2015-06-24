@@ -112,14 +112,14 @@ public class VolleyController {
 
                     @Override
                     public void putBitmap(String url, Bitmap bitmap) {
-                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_1);
+                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
                         memoryCache.put((isEncryptKey && key != null) ? key : url, bitmap);
                         fileUtils.saveBitmap(key, bitmap);
                     }
 
                     @Override
                     public Bitmap getBitmap(String url) {
-                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_1);
+                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
                         Bitmap bitmap = memoryCache.get((isEncryptKey && key != null) ? key : url);
                         if (bitmap == null) {
                             bitmap = fileUtils.readBitmap(key);

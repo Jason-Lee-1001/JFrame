@@ -28,10 +28,11 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
     /**
      * 更新适配器的内容，已调用notifyDataSetChanged
+     *
      * @param data 更新到适配器的内容
      */
     public void setData(List<T> data) {
-        if(data!= null) {
+        if (data != null) {
             this.mData = data;
         }
         this.notifyDataSetChanged();
@@ -84,7 +85,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     public abstract int setItemLayout(int type);
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public final View getView(int position, View convertView, ViewGroup parent) {
         int layout = 0;
         for (int i = 0; i < getViewTypeCount(); i++) {
             // 通过item种类数量遍历类型，如果跟当前position类型吻合

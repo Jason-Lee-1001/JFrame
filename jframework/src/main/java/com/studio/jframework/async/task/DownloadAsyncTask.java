@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 /**
  * Created by Jason
- *
+ * <p/>
  * A simple async task for downloading file
  */
 public class DownloadAsyncTask extends AsyncTask<String, Integer, Byte[]> {

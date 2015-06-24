@@ -22,15 +22,14 @@ public class VolleyErrorHelper {
     public static String getMessage(Object error) {
         if (error instanceof TimeoutError) {
             return "generic_server_down";
-        }
-        else if (isServerProblem(error)) {
+        } else if (isServerProblem(error)) {
             return handleServerError(error);
-        }
-        else if (isNetworkProblem(error)) {
+        } else if (isNetworkProblem(error)) {
             return "no_internet";
         }
         return "generic_error";
     }
+
     /**
      * Determines whether the error is related to network
      *
@@ -40,6 +39,7 @@ public class VolleyErrorHelper {
     private static boolean isNetworkProblem(Object error) {
         return (error instanceof NetworkError) || (error instanceof NoConnectionError);
     }
+
     /**
      * Determines whether the error is related to server
      *
@@ -49,6 +49,7 @@ public class VolleyErrorHelper {
     private static boolean isServerProblem(Object error) {
         return (error instanceof ServerError) || (error instanceof AuthFailureError);
     }
+
     /**
      * Handles the server error, tries to determine whether to show a stock message or to
      * show a message retrieved from the server.

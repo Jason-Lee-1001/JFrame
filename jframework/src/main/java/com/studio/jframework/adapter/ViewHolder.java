@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Created by Jason
  * 模板设计模式，抽象ViewHolder，配合CommonAdapter使用
  */
-public class ViewHolder {
+public final class ViewHolder {
 
     private SparseArray<View> mViews;
     private int mPosition;

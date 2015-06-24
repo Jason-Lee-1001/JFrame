@@ -2,23 +2,23 @@ package com.studio.jframework.utils;
 
 import android.util.Log;
 
-import com.studio.jframework.BuildConfig;
-
 
 /**
  * Created by Jason
  * A class which is easy to print log. Including line number and method name
+ * Usage:<p/>
+ * LogUtils.setEnable(BuildConfig.DEBUG);
  */
 public class LogUtils {
 
     private static LogUtils Singleton;
-    private static boolean enableLogger = BuildConfig.DEBUG;
+    private static boolean enableLogger = false;
 
     private LogUtils() {
     }
 
     /**
-     * The class will print log depend on the value of BuildConfig.DEBUG
+     * The class will print log depend on the value of BuildConfig.DEBUG in your project
      * you may change it during runtime
      *
      * @param enable enable or disable to print log
@@ -29,6 +29,7 @@ public class LogUtils {
 
     /**
      * Get the instance of this class
+     *
      * @return the LogUtil singleton
      */
     private static LogUtils getSingleton() {

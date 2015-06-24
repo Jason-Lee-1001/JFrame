@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * Create by Jason
- *
+ * <p/>
  * Catch the uncaught exception<p/>
  * Usage:<p/>
  * in Application, method onCreate;<p/>
@@ -45,6 +45,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     //The message for toast to show
     public String showMessage = null;
+    public static final String TAG = "CrashHandler";
     private Context mContext;
     private UncaughtExceptionHandler mDefaultHandler;
     private Map<String, String> crashInfo = new HashMap<>();
@@ -69,13 +70,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * Initialization of this crash handler
      *
      * @param context     Context
-     * @param filePath    C log file directory under root path
+     * @param filePath    Crash log file directory under root path, default is /Crash/
      * @param showMessage The message for toast when crash happens
      * @param operator    The operator to tidy up the work after the crash
      */
     public void init(Context context, String filePath, String showMessage, ExceptionOperator operator) {
         exceptionOperator = operator;
-        if (crashFilePath != null && !filePath.equals("")) {
+        if (filePath != null && !filePath.equals("")) {
             crashFilePath = filePath;
         }
         if (showMessage != null && !showMessage.equals("")) {
@@ -98,10 +99,10 @@ public class CrashHandler implements UncaughtExceptionHandler {
         } else {
             try {
                 Thread.sleep(2000);
+                exceptionOperator.onExceptionThrows();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            exceptionOperator.onExceptionThrows();
         }
     }
 
@@ -114,7 +115,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             public void run() {
                 Looper.prepare();
                 if (showMessage != null) {
-                    Toast.makeText(mContext, showMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, showMessage, Toast.LENGTH_LONG).show();
                 }
                 Looper.loop();
             }
@@ -181,6 +182,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
+        LogUtils.e(TAG, sb.toString());
         try {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + crashFilePath;
