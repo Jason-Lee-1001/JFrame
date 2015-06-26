@@ -16,17 +16,31 @@ import java.util.Map;
 public class VolleyRequest extends StringRequest {
 
     private Map<String, String> params;
+    private static final int mTimeOut = 15 * 1000;
+    private static final int mRetryTimes = 1;
 
     public VolleyRequest(String url, Map<String, String> params, Listener<String> listener, ErrorListener errorListener) {
         super(url, listener, errorListener);
         this.params = params;
-        setRetryPolicy(new DefaultRetryPolicy(15000, 1, 1f));
+        setRetryPolicy(new DefaultRetryPolicy(mTimeOut, mRetryTimes, 1f));
+    }
+
+    public VolleyRequest(String url, Map<String, String> params, int timeOut, int retryTimes, Listener<String> listener, ErrorListener errorListener) {
+        super(url, listener, errorListener);
+        this.params = params;
+        setRetryPolicy(new DefaultRetryPolicy(timeOut, retryTimes, 1f));
     }
 
     public VolleyRequest(int method, String url, Map<String, String> params, Listener<String> listener, ErrorListener errorListener) {
         super(method, url, listener, errorListener);
         this.params = params;
-        setRetryPolicy(new DefaultRetryPolicy(15000, 1, 1f));
+        setRetryPolicy(new DefaultRetryPolicy(mTimeOut, mRetryTimes, 1f));
+    }
+
+    public VolleyRequest(int method, String url, Map<String, String> params, int timeOut, int retryTimes, Listener<String> listener, ErrorListener errorListener) {
+        super(method, url, listener, errorListener);
+        this.params = params;
+        setRetryPolicy(new DefaultRetryPolicy(timeOut, retryTimes, 1f));
     }
 
     @Override
@@ -36,5 +50,4 @@ public class VolleyRequest extends StringRequest {
         }
         return super.getParams();
     }
-
 }
