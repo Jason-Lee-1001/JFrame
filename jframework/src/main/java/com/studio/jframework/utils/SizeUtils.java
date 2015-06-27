@@ -62,8 +62,8 @@ public class SizeUtils {
     /**
      * 得到控件宽
      *
-     * @param view
-     * @return
+     * @param view The view to be measured
+     * @return Get the width of the widget
      */
     public static int getWidgetWidth(View view) {
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -75,8 +75,8 @@ public class SizeUtils {
     /**
      * 得到控件高
      *
-     * @param view
-     * @return
+     * @param view The view to be measured
+     * @return Get the Height of the widget
      */
     public static int getWidgetHeight(View view) {
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -85,12 +85,6 @@ public class SizeUtils {
         return view.getMeasuredHeight();
     }
 
-
-//
-//
-//
-//    这种方法很简单，就是我们自己来测量
-//
 //
 //    No2：
 //

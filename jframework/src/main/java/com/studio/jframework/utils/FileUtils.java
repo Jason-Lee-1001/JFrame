@@ -20,8 +20,10 @@ public class FileUtils {
 
     public static final String TAG = "FileUtils";
     private static String appFolder;
+    private Context mContext;
 
-    public FileUtils() {
+    public FileUtils(Context context) {
+        mContext = context;
     }
 
     /**
@@ -30,7 +32,7 @@ public class FileUtils {
      * @return True if the external storage is available, false otherwise
      */
     public boolean isExternalStorageAvailable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -77,21 +79,20 @@ public class FileUtils {
      * @param appFolder The path you want to store files
      */
     public void setAppFolder(String appFolder) {
-        FileUtils.appFolder = appFolder;
+        if (appFolder != null && !appFolder.equals("")) {
+            FileUtils.appFolder = appFolder;
+        }
     }
 
     /**
      * Construct the mainFolder of the application
      * Such as storage/emulated/0/Jumook
      *
-     * @return
+     * @return True if the folder is created successfully, false otherwise
      */
     public boolean makeMainFolder() {
         File mainPath = new File(appFolder);
-        if (!mainPath.exists()) {
-            return mainPath.mkdirs();
-        }
-        return false;
+        return !mainPath.exists() && mainPath.mkdirs();
     }
 
     public boolean saveBitmap(String key, Bitmap bitmap) {

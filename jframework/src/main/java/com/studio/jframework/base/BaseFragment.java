@@ -48,14 +48,14 @@ public abstract class BaseFragment extends Fragment {
     public abstract void onCreateView();
 
     /**
-     * Do some initialization in onCreateView()
-     */
-    public abstract void initialization();
-
-    /**
      * Do find views in onCreateView()
      */
     public abstract void findViews(View view);
+
+    /**
+     * Do some initialization in onCreateView()
+     */
+    public abstract void initialization();
 
     /**
      * Do bind event in onCreateView()

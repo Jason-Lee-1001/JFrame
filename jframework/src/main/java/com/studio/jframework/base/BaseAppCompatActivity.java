@@ -33,14 +33,14 @@ public abstract class BaseAppCompatActivity extends SwipeBackActivity {
     }
 
     /**
-     * Do some initialization in onCreateView()
-     */
-    public abstract void initialization();
-
-    /**
      * Do find views in onCreateView()
      */
     public abstract void findViews();
+
+    /**
+     * Do some initialization in onCreateView()
+     */
+    public abstract void initialization();
 
     /**
      * Do bind event in onCreateView()
@@ -91,7 +91,7 @@ public abstract class BaseAppCompatActivity extends SwipeBackActivity {
     /**
      * Judge whether the keyboard is showing
      *
-     * @return
+     * @return Trur if the keyboard is showing, false otherwise
      */
     protected boolean isKeyboardShown() {
         return getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED;

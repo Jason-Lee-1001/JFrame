@@ -92,6 +92,11 @@ public class NetwrokUtils {
         return ProvidersName;
     }
 
+    /**
+     * Get the network type, will return wifi, 2G, 3G, LTE or null if the system can't judge the type
+     * @param context Context
+     * @return The network type now you are using
+     */
     public static String getNetworkType(Context context) {
         String type = "";
         ConnectivityManager connectMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

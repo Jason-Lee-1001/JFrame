@@ -38,7 +38,7 @@ import java.util.Map;
 public class CrashHandler implements UncaughtExceptionHandler {
 
     //Default path to save crash file
-    private static String crashFilePath = "/Crash/";
+    private static String crashFilePath = "Crash";
 
     //The singleton of this class
     private static CrashHandler INSTANCE;
@@ -70,7 +70,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * Initialization of this crash handler
      *
      * @param context     Context
-     * @param filePath    Crash log file directory under root path, default is /Crash/
+     * @param filePath    Crash log file directory under root path, default is Crash
      * @param showMessage The message for toast when crash happens
      * @param operator    The operator to tidy up the work after the crash
      */
@@ -98,7 +98,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, exception);
         } else {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(3000);
                 exceptionOperator.onExceptionThrows();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -185,7 +185,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         LogUtils.e(TAG, sb.toString());
         try {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + crashFilePath;
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                        + File.separator + crashFilePath + File.separator;
                 String filePath = path + "crash.log";
                 File dir = new File(path);
                 if (!dir.exists()) {
@@ -210,7 +211,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     public static String getCrashInfo() {
         String info = null;
-        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + crashFilePath + "crash.log";
+        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + crashFilePath + File.separator + "crash.log";
         File f = new File(filePath);
         if (f.exists()) {
             StringBuilder log = new StringBuilder();
@@ -232,6 +234,15 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
         }
         return info;
+    }
+
+    public static void deleteLogFile() {
+        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + crashFilePath + File.separator + "crash.log";
+        File f = new File(filePath);
+        if(f.exists()){
+            LogUtils.i(TAG,f.delete() ? "Deleted" : "Not delete");
+        }
     }
 
     public interface ExceptionOperator {

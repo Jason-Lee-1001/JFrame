@@ -21,5 +21,12 @@ public class MyApplication extends Application {
                 ExitAppUtils.getInstance().exit();
             }
         });
+        if(CrashHandler.getCrashInfo()!=null){
+            uploadCrashLog();
+        }
+    }
+
+    private void uploadCrashLog() {
+
     }
 }

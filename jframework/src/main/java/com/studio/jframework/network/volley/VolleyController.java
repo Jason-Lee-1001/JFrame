@@ -23,6 +23,7 @@ public class VolleyController {
     private static VolleyController INSTANCE;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
+    private static boolean isEncryptKey = true;
 
     /**
      * Log or global request TAG
@@ -33,11 +34,26 @@ public class VolleyController {
      * Gain the instance of VolleyHub class
      *
      * @param context Context
-     * @return the instance of this class
+     * @return The instance of this class
      */
-    public synchronized static VolleyController getInstance(Context context, boolean isEncryptKey) {
+    public synchronized static VolleyController getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new VolleyController(context, isEncryptKey);
+            INSTANCE = new VolleyController(context);
+        }
+        return INSTANCE;
+    }
+
+    /**
+     * Gain the instance of VolleyHub class
+     *
+     * @param context     Context
+     * @param isEncrypted Set whether to encrypt the key when loading the image, default is true;
+     * @return The instance of this class
+     */
+    public synchronized static VolleyController getInstance(Context context, boolean isEncrypted) {
+        isEncryptKey = isEncrypted;
+        if (INSTANCE == null) {
+            INSTANCE = new VolleyController(context);
         }
         return INSTANCE;
     }
@@ -77,6 +93,15 @@ public class VolleyController {
     }
 
     /**
+     * Cancels all pending requests with default TAG
+     */
+    public void cancelPendingRequests() {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+        }
+    }
+
+    /**
      * Get the request queue that in volley
      *
      * @return the request queue in volley
@@ -99,11 +124,10 @@ public class VolleyController {
      *
      * @param context Context
      */
-    private VolleyController(Context context, final boolean isEncryptKey) {
+    private VolleyController(final Context context) {
         mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
-        mImageLoader = new ImageLoader(mRequestQueue,
-                new ImageLoader.ImageCache() {
-                    private FileUtils fileUtils = new FileUtils();
+        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
+                    private FileUtils fileUtils = new FileUtils(context);
                     private LruCache<String, Bitmap> memoryCache = new LruCache<String, Bitmap>(10 * 1024 * 1024) {
                         protected int sizeOf(String key, Bitmap value) {
                             return value.getRowBytes() * value.getHeight();

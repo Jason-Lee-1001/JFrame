@@ -21,7 +21,7 @@ public class LogUtils {
      * The class will print log depend on the value of BuildConfig.DEBUG in your project
      * you may change it during runtime
      *
-     * @param enable enable or disable to print log
+     * @param enable Enable or disable to print log, default is false;
      */
     public static void setEnable(boolean enable) {
         enableLogger = enable;
