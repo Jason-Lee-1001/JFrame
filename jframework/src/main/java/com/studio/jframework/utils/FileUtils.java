@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,11 +18,30 @@ import java.io.IOException;
 public class FileUtils {
 
     public static final String TAG = "FileUtils";
-    private static String appFolder;
+    /**
+     * The name of the main folder
+     */
+    private String folderName;
+
+    /**
+     * The path of the main folder under external storage root
+     */
+    private String folderPath;
+    private int mode;
     private Context mContext;
 
-    public FileUtils(Context context) {
+    public static final int EXTERNAL_CACHE = 1;
+    public static final int NORMAL_FOLDER = 2;
+
+
+    public FileUtils(Context context, int mode, String folderName) throws IllegalArgumentException {
+        if (mode != 1 && mode != 2) {
+            throw new IllegalArgumentException("Mode should be 1 or 2");
+        }
         mContext = context;
+        this.mode = mode;
+        this.folderName = folderName;
+        this.createAppMainFolder();
     }
 
     /**
@@ -31,7 +49,7 @@ public class FileUtils {
      *
      * @return True if the external storage is available, false otherwise
      */
-    public boolean isExternalStorageAvailable() {
+    public static boolean isExternalStorageAvailable() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
@@ -46,7 +64,7 @@ public class FileUtils {
      * exist, so you must make sure it exists before using it such as with File.mkdirs().
      * For example: storage/emulated/0/Movies
      */
-    public String getPublicDirectory(String type) {
+    public static String getPublicDirectory(String type) {
         return Environment.getExternalStoragePublicDirectory(type).getAbsolutePath();
     }
 
@@ -57,7 +75,7 @@ public class FileUtils {
      * @return The external cache folder of the package, for example
      * For example: storage/emulated/0/Android/data/"packageName"/cache
      */
-    public String getExternalCacheDir(Context context) {
+    public static String getExternalCacheDir(Context context) {
         if (isExternalStorageAvailable()) {
             return context.getExternalCacheDir().getAbsolutePath();
         }
@@ -65,43 +83,89 @@ public class FileUtils {
     }
 
     /**
-     * Get the main folder of the app
+     * Get the internal cache folder path
      *
-     * @return The path the app to store files
+     * @param context Context
+     * @return The internal cache folder of the package, for example
+     * For example: data/data/"packageName"/cache
      */
-    public String getAppFolder() {
-        return appFolder;
+    public static String getInternalCacheDir(Context context) {
+        return context.getCacheDir().getAbsolutePath();
     }
 
     /**
-     * Set the path of main folder of the app
-     *
-     * @param appFolder The path you want to store files
-     */
-    public void setAppFolder(String appFolder) {
-        if (appFolder != null && !appFolder.equals("")) {
-            FileUtils.appFolder = appFolder;
-        }
-    }
-
-    /**
-     * Construct the mainFolder of the application
-     * Such as storage/emulated/0/Jumook
+     * Set the path of main folder of the app under the root of external path
      *
      * @return True if the folder is created successfully, false otherwise
      */
-    public boolean makeMainFolder() {
-        File mainPath = new File(appFolder);
-        return !mainPath.exists() && mainPath.mkdirs();
+    public boolean createAppMainFolder() {
+        if (folderName == null || folderName.equals("")) {
+            LogUtils.e(TAG, "Create folder failed, folderName should not be empty in constructor");
+            return false;
+        }
+        if (isExternalStorageAvailable()) {
+            folderPath = mode == 2 ? Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + File.separator + folderName + File.separator :
+                    getExternalCacheDir(mContext) + File.separator + folderName + File.separator;
+            LogUtils.i(TAG, folderPath);
+            File file = new File(folderPath);
+            return file.exists() || file.mkdirs();
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * Get the main folder of the app
+     *
+     * @return The path the app to store files,
+     * will return null if the external storage is not available
+     */
+    public String getAppFolderPath() {
+        if (mode == NORMAL_FOLDER && isExternalStorageAvailable() && folderPath != null) {
+            return folderPath;
+        }
+        return null;
+    }
+
+    /**
+     * Create a sub folder, if mode is EXTERNAL_CACHE, will create a new folder under cache folder
+     * if mode is NORMAL_FOLDER, will create a folder under the main app folder
+     *
+     * @param subFolderName The folder name
+     * @return True if the folder is created successfully, false otherwise
+     */
+    public boolean createSubFolder(String subFolderName) {
+        switch (mode) {
+            case EXTERNAL_CACHE:
+                File cacheDir = new File(getExternalCacheDir(mContext) + File.separator + subFolderName + File.separator);
+                if (!cacheDir.exists()) {
+                    return cacheDir.mkdirs();
+                }
+            case NORMAL_FOLDER:
+                File normalDir = new File(folderPath + File.separator + subFolderName + File.separator);
+                if (!normalDir.exists()) {
+                    return normalDir.mkdirs();
+                }
+        }
+        LogUtils.e(TAG, "create sub folder failed");
+        return false;
+    }
+
+    /**
+     * Save bitmap to external storage
+     *
+     * @param key    The name of the file
+     * @param bitmap The bitmap to be storaged
+     * @return True if successfully, false otherwise
+     */
     public boolean saveBitmap(String key, Bitmap bitmap) {
-        if (key == null || bitmap == null || appFolder == null) {
+        if (key == null || bitmap == null || folderPath == null) {
             LogUtils.e(TAG, "save bitmap failed");
             return false;
         }
-        if (!TextUtils.isEmpty(key) && isExternalStorageAvailable()) {
-            File dir = new File(appFolder);
+        if (isExternalStorageAvailable()) {
+            File dir = new File(folderPath);
             File f = new File(dir, key);
             FileOutputStream fos;
             try {
@@ -116,10 +180,16 @@ public class FileUtils {
         return false;
     }
 
+    /**
+     * Read a bitmap from local storage
+     *
+     * @param key The name of the file
+     * @return The bitmap instance, will return null if the file not found
+     */
     public Bitmap readBitmap(String key) {
         Bitmap bitmap = null;
-        if (!TextUtils.isEmpty(key) && isExternalStorageAvailable() && appFolder != null) {
-            File bitmapFile = new File(appFolder + File.separator + key);
+        if (isExternalStorageAvailable() && folderPath != null) {
+            File bitmapFile = new File(folderPath + key);
             if (bitmapFile.exists() && !bitmapFile.isDirectory()) {
                 FileInputStream fis;
                 try {
@@ -132,9 +202,5 @@ public class FileUtils {
             }
         }
         return bitmap;
-    }
-
-    public String getEncryptKey(String url) {
-        return MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
     }
 }

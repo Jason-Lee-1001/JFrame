@@ -15,7 +15,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LogUtils.setEnable(BuildConfig.DEBUG);
-        CrashHandler.getInstance().init(this, null, "渣渣,又崩了!!", new CrashHandler.ExceptionOperator() {
+        CrashHandler.getInstance().init(this, null, "渣渣,又崩了!!",false, new CrashHandler.ExceptionOperator() {
             @Override
             public void onExceptionThrows() {
                 ExitAppUtils.getInstance().exit();
@@ -27,6 +27,6 @@ public class MyApplication extends Application {
     }
 
     private void uploadCrashLog() {
-
+        CrashHandler.deleteLogFile();
     }
 }

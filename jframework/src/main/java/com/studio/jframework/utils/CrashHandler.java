@@ -37,19 +37,20 @@ import java.util.Map;
  */
 public class CrashHandler implements UncaughtExceptionHandler {
 
+    public static final String TAG = "CrashHandler";
+
     //Default path to save crash file
     private static String crashFilePath = "Crash";
 
     //The singleton of this class
     private static CrashHandler INSTANCE;
-
     //The message for toast to show
     public String showMessage = null;
-    public static final String TAG = "CrashHandler";
     private Context mContext;
     private UncaughtExceptionHandler mDefaultHandler;
     private Map<String, String> crashInfo = new HashMap<>();
     private ExceptionOperator exceptionOperator;
+    private boolean isDebug = false;
 
     private CrashHandler() {
     }
@@ -72,9 +73,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @param context     Context
      * @param filePath    Crash log file directory under root path, default is Crash
      * @param showMessage The message for toast when crash happens
-     * @param operator    The operator to tidy up the work after the crash
+     * @param isDebug     Indicate that whether is under the debug mode, if true,
+     *                    will not create crash log file and handle the exception by the system
+     * @param operator    The operator to tidy up the work after the crash, you need to exit the app
+     *                    in this method if you want to handle the exception by yourself
      */
-    public void init(Context context, String filePath, String showMessage, ExceptionOperator operator) {
+    public void init(Context context, String filePath, String showMessage, boolean isDebug, ExceptionOperator operator) {
+        this.isDebug = isDebug;
         exceptionOperator = operator;
         if (filePath != null && !filePath.equals("")) {
             crashFilePath = filePath;
@@ -94,12 +99,17 @@ public class CrashHandler implements UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread thread, Throwable exception) {
         boolean isHandle = handleException(exception);
+        if (isDebug) {
+            mDefaultHandler.uncaughtException(thread, exception);
+        }
         if (!isHandle && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(thread, exception);
         } else {
             try {
-                Thread.sleep(3000);
-                exceptionOperator.onExceptionThrows();
+                Thread.sleep(2500);
+                if (exceptionOperator != null) {
+                    exceptionOperator.onExceptionThrows();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -114,7 +124,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                if (showMessage != null) {
+                if (showMessage != null && !isDebug) {
                     Toast.makeText(mContext, showMessage, Toast.LENGTH_LONG).show();
                 }
                 Looper.loop();
@@ -190,12 +200,11 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 String filePath = path + "crash.log";
                 File dir = new File(path);
                 if (!dir.exists()) {
-                    if (dir.mkdirs()) {
-                        FileOutputStream fos = new FileOutputStream(filePath);
-                        fos.write(sb.toString().getBytes());
-                        fos.close();
-                    }
+                    dir.mkdirs();
                 }
+                FileOutputStream fos = new FileOutputStream(filePath);
+                fos.write(sb.toString().getBytes());
+                fos.close();
             }
             return true;
         } catch (Exception e) {
@@ -236,12 +245,15 @@ public class CrashHandler implements UncaughtExceptionHandler {
         return info;
     }
 
+    /**
+     *
+     */
     public static void deleteLogFile() {
         String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + crashFilePath + File.separator + "crash.log";
         File f = new File(filePath);
-        if(f.exists()){
-            LogUtils.i(TAG,f.delete() ? "Deleted" : "Not delete");
+        if (f.exists()) {
+            LogUtils.i(TAG, f.delete() ? "Deleted" : "Not delete");
         }
     }
 
@@ -252,5 +264,4 @@ public class CrashHandler implements UncaughtExceptionHandler {
          */
         void onExceptionThrows();
     }
-
 }

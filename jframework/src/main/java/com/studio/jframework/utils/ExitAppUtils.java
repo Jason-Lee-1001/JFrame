@@ -60,8 +60,13 @@ public class ExitAppUtils {
      */
     public void exit() {
         for (WeakReference<Activity> activity : mActivityList) {
-            if (activity.get() != null)
+            if (activity.get() != null) {
                 activity.get().finish();
+            }
+        }
+        if(mActivityList != null){
+            mActivityList.clear();
+            mActivityList = null;
         }
         System.exit(0);
     }

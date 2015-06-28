@@ -127,29 +127,30 @@ public class VolleyController {
     private VolleyController(final Context context) {
         mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
-                    private FileUtils fileUtils = new FileUtils(context);
-                    private LruCache<String, Bitmap> memoryCache = new LruCache<String, Bitmap>(10 * 1024 * 1024) {
-                        protected int sizeOf(String key, Bitmap value) {
-                            return value.getRowBytes() * value.getHeight();
-                        }
-                    };
+            private FileUtils fileUtils = new FileUtils(context, FileUtils.EXTERNAL_CACHE, TAG);
 
-                    @Override
-                    public void putBitmap(String url, Bitmap bitmap) {
-                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
-                        memoryCache.put((isEncryptKey && key != null) ? key : url, bitmap);
-                        fileUtils.saveBitmap(key, bitmap);
-                    }
+            private LruCache<String, Bitmap> memoryCache = new LruCache<String, Bitmap>(10 * 1024 * 1024) {
+                protected int sizeOf(String key, Bitmap value) {
+                    return value.getRowBytes() * value.getHeight();
+                }
+            };
 
-                    @Override
-                    public Bitmap getBitmap(String url) {
-                        String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
-                        Bitmap bitmap = memoryCache.get((isEncryptKey && key != null) ? key : url);
-                        if (bitmap == null) {
-                            bitmap = fileUtils.readBitmap(key);
-                        }
-                        return bitmap;
-                    }
-                });
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
+                memoryCache.put((isEncryptKey && key != null) ? key : url, bitmap);
+                fileUtils.saveBitmap(key, bitmap);
+            }
+
+            @Override
+            public Bitmap getBitmap(String url) {
+                String key = MD5Utils.get32bitsMD5(url, MD5Utils.ENCRYPT_METHOD_A);
+                Bitmap bitmap = memoryCache.get((isEncryptKey && key != null) ? key : url);
+                if (bitmap == null) {
+                    bitmap = fileUtils.readBitmap(key);
+                }
+                return bitmap;
+            }
+        });
     }
 }
