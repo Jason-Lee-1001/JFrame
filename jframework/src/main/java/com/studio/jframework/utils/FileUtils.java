@@ -11,9 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Jason
- * <p/>
- * need to be fix
+ * Created by Jason<p/>
+ *
  */
 public class FileUtils {
 

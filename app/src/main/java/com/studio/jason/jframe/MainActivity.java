@@ -33,7 +33,7 @@ public class MainActivity extends BaseAppCompatActivity {
     public static final String TAG = "MainActivity";
     private Button button1, button2, button3;
     private AESUtils aesUtils;
-    private String origin = "15507592016";
+    private String origin = "15507592016~!@#$%^&*().,?/\\[]{};|';<>`张三abccdegff";
 
     private ImageView imageView;
 
@@ -100,7 +100,7 @@ public class MainActivity extends BaseAppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        LogUtils.d(TAG, VolleyErrorHelper.getMessage(error));
+                        LogUtils.e(TAG, VolleyErrorHelper.getMessage(error));
                     }
                 });
                 VolleyController.getInstance(MainActivity.this).addToQueue(request,"b");

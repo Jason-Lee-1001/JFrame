@@ -2,6 +2,7 @@ package com.studio.jframework.utils;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 public class SizeUtils {
 
@@ -60,7 +61,7 @@ public class SizeUtils {
     }
 
     /**
-     * 得到控件宽
+     * Gain the width of the widget
      *
      * @param view The view to be measured
      * @return Get the width of the widget
@@ -73,7 +74,7 @@ public class SizeUtils {
     }
 
     /**
-     * 得到控件高
+     * Gain the height of the widget
      *
      * @param view The view to be measured
      * @return Get the Height of the widget
@@ -83,6 +84,20 @@ public class SizeUtils {
         int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(w, h);
         return view.getMeasuredHeight();
+    }
+
+    public static int getWidgetHeightWithObv(final View view){
+        int height = 0;
+        final ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
+        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                viewTreeObserver.removeOnPreDrawListener(this);
+//                h = view.getMeasuredHeight();
+                return true;
+            }
+        });
+        return height;
     }
 
 //
