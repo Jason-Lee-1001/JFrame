@@ -23,6 +23,8 @@ import com.studio.jframework.network.volley.VolleyRequest;
 import com.studio.jframework.utils.AESUtils;
 import com.studio.jframework.utils.ExitAppUtils;
 import com.studio.jframework.utils.LogUtils;
+import com.studio.jframework.utils.PreferencesUtils;
+import com.studio.jframework.widget.LoadMoreListView;
 import com.studio.jframework.widget.toast.FullWidthToast;
 
 import java.security.Key;
@@ -38,6 +40,8 @@ public class MainActivity extends BaseAppCompatActivity {
     private ImageView imageView;
 
     public Drawable drawable;
+    public LoadMoreListView listView = new LoadMoreListView(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,12 @@ public class MainActivity extends BaseAppCompatActivity {
         aesUtils = new AESUtils();
         drawable = getResources().getDrawable(R.drawable.color1);
         drawable.setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY);
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void loadMore() {
+
+            }
+        });
     }
 
     @Override
@@ -129,6 +139,7 @@ public class MainActivity extends BaseAppCompatActivity {
                 LogUtils.e(TAG,new String(yy));
             }
         });
+        PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(this);
     }
 
     public byte[] by;
@@ -137,7 +148,5 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ExitAppUtils.getInstance().removeActivity(this);
-
     }
 }

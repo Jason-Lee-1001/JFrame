@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "download_task.db";
+    private static final String DB_NAME = "xxx.db";
     private static final int DB_VERSION = 1;
     private static final String SQL_CREATE = "create table";
 

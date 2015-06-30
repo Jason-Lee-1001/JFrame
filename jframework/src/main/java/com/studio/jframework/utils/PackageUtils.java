@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class PackageUtils {
 
+    public static final String TAG = "PackageUtils";
+
     /**
      * Check if the service is running
      *
@@ -132,7 +134,13 @@ public class PackageUtils {
         }
     }
 
-    public static String getAppName(Context context,int pID) {
+    /**
+     * Gain the app name with the process id
+     * @param context Context
+     * @param pid The process id
+     * @return The app name
+     */
+    public static String getAppName(Context context,int pid) {
         String processName = null;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List l = am.getRunningAppProcesses();
@@ -141,7 +149,7 @@ public class PackageUtils {
         while (i.hasNext()) {
             ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
             try {
-                if (info.pid == pID) {
+                if (info.pid == pid) {
                     CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(info.processName, PackageManager.GET_META_DATA));
                     // Log.d("Process", "Id: "+ info.pid +" ProcessName: "+
                     // info.processName +"  Label: "+c.toString());
@@ -150,7 +158,7 @@ public class PackageUtils {
                     return processName;
                 }
             } catch (Exception e) {
-                // Log.d("Process", "Error>> :"+ e.toString());
+                LogUtils.e(TAG, "get app name failed");
             }
         }
         return processName;
