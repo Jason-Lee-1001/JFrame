@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="seach">"搜索"</string>
+    <string name="hotseach">"热门搜索"</string>
+
 </resources>

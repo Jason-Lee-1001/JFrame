@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--白色-->
+    <color name="white">#FFFFFFFF</color>
+    <!--黑色-->
+    <color name="black">#FF000000</color>
+    <!--图标_灰色-->
+    <color name="icon_gray">#FFBEBEBE</color>
+    <!--图标_浅红-->
+    <color name="icon_palered">#FFF46666</color>
+    <!--底层背景_灰色-->
+    <color name="background">#EEF0F0F0</color>
+
+</resources>

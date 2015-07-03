@@ -22,6 +22,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Integer, Byte[]> {
     @Override
     protected void onCancelled(Byte[] bytes) {
         super.onCancelled(bytes);
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.studio.jason.jframe;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.studio.jframework.utils.ExitAppUtils;
 import com.swipebacklayout.lib.app.SwipeBackActivity;
@@ -19,12 +18,12 @@ public class SwipeSecActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ExitAppUtils.getInstance().addActivity(this);
-        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                text.equals("");
-            }
-        });
+//        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                text.equals("");
+//            }
+//        });
     }
 
     @Override

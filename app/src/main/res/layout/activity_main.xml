@@ -1,57 +1,63 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!--    <ListView
-            android:id="@+id/listview"
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white">
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_find"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="圈子"
+                    android:textColor="@color/icon_palered" />
+
+                <RadioButton
+                    android:id="@+id/radio_seach"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="搜索"
+                    android:textColor="@color/icon_gray" />
+
+                <RadioButton
+                    android:id="@+id/radio_personal"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="个人"
+                    android:textColor="@color/icon_gray" />
+            </RadioGroup>
+        </RelativeLayout>
 
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="49dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="62dp"
-        android:text="New Button" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button1"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignStart="@+id/button1"
-        android:layout_marginTop="90dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button3"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="32dp"
-        android:layout_marginEnd="32dp" />
-
-    <!--android:src="@mipmap/ic_launcher"-->
-    <ImageView
-        android:background="@drawable/color1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:layout_marginTop="81dp" />
-
-</RelativeLayout>
+</LinearLayout>
