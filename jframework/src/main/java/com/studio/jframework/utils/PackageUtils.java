@@ -12,13 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Jason
- * <p/>
- * need to be tested
+ * <p>need to be tested
+ * @author Jason
  */
 public class PackageUtils {
-
-    public static final String TAG = "PackageUtils";
 
     /**
      * Check if the service is running
@@ -135,12 +132,23 @@ public class PackageUtils {
     }
 
     /**
-     * Gain the app name with the process id
+     * Get the package name of the application
+     *
      * @param context Context
-     * @param pid The process id
-     * @return The app name
+     * @return The package name if the package name exists
+     * will return null if the name not found
      */
-    public static String getAppName(Context context,int pid) {
+    public static String getPackageName(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.packageName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
+    }
+
+    public static String getAppName(Context context,int pID) {
         String processName = null;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List l = am.getRunningAppProcesses();
@@ -149,7 +157,7 @@ public class PackageUtils {
         while (i.hasNext()) {
             ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
             try {
-                if (info.pid == pid) {
+                if (info.pid == pID) {
                     CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(info.processName, PackageManager.GET_META_DATA));
                     // Log.d("Process", "Id: "+ info.pid +" ProcessName: "+
                     // info.processName +"  Label: "+c.toString());
@@ -158,7 +166,7 @@ public class PackageUtils {
                     return processName;
                 }
             } catch (Exception e) {
-                LogUtils.e(TAG, "get app name failed");
+                // Log.d("Process", "Error>> :"+ e.toString());
             }
         }
         return processName;

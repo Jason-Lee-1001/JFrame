@@ -4,11 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Jason
- * <p/>
- * need to be tested
- * <p/>
+ * <p>need to be tested
  * Provide the most common regular expression methods
+ * @author Jason
  */
 public class RegularExpUtils {
 

@@ -50,11 +50,25 @@ public class SizeUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    /**
+     * Size tool to convert px to dp
+     *
+     * @param context Context
+     * @param spValue px unit
+     * @return The converted size in pixel
+     */
     public static int convertSp2Px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
+    /**
+     * Size tool to convert px to dp
+     *
+     * @param context Context
+     * @param pxValue px unit
+     * @return The converted size in pixel
+     */
     public static int convertPx2Sp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / scale + 0.5f);

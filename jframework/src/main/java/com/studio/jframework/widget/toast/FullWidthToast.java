@@ -17,9 +17,9 @@ import com.studio.jframework.R;
 import java.lang.reflect.Field;
 
 /**
- * Created by Jason
- * <p/>
  * A full width toast, may specify image icon, text color, animation
+ *
+ * @author Jason
  */
 public class FullWidthToast {
 

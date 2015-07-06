@@ -10,8 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Jason
- * 流式布局
+ * FlowLayout that allow child views to construct a flow arrangement style
+ *
+ * @author Jason
  */
 public class FlowLayout extends ViewGroup {
 

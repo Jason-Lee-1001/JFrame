@@ -1,17 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--FullWidthToast Bottom animation-->
     <style name="bottom_default_toast_animation" parent="@android:style/Animation.Toast">
         <item name="android:windowEnterAnimation">@anim/up_and_fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+    <!--FullWidthToast Top animation-->
     <style name="top_default_toast_animation" parent="@android:style/Animation.Toast">
         <item name="android:windowEnterAnimation">@anim/down_and_fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+    <!--SwipeBackLayout-->
     <style name="SwipeBackLayout">
         <item name="edge_size">40dp</item>
         <item name="shadow_left">@drawable/shadow_left</item>
         <item name="shadow_right">@drawable/shadow_right</item>
         <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
+    <!--Bottom Dialog animation-->
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+    <!--Bottom Dialog style-->
+    <style name="BottomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--Top Dialog animation-->
+    <style name="AnimTop" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_top_in</item>
+        <item name="android:windowExitAnimation">@anim/push_top_out</item>
+    </style>
+    <!--Top Dialog style-->
+    <style name="TopDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/AnimTop</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!--Center Dialog style-->
+    <style name="CenterDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

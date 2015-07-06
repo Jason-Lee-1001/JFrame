@@ -26,14 +26,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Create by Jason
- * <p/>
- * Catch the uncaught exception<p/>
- * Usage:<p/>
- * in Application, method onCreate;<p/>
- * CrashHandler crashHandler = CrashHandler.getInstance();<p/>
- * crashHandler.init(getApplicationContext(),"/crash/", "Application crashed, exiting...", new ExceptionOperator(){...});<p/>
- * add permission: <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><p/>
+ * Catch the uncaught exception
+ * <p>Usage: in Application, method onCreate;
+ * <p>CrashHandler crashHandler = CrashHandler.getInstance();
+ * <p>crashHandler.init(getApplicationContext(),"/crash/", "Application crashed, exiting...", new ExceptionOperator(){...});
+ * <p>add permission: android.permission.WRITE_EXTERNAL_STORAGE in manifest
+ * @author Jason
  */
 public class CrashHandler implements UncaughtExceptionHandler {
 
@@ -259,8 +257,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     public interface ExceptionOperator {
         /**
-         * The callback for you to tidy up the job, such as save the instance<p/>
-         * or exit the whole application
+         * The callback for you to tidy up the job, such as save the instance
+         * or quit the whole application
          */
         void onExceptionThrows();
     }

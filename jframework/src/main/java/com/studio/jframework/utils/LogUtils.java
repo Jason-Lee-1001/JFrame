@@ -4,10 +4,10 @@ import android.util.Log;
 
 
 /**
- * Created by Jason
  * A class which is easy to print log. Including line number and method name
- * Usage:<p/>
- * LogUtils.setEnable(BuildConfig.DEBUG);
+ * <p>Usage:
+ * <p>LogUtils.setEnable(BuildConfig.DEBUG);
+ * @author Jason
  */
 public class LogUtils {
 

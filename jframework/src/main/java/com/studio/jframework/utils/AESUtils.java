@@ -14,14 +14,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by Jason<p/>
- * <p/>
  * A class that is used to encrypt and decrypt
+ * @author Jason
  */
 public class AESUtils {
 
     private Cipher mCiper;
-
     private final static String HEX = "0123456789ABCDEF";
 
     @SuppressLint("GetInstance")

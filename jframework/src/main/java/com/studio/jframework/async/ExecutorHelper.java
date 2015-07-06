@@ -4,11 +4,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by Jason<p/>
- * Usage:<p/>
- * ExecutorHelper helper = new ExecutorHelper(4);<p/>
- * helper.execute(new BackgroundTask(){...});<p/>
- * helper.execute(new BackgroundTask(){...});<p/>
+ * <p>Usage:
+ * <p>ExecutorHelper helper = new ExecutorHelper(4);
+ * <p>helper.execute(new BackgroundTask(){...});
+ * <p>helper.execute(new BackgroundTask(){...});
+ * @author Jason
  */
 public class ExecutorHelper {
 

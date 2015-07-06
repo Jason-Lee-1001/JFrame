@@ -7,12 +7,11 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 /**
- * Created by Jason
- * <p/>
  * need to be tested
  * <p/>
  * NetworkUtils is used to operate network relative stuff
  * Such as GPS, Wifi, Mobile network, Bluetooth
+ * @author Jason
  */
 public class NetwrokUtils {
 

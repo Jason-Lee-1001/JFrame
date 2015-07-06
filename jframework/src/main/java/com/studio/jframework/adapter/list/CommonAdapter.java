@@ -1,4 +1,4 @@
-package com.studio.jframework.adapter;
+package com.studio.jframework.adapter.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -40,7 +40,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mData == null ? 0 : mData.size();
+        return mData.size();
     }
 
     @Override

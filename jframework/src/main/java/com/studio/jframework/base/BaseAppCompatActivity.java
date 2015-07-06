@@ -11,46 +11,74 @@ import com.studio.jframework.utils.ExitAppUtils;
 import com.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
- * Created by Jason<p/>
  * Base class for the activity
  *
+ * @author Jason
  */
 public abstract class BaseAppCompatActivity extends SwipeBackActivity {
 
     /**
-     * If savedInstanceState is not null, will restart the whole application
+     * Perform initialization of all fragments and loaders
+     *
      * @param savedInstanceState The savedInstanceState from onSaveInstanceState
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            restartApp();
-            savedInstanceState.clear();
-            savedInstanceState = null;
+        if (!onRestoreState(savedInstanceState)) {
+            if (savedInstanceState != null) {
+                savedInstanceState.clear();
+                savedInstanceState = null;
+                restartApp();
+            }
         }
+        setContentView();
+        findViews();
+        initialization();
+        bindEvent();
+        doMoreInOnCreate();
         ExitAppUtils.getInstance().addActivity(this);
     }
 
     /**
-     * Do find views in onCreateView()
+     * To restore the environment with savedInstanceState, if you don't handle it by yourself,
+     * The app will restart the whole application in case of crash when restore the killed process
+     *
+     * @param paramSavedState The savedInstanceState from onSaveInstanceState
+     * @return If you handle it by yourself, you need to return true, default is false which indicate
+     * that will restart the whole app
      */
-    public abstract void findViews();
+    protected abstract boolean onRestoreState(Bundle paramSavedState);
 
     /**
-     * Do some initialization in onCreateView()
+     * Invoke setContentView(int layoutId) here, you may call setTheme(int resId) first
      */
-    public abstract void initialization();
+    protected abstract void setContentView();
 
     /**
-     * Do bind event in onCreateView()
+     * Do find views by id
      */
-    public abstract void bindEvent();
+    protected abstract void findViews();
+
+    /**
+     * Do some initialization, such as getIntent()
+     */
+    protected abstract void initialization();
+
+    /**
+     * Do bind event, such set event listener
+     */
+    protected abstract void bindEvent();
+
+    /**
+     * If you want to do more in onCreate method, you may do it here
+     */
+    protected abstract void doMoreInOnCreate();
 
     /**
      * For the use in restoring activity when the memory of this app is recycled, when the user
-     * restore the app, will detect the savedInstanceState is not null, then we will restart the
-     * app again.
+     * restore the app, will detect whether the savedInstanceState is null or not. If not, will
+     * restart the app again.
      */
     private void restartApp() {
         Intent intentForPackage = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
@@ -60,29 +88,15 @@ public abstract class BaseAppCompatActivity extends SwipeBackActivity {
         finish();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     /**
      * Start an activity with specify Bundle
-     * @param paramClass The activity class you want to start
+     *
+     * @param paramClass  The activity class you want to start
      * @param paramBundle The bundle you want to put in the intent
      */
-    protected void openActivityWithBundle(Class<?> paramClass, Bundle paramBundle){
+    protected void openActivityWithBundle(Class<?> paramClass, Bundle paramBundle) {
         Intent intent = new Intent(this, paramClass);
-        if(paramBundle != null) {
+        if (paramBundle != null) {
             intent.putExtras(paramBundle);
         }
         startActivity(intent);
@@ -91,19 +105,29 @@ public abstract class BaseAppCompatActivity extends SwipeBackActivity {
     /**
      * Judge whether the keyboard is showing
      *
-     * @return Trur if the keyboard is showing, false otherwise
+     * @return True if the keyboard is showing, false otherwise
      */
     protected boolean isKeyboardShown() {
         return getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED;
     }
 
+    /**
+     * Easy to hide the soft keyboard
+     *
+     * @param view A view to getWindowToken
+     */
     protected void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    /**
+     * Easy to show the soft keyboard
+     *
+     * @param view A view to getWindowToken
+     */
     protected void showKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);
         imm.showSoftInput(view, 0);
     }

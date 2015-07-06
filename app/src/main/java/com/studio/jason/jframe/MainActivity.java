@@ -1,5 +1,6 @@
 package com.studio.jason.jframe;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,11 +25,8 @@ import com.studio.jframework.network.volley.VolleyRequest;
 import com.studio.jframework.utils.AESUtils;
 import com.studio.jframework.utils.ExitAppUtils;
 import com.studio.jframework.utils.LogUtils;
-import com.studio.jframework.utils.PreferencesUtils;
-import com.studio.jframework.widget.LoadMoreListView;
+import com.studio.jframework.widget.dialog.DialogCreator;
 import com.studio.jframework.widget.toast.FullWidthToast;
-
-import java.security.Key;
 
 
 public class MainActivity extends BaseAppCompatActivity {
@@ -38,17 +37,18 @@ public class MainActivity extends BaseAppCompatActivity {
     private String origin = "15507592016~!@#$%^&*().,?/\\[]{};|';<>`张三abccdegff";
 
     private ImageView imageView;
-
+    private View dialog;
     public Drawable drawable;
-    public LoadMoreListView listView = new LoadMoreListView(this);
+    private Dialog dialogInstance;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public boolean onRestoreState(Bundle paramSavedState) {
+        return false;
+    }
+
+    @Override
+    public void setContentView() {
         setContentView(R.layout.activity_main);
-        initialization();
-        findViews();
-        bindEvent();
     }
 
     @Override
@@ -62,12 +62,9 @@ public class MainActivity extends BaseAppCompatActivity {
         aesUtils = new AESUtils();
         drawable = getResources().getDrawable(R.drawable.color1);
         drawable.setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY);
-        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
-            @Override
-            public void loadMore() {
-
-            }
-        });
+        dialog = LayoutInflater.from(this).inflate(R.layout.dialog,null, false);
+        DialogCreator creator = new DialogCreator();
+        dialogInstance = creator.createNormalDialog(MainActivity.this,dialog, DialogCreator.Position.TOP);
     }
 
     @Override
@@ -130,16 +127,21 @@ public class MainActivity extends BaseAppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Key key2 = aesUtils.generateKey("Jumook".getBytes());
-                String enc = aesUtils.toHex(aesUtils.encryptToBytes(key2,origin));
-                LogUtils.e(TAG,enc);
-                Key key1 = aesUtils.generateKey("Jumook".getBytes());
-
-                yy = aesUtils.decryptToBytes(key1,aesUtils.toByte(enc));
-                LogUtils.e(TAG,new String(yy));
+//                Key key2 = aesUtils.generateKey("Jumook".getBytes());
+//                String enc = aesUtils.toHex(aesUtils.encryptToBytes(key2,origin));
+//                LogUtils.e(TAG,enc);
+//                Key key1 = aesUtils.generateKey("Jumook".getBytes());
+//
+//                yy = aesUtils.decryptToBytes(key1,aesUtils.toByte(enc));
+//                LogUtils.e(TAG, new String(yy));
+                dialogInstance.show();
             }
         });
-        PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(this);
+    }
+
+    @Override
+    protected void doMoreInOnCreate() {
+
     }
 
     public byte[] by;
@@ -148,5 +150,7 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ExitAppUtils.getInstance().removeActivity(this);
+
     }
 }

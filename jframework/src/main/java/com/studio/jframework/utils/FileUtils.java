@@ -11,14 +11,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Jason<p/>
- *
+ * A usefully tool to operate file, each FileUtils stands for one folder' operation
+ * @author Jason
  */
 public class FileUtils {
 
     public static final String TAG = "FileUtils";
     /**
-     * The name of the main folder
+     * The name of the folder to be operated
      */
     private String folderName;
 
@@ -155,7 +155,7 @@ public class FileUtils {
      * Save bitmap to external storage
      *
      * @param key    The name of the file
-     * @param bitmap The bitmap to be storaged
+     * @param bitmap The bitmap to be stored
      * @return True if successfully, false otherwise
      */
     public boolean saveBitmap(String key, Bitmap bitmap) {

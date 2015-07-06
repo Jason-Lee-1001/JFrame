@@ -8,12 +8,11 @@ import android.net.Uri;
 import android.provider.Settings;
 
 /**
- * Created by Jason
- * <p/>
  * need to be tested
- * <p/>
- * IntentHelper is designed for opening native application.
+ *
+ * <p>IntentHelper is designed for opening native application.
  * Such as call phone, open gallery, open settings .....
+ * @author Jason
  */
 public class IntentHelper {
 

@@ -1,4 +1,4 @@
-package com.studio.jframework.adapter;
+package com.studio.jframework.adapter.list;
 
 import android.content.Context;
 import android.util.SparseArray;

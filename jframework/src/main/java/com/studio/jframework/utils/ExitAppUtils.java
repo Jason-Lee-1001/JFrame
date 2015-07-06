@@ -7,12 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Jason
- * A singleton tool to quit the whole app<p/>
- * Usage:<p/>
- * 1.invoke addActivity() in each activities' onCreate(), this will add the activity in mActivityList<p/>
- * 2.invoke removeActivity() in each activities' onDestroy(), this will remove the activity from mActivityList<p/>
- * 3.if your application contains Service, you need to find other way to terminal the service<p/>
+ * A singleton tool to quit the whole app
+ * <p>Usage:
+ * <p>1.invoke addActivity() in each activities' onCreate(), this will add the activity in mActivityList
+ * <p>2.invoke removeActivity() in each activities' onDestroy(), this will remove the activity from mActivityList
+ * <p>3.if your application contains Service, you need to find other way to terminal the service
  */
 public class ExitAppUtils {
 
@@ -36,7 +35,7 @@ public class ExitAppUtils {
     }
 
     /**
-     * Add the activity to the container<p/>
+     * Add the activity to the container
      * invoke in onCreate()
      *
      * @param activity The activity instance to be stored
@@ -46,7 +45,7 @@ public class ExitAppUtils {
     }
 
     /**
-     * Remove the activity from the container<p/>
+     * Remove the activity from the container
      * invoke in onDestroy()
      *
      * @param activity The activity instance to be removed
