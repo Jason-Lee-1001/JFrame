@@ -6,9 +6,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.studio.jframework.R;
 import com.studio.jframework.utils.SizeUtils;
+import com.studio.jframework.widget.progressbar.MaterialProgressBar;
 
 /**
  * @author Jason
@@ -38,10 +40,10 @@ public class DialogCreator {
                 style = R.style.TopDialog;
                 break;
         }
-        Dialog mDialog = new Dialog(context, style);
-        mDialog.setContentView(view);
-        mDialog.setCanceledOnTouchOutside(true);
-        WindowManager.LayoutParams params = mDialog.getWindow().getAttributes();
+        Dialog dialog = new Dialog(context, style);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         switch (position){
             case BOTTOM:
                 params.gravity = Gravity.BOTTOM;
@@ -54,11 +56,11 @@ public class DialogCreator {
                 break;
         }
         params.width = SizeUtils.getScreenWidth(context);
-        mDialog.getWindow().setAttributes(params);
-        return mDialog;
+        dialog.getWindow().setAttributes(params);
+        return dialog;
     }
 
-    public Dialog createProgressDialog(Context context, Position position){
+    public Dialog createProgressDialog(Context context, Position position, int color, String message){
         int style = 0;
         switch (position){
             case BOTTOM:
@@ -72,10 +74,15 @@ public class DialogCreator {
                 break;
         }
         View view = LayoutInflater.from(context).inflate(R.layout.progress_dialog_layout, null, false);
-        Dialog mDialog = new Dialog(context, style);
-        mDialog.setContentView(view);
-        mDialog.setCanceledOnTouchOutside(true);
-        WindowManager.LayoutParams params = mDialog.getWindow().getAttributes();
+        MaterialProgressBar progressBar = (MaterialProgressBar) view.findViewById(R.id.progress);
+        progressBar.setBackgroundColor(color);
+        TextView textView = (TextView) view.findViewById(R.id.message);
+        textView.setText(message);
+
+        Dialog dialog = new Dialog(context, style);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         switch (position){
             case BOTTOM:
                 params.gravity = Gravity.BOTTOM;
@@ -88,8 +95,8 @@ public class DialogCreator {
                 break;
         }
         params.width = SizeUtils.getScreenWidth(context);
-        mDialog.getWindow().setAttributes(params);
-        return mDialog;
+        dialog.getWindow().setAttributes(params);
+        return dialog;
     }
 
 }

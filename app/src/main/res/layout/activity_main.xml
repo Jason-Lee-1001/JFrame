@@ -51,7 +51,11 @@
         android:id="@+id/imageView"
         android:layout_below="@+id/button2"
         android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:layout_marginTop="81dp" />
+        android:layout_alignStart="@+id/button2" />
+
+    <com.studio.jframework.widget.progressbar.MaterialProgressBar
+        android:background="#cc5239"
+        android:layout_width="32dp"
+        android:layout_height="32dp"/>
 
 </RelativeLayout>

@@ -47,7 +47,9 @@ public class LoadMoreListView extends ListView {
     }
 
     private void isScrollCompleted() {
-        if (this.currentVisibleItemCount > 0 && this.currentScrollState == OnScrollListener.SCROLL_STATE_IDLE && (currentFirstVisibleItem + currentVisibleItemCount) >= totalItemCounts - 1) {
+        if (this.currentVisibleItemCount > 0 &&
+                this.currentScrollState == OnScrollListener.SCROLL_STATE_IDLE &&
+                (currentFirstVisibleItem + currentVisibleItemCount) >= totalItemCounts - 1) {
             if (!isLoading) {
                 isLoading = true;
                 onLoadMore();

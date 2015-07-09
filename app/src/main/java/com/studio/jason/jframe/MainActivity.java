@@ -25,6 +25,7 @@ import com.studio.jframework.network.volley.VolleyRequest;
 import com.studio.jframework.utils.AESUtils;
 import com.studio.jframework.utils.ExitAppUtils;
 import com.studio.jframework.utils.LogUtils;
+import com.studio.jframework.utils.SizeUtils;
 import com.studio.jframework.widget.dialog.DialogCreator;
 import com.studio.jframework.widget.toast.FullWidthToast;
 
@@ -61,10 +62,12 @@ public class MainActivity extends BaseAppCompatActivity {
         Resources.getSystem().getDisplayMetrics();
         aesUtils = new AESUtils();
         drawable = getResources().getDrawable(R.drawable.color1);
-        drawable.setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY);
-        dialog = LayoutInflater.from(this).inflate(R.layout.dialog,null, false);
+        drawable.setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+        dialog = LayoutInflater.from(this).inflate(R.layout.dialog, null, false);
         DialogCreator creator = new DialogCreator();
-        dialogInstance = creator.createNormalDialog(MainActivity.this,dialog, DialogCreator.Position.TOP);
+//        dialogInstance = creator.createNormalDialog(MainActivity.this,dialog, DialogCreator.Position.TOP);
+        dialogInstance = creator.createProgressDialog(this, DialogCreator.Position.TOP, Color.GREEN, "loading");
+        Toast.makeText(this, SizeUtils.convertDp2Px(this, 100) + "", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -74,7 +77,6 @@ public class MainActivity extends BaseAppCompatActivity {
         button3 = (Button) findViewById(R.id.button3);
         imageView = (ImageView) findViewById(R.id.imageView);
     }
-
 
 
     @Override
@@ -110,7 +112,7 @@ public class MainActivity extends BaseAppCompatActivity {
                         LogUtils.e(TAG, VolleyErrorHelper.getMessage(error));
                     }
                 });
-                VolleyController.getInstance(MainActivity.this).addToQueue(request,"b");
+                VolleyController.getInstance(MainActivity.this).addToQueue(request, "b");
                 VolleyController.getInstance(MainActivity.this).getImageLoader().get("https://www.baidu.com/img/bd_logo1.png", new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -121,7 +123,7 @@ public class MainActivity extends BaseAppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         LogUtils.e(TAG, VolleyErrorHelper.getMessage(error));
                     }
-                },400,400);
+                }, 400, 400);
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {

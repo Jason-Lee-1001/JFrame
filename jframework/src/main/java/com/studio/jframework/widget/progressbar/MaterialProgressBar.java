@@ -12,16 +12,16 @@ import android.util.AttributeSet;
 
 import com.studio.jframework.utils.SizeUtils;
 
-public class MaterialIndeterminateProgressBar extends CustomView {
+public class MaterialProgressBar extends CustomView {
 
     final static String ANDROIDXML = "http://schemas.android.com/apk/res/android";
     int backgroundColor = Color.parseColor("#1E88E5");
     private Context mContext;
 
-    public MaterialIndeterminateProgressBar(Context context, AttributeSet attrs) {
+    public MaterialProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setAttributes(attrs);
         mContext = context;
+        setAttributes(attrs);
     }
 
     protected void setAttributes(AttributeSet attrs) {
