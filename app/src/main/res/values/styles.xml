@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">#673AB7</item>
         <item name="colorPrimaryDark">#ff4b3495</item>
         <item name="colorAccent">#ffff4a4f</item>
@@ -9,8 +10,7 @@
     </style>
     <style name="AppSecTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowIsTranslucent">true</item>
-
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">#673AB7</item>
         <item name="colorPrimaryDark">#ff4b3495</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->

@@ -18,6 +18,11 @@ abstract public class SimpleViewPagerAdapter<T> extends PagerAdapter {
         mViews = inflateContent(data);
     }
 
+    /**
+     * Bind data to the view, and return a list of all the page's views
+     * @param data A collection of the data that is going to be inflated in the view
+     * @return A list of all the page's views
+     */
     abstract public List<View> inflateContent(List<T> data);
 
     @Override

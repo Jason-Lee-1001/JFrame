@@ -1,5 +1,6 @@
 package com.studio.jframework.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -82,6 +83,17 @@ public abstract class BaseFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);
         imm.showSoftInput(view, 0);
+    }
+
+    /**
+     * Easy to dismiss the specify dialog
+     *
+     * @param dialog The dialog you want to dismiss
+     */
+    protected void dismissDialog(Dialog dialog) {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     /**

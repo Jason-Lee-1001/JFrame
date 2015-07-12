@@ -50,11 +50,11 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_main);
+        setSystemTintColor(R.color.orange);
     }
 
     @Override
     public void initialization() {
-        getSwipeBackLayout().setEnableGesture(false);
         ExitAppUtils.getInstance().addActivity(this);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

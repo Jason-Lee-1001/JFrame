@@ -1,8 +1,6 @@
 package com.studio.jframework.base.impl;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.RelativeLayout;
 import com.studio.jframework.R;
 import com.studio.jframework.adapter.pager.SimpleViewPagerAdapter;
 import com.studio.jframework.base.BaseAppCompatActivity;
-import com.studio.jframework.utils.LogUtils;
 import com.studio.jframework.widget.AutoScrollViewPager;
 
 import java.util.ArrayList;
@@ -26,20 +23,14 @@ import java.util.List;
  */
 public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     private static final String TAG = "BaseGuidelineActivity";
-    private static final int GET_LOCATION = 1;
-    private static final int GET_CONTACTS = 2;
 
     private AutoScrollViewPager guideViewPager;
     private Button guideBtn;
-    private LinearLayout guideIndicater;//游标生成的layout
+    private LinearLayout guideIndicator;//游标生成的layout
 
     private SimpleViewPagerAdapter guideAdapter;//自定义ViewPager的适配器
     private List<Integer> pics;//引导界面图片资源数组
-    private ArrayList<View> views;//存放图片的View的链表
-    private ArrayList<ImageView> pointViews;// 游标点集合
-
-    private boolean isGetPosition;//是否定位
-    private boolean isGetContacts;//是否获取通讯录
+    private ArrayList<ImageView> indicatorGroup;// 游标点集合
 
 
     @Override
@@ -50,42 +41,26 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     @Override
     protected void setContentView() {
         setContentView(R.layout.base_guideline_layout);
-        getSwipeBackLayout().setEnableGesture(false);
     }
 
     @Override
     protected void findViews() {
         guideViewPager = (AutoScrollViewPager) findViewById(R.id.guide_viewpager);
         guideBtn = (Button) findViewById(R.id.guide_btn);
-        guideIndicater = (LinearLayout) findViewById(R.id.guide_point);
+        guideIndicator = (LinearLayout) findViewById(R.id.guide_point);
     }
 
     @Override
     protected void initialization() {
-        this.isGetPosition = false;
-        this.isGetContacts = false;
         pics = setBackgrounds();
-        views = new ArrayList<View>();
-        //定义一个布局并设置参数
-        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        //初始化引导页面的图片
-        for (int i = 0; i < pics.size(); i++) {
-            ImageView iv = new ImageView(this);
-            iv.setLayoutParams(mParams);
-            iv.setImageResource(pics.get(i));
-            views.add(iv);
-        }
-        //初始化游标
-        initIndicater();
-        //设置适配器
+        initIndicator();
         guideAdapter = new SimpleViewPagerAdapter(this, pics) {
             @Override
             public List<View> inflateContent(List data) {
                 List<View> views = new ArrayList<>();
                 LayoutInflater inflater = LayoutInflater.from(BaseGuidelineActivity.this);
 //                View view = inflater.inflate(R.layout.);
-                        return null;
+                return null;
             }
         };
         guideViewPager.setAdapter(guideAdapter);
@@ -96,25 +71,22 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
 
     @Override
     protected void bindEvent() {
-//最后一个引导页面的按钮的点击监听
         guideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 skipSetOnClickListener();
             }
         });
-        //设置viewPager监听
-        guideViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        guideViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
-
             }
 
             @Override
             public void onPageSelected(int i) {
-                drawIndicater(i);//更改游标的位置
+                drawIndicator(i);
                 guideViewPager.setCurrentItem(i);
-                if (i == views.size() - 1) {
+                if (i == pics.size() - 1) {
                     guideBtn.setVisibility(View.VISIBLE);
                 } else {
                     guideBtn.setVisibility(View.GONE);
@@ -123,85 +95,45 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
     }
 
-    @Override
-    protected abstract void doMoreInOnCreate();
-
-
-
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case GET_LOCATION:
-
-                    LogUtils.d(TAG, "启动了定位功能");
-                    break;
-                case GET_CONTACTS:
-                    LogUtils.d(TAG, "启动了获取通讯录功能");
-                    break;
-            }
-        }
-    };
-
     /**
-     * 初始化游标
+     * 初始化页面指示器
      */
-    public void initIndicater() {
+    public void initIndicator() {
 
-        pointViews = new ArrayList<ImageView>();
-        guideIndicater.removeAllViews();
+        indicatorGroup = new ArrayList<>();
+        guideIndicator.removeAllViews();
         ImageView imageView;
-        for (int i = 0; i < views.size(); i++) {
+        for (int i = 0; i < pics.size(); i++) {
             imageView = new ImageView(this);
-            imageView.setBackgroundResource(R.drawable.point_false);
+            imageView.setBackgroundResource(R.drawable.point_unchecked);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             layoutParams.leftMargin = 10;
             layoutParams.rightMargin = 10;
             layoutParams.width = 30;
             layoutParams.height = 30;
-            guideIndicater.addView(imageView, layoutParams);
+            guideIndicator.addView(imageView, layoutParams);
             if (i == 0) {
-                imageView.setBackgroundResource(R.drawable.point_ture);
+                imageView.setBackgroundResource(R.drawable.point_checked);
             }
-            pointViews.add(imageView);
+            indicatorGroup.add(imageView);
         }
     }
 
     /**
      * 绘制游标背景
      */
-    public void drawIndicater(int index) {
-        for (int i = 0; i < pointViews.size(); i++) {
+    public void drawIndicator(int index) {
+        for (int i = 0; i < indicatorGroup.size(); i++) {
             if (index == i) {
-                pointViews.get(i).setBackgroundResource(R.drawable.point_ture);
+                indicatorGroup.get(i).setBackgroundResource(R.drawable.point_checked);
             } else {
-                pointViews.get(i).setBackgroundResource(R.drawable.point_false);
+                indicatorGroup.get(i).setBackgroundResource(R.drawable.point_unchecked);
             }
-        }
-    }
-
-
-    /**
-     * 设置引导页面是否启动相应功能
-     *
-     * @param isGetPosition 是否启动定位
-     * @param isGetContacts 是否获取通讯录
-     */
-    public void setFunction(boolean isGetPosition, boolean isGetContacts) {
-        this.isGetPosition = isGetPosition;
-        this.isGetContacts = isGetContacts;
-        if (this.isGetPosition) {
-            handler.sendEmptyMessage(GET_LOCATION);
-        }
-        if (this.isGetContacts) {
-            handler.sendEmptyMessage(GET_CONTACTS);
         }
     }
 
@@ -209,7 +141,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      * 启动自动滚动，默认时间间隔为1500毫秒
      * 可以通过setAutoScrollTime设置滚动的时间间隔
      */
-    public void startAutoScroll() {
+    protected void startAutoScroll() {
         guideViewPager.startAutoScroll();
     }
 
@@ -218,7 +150,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @param delayTimeInMills 滚动的时间间隔
      */
-    public void startAutoScroll(int delayTimeInMills) {
+    protected void startAutoScroll(int delayTimeInMills) {
         guideViewPager.startAutoScroll(delayTimeInMills);
     }
 
@@ -227,7 +159,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @param delayTimeInMills
      */
-    public void setAutoScrollTime(int delayTimeInMills) {
+    protected void setAutoScrollTime(int delayTimeInMills) {
         guideViewPager.setInterval(delayTimeInMills);
     }
 
@@ -236,14 +168,14 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @return long
      */
-    public long getAutoScrollTime() {
+    protected long getAutoScrollTime() {
         return guideViewPager.getInterval();
     }
 
     /**
      * 停止自动滚动
      */
-    public void stopAutoScroll() {
+    protected void stopAutoScroll() {
         guideViewPager.stopAutoScroll();
     }
 
@@ -252,7 +184,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @param isCycle true : 无限循环  false :　不无限循环
      */
-    public void setAutoMode(boolean isCycle) {
+    protected void setAutoMode(boolean isCycle) {
         guideViewPager.setCycle(isCycle);
     }
 
@@ -261,7 +193,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @return
      */
-    public boolean getAutoMode() {
+    protected boolean getAutoMode() {
         return guideViewPager.isCycle();
     }
 
@@ -270,11 +202,11 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
      *
      * @return
      */
-    public abstract List<Integer> setBackgrounds();
+    protected abstract List<Integer> setBackgrounds();
 
     /**
      * 设置点击跳转
      */
-    public abstract void skipSetOnClickListener();
+    protected abstract void skipSetOnClickListener();
 
 }

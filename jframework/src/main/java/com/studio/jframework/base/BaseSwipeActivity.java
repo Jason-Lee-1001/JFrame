@@ -3,22 +3,20 @@ package com.studio.jframework.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.studio.jframework.ui.SystemBarTintManager;
 import com.studio.jframework.utils.ExitAppUtils;
+import com.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Base class for the activity
  *
  * @author Jason
  */
-public abstract class BaseAppCompatActivity extends AppCompatActivity {
+public abstract class BaseSwipeActivity extends SwipeBackActivity {
 
     /**
      * Perform initialization of all fragments and loaders
@@ -103,19 +101,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             intent.putExtras(paramBundle);
         }
         startActivity(intent);
-    }
-
-    /**
-     * A method to set the color of the status bar since kitkat
-     * @param colorId The resource id of the color
-     */
-    protected void setSystemTintColor(int colorId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setNavigationBarTintEnabled(true);
-            tintManager.setTintColor(getResources().getColor(colorId));
-        }
     }
 
     /**
