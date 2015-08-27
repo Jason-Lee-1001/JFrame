@@ -100,7 +100,7 @@ public class SizeUtils {
         return view.getMeasuredHeight();
     }
 
-    public static int getWidgetHeightWithObv(final View view){
+    public static int getWidgetHeightWithObv(final View view) {
         int height = 0;
         final ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
         viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

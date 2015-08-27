@@ -11,19 +11,9 @@ import com.studio.jframework.utils.PackageUtils;
  */
 abstract public class CommonApplication extends Application {
 
-    public static final String TAG = "CommonApplication";
-
-    private static CommonApplication INSTANCE;
-    private int pid;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        INSTANCE = this;
-    }
-
-    public static CommonApplication getInstance() {
-        return INSTANCE;
     }
 
     /**
@@ -42,14 +32,8 @@ abstract public class CommonApplication extends Application {
      * that the this application instance was created by a new process
      */
     protected boolean isMainProcessCreated() {
-        pid = android.os.Process.myPid();
-        String appName = PackageUtils.getAppName(INSTANCE, pid);
+        int pid = android.os.Process.myPid();
+        String appName = PackageUtils.getAppName(this, pid);
         return appName != null && appName.equalsIgnoreCase(yourPackageName());
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        System.gc();
     }
 }

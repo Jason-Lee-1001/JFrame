@@ -38,9 +38,18 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
+    /**
+     * 获取当前适配器中的数据
+     *
+     * @return 返回处于适配器中的数据，没有则返回空
+     */
+    public List<T> getData() {
+        return mData;
+    }
+
     @Override
     public int getCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.studio.jframework.adapter.list;
 
 import android.content.Context;
+import android.text.Editable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.TextView;
 
 /**
@@ -76,7 +78,7 @@ public final class ViewHolder {
      * @param text   要设置的文字
      * @return 返回当前ViewHolder对象
      */
-    public ViewHolder setTextByString(int viewId, String text) {
+    public ViewHolder setTextByString(int viewId, Editable text) {
         TextView textView = getView(viewId);
         textView.setText(text);
         return this;
@@ -105,6 +107,47 @@ public final class ViewHolder {
     public ViewHolder setVisibility(int viewId, int visibility) {
         View view = getView(viewId);
         view.setVisibility(visibility);
+        return this;
+    }
+
+    /**
+     * 设置指定Id的View控件的选中状态
+     *
+     * @param viewId 控件的Id
+     * @param check  传入check状态
+     * @return 返回当前ViewHolder对象
+     */
+    public ViewHolder setCheck(int viewId, boolean check) {
+        View view = getView(viewId);
+        if (view instanceof Checkable) {
+            ((Checkable) view).setChecked(check);
+        }
+        return this;
+    }
+
+    /**
+     * 设置指定Id的View控件的选中状态
+     *
+     * @param viewId 控件的Id
+     * @param enable 传入enable状态
+     * @return 返回当前ViewHolder对象
+     */
+    public ViewHolder setEnable(int viewId, boolean enable) {
+        View view = getView(viewId);
+        view.setEnabled(enable);
+        return this;
+    }
+
+    /**
+     * 设置指定Id的View控件的选中状态
+     *
+     * @param viewId 控件的Id
+     * @param resId  当前需要设置的背景资源
+     * @return 返回当前ViewHolder对象
+     */
+    public ViewHolder setBackground(int viewId, int resId) {
+        View view = getView(viewId);
+        view.setBackgroundResource(resId);
         return this;
     }
 }

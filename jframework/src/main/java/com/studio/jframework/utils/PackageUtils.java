@@ -3,9 +3,11 @@ package com.studio.jframework.utils;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import java.util.List;
 
 /**
  * <p>need to be tested
+ *
  * @author Jason
  */
 public class PackageUtils {
@@ -148,7 +151,18 @@ public class PackageUtils {
         }
     }
 
-    public static String getAppName(Context context,int pID) {
+    public static Bundle getMetaData(Context context) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            ApplicationInfo info = manager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            return info.metaData;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getAppName(Context context, int pID) {
         String processName = null;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List l = am.getRunningAppProcesses();
@@ -159,14 +173,11 @@ public class PackageUtils {
             try {
                 if (info.pid == pID) {
                     CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(info.processName, PackageManager.GET_META_DATA));
-                    // Log.d("Process", "Id: "+ info.pid +" ProcessName: "+
-                    // info.processName +"  Label: "+c.toString());
-                    // processName = c.toString();
                     processName = info.processName;
                     return processName;
                 }
             } catch (Exception e) {
-                // Log.d("Process", "Error>> :"+ e.toString());
+                e.printStackTrace();
             }
         }
         return processName;

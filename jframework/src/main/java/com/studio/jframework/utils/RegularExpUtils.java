@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>need to be tested
  * Provide the most common regular expression methods
+ *
  * @author Jason
  */
 public class RegularExpUtils {
@@ -17,7 +17,7 @@ public class RegularExpUtils {
      * @return True if the string is email address, false otherwise
      */
     public static boolean checkMail(String mail) {
-        boolean flag = false;
+        boolean flag;
         try {
             String check = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
             Pattern regex = Pattern.compile(check);
@@ -36,7 +36,27 @@ public class RegularExpUtils {
      * @return True if the string is mobile number, false otherwise
      */
     public static boolean checkMobile(String mobile) {
-        return mobile.matches("^[1][3,5,8]+\\d{9}");
+        return mobile.matches("^[1][3,5,8,4,7]+\\d{9}");
+    }
+
+    /**
+     * Judge if the string combine with numbers
+     *
+     * @param paramString The string to be judge
+     * @return True if the string is combined with number, false otherwise
+     */
+    public static boolean isNumeric(String paramString) {
+        if (paramString == null) {
+            return false;
+        }
+        int i = paramString.length();
+        for (int j = 0; ; j++) {
+            if (j >= i)
+                break;
+            if (!Character.isDigit(paramString.charAt(j)))
+                break;
+        }
+        return true;
     }
 
 }

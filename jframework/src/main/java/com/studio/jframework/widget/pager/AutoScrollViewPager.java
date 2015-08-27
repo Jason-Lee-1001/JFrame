@@ -1,4 +1,4 @@
-package com.studio.jframework.widget;
+package com.studio.jframework.widget.pager;
 
 import android.content.Context;
 import android.os.Handler;

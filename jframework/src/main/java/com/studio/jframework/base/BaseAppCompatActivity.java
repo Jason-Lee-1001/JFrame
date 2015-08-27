@@ -27,7 +27,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      */
     @Override
     final protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if (!onRestoreState(savedInstanceState)) {
             if (savedInstanceState != null) {
                 savedInstanceState.clear();
@@ -35,6 +34,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
                 restartApp();
             }
         }
+        super.onCreate(savedInstanceState);
         setContentView();
         findViews();
         initialization();
@@ -107,6 +107,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * A method to set the color of the status bar since kitkat
+     *
      * @param colorId The resource id of the color
      */
     protected void setSystemTintColor(int colorId) {

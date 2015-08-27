@@ -7,6 +7,7 @@ import android.util.Log;
  * A class which is easy to print log. Including line number and method name
  * <p>Usage:
  * <p>LogUtils.setEnable(BuildConfig.DEBUG);
+ *
  * @author Jason
  */
 public class LogUtils {
@@ -57,7 +58,7 @@ public class LogUtils {
             if (st.getClassName().equals(this.getClass().getName())) {
                 continue;
             }
-            return "[ ->Line " + st.getLineNumber() + " " + st.getMethodName() + "() ]";
+            return "[ ->Line " + st.getLineNumber() + " " + st.getMethodName() + " ]";
         }
         return null;
     }

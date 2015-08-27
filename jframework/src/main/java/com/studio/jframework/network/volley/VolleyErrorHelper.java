@@ -11,6 +11,11 @@ import com.android.volley.VolleyError;
  * Created by Jason
  */
 public class VolleyErrorHelper {
+
+    public static final String SERVER_DOWN = "generic_server_down";
+    public static final String NO_INTERNET = "no_internet";
+    public static final String GENERIC_ERROR = "generic_error";
+
     /**
      * Returns appropriate message which is to be displayed to the user
      * against the specified error object.
@@ -20,13 +25,13 @@ public class VolleyErrorHelper {
      */
     public static String getMessage(Object error) {
         if (error instanceof TimeoutError) {
-            return "generic_server_down";
+            return SERVER_DOWN;
         } else if (isServerProblem(error)) {
             return handleServerError(error);
         } else if (isNetworkProblem(error)) {
-            return "no_internet";
+            return NO_INTERNET;
         }
-        return "generic_error";
+        return GENERIC_ERROR;
     }
 
     /**
@@ -66,9 +71,9 @@ public class VolleyErrorHelper {
                 case 401:
                     return volleyError.getMessage();
                 default:
-                    return "generic_server_down";
+                    return SERVER_DOWN;
             }
         }
-        return "generic_error";
+        return GENERIC_ERROR;
     }
 }

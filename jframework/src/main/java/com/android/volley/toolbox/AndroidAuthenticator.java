@@ -69,8 +69,7 @@ public class AndroidAuthenticator implements Authenticator {
         return mAccount;
     }
 
-    // TODO: Figure out what to do about notifyAuthFailure
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("ResourceType")
     @Override
     public String getAuthToken() throws AuthFailureError {
         final AccountManager accountManager = AccountManager.get(mContext);
@@ -97,6 +96,7 @@ public class AndroidAuthenticator implements Authenticator {
         return authToken;
     }
 
+    @SuppressWarnings("ResourceType")
     @Override
     public void invalidateAuthToken(String authToken) {
         AccountManager.get(mContext).invalidateAuthToken(mAccount.type, authToken);

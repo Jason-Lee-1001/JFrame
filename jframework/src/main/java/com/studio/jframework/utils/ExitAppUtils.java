@@ -63,7 +63,7 @@ public class ExitAppUtils {
                 activity.get().finish();
             }
         }
-        if(mActivityList != null){
+        if (mActivityList != null) {
             mActivityList.clear();
             mActivityList = null;
         }

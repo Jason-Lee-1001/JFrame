@@ -15,7 +15,7 @@ import com.studio.jframework.utils.MD5Utils;
 /**
  * Created by Jason<p/>
  * Usage:<p/>
- * VolleyRequest request = new VolleyRequest(...);<p/>
+ * VolleyStringRequest request = new VolleyStringRequest(...);<p/>
  * VolleyController.getInstance(activity).addToQueue(request);<p/>
  */
 public class VolleyController {
@@ -129,7 +129,7 @@ public class VolleyController {
         mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
             private FileUtils fileUtils = new FileUtils(context, FileUtils.EXTERNAL_CACHE, TAG);
 
-            private LruCache<String, Bitmap> memoryCache = new LruCache<String, Bitmap>(10 * 1024 * 1024) {
+            private LruCache<String, Bitmap> memoryCache = new LruCache<String, Bitmap>(15 * 1024 * 1024) {
                 protected int sizeOf(String key, Bitmap value) {
                     return value.getRowBytes() * value.getHeight();
                 }

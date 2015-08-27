@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
  * <p>ExecutorHelper helper = new ExecutorHelper(4);
  * <p>helper.execute(new BackgroundTask(){...});
  * <p>helper.execute(new BackgroundTask(){...});
+ *
  * @author Jason
  */
 public class ExecutorHelper {

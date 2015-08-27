@@ -15,6 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * A class that is used to encrypt and decrypt
+ *
  * @author Jason
  */
 public class AESUtils {
@@ -40,9 +41,9 @@ public class AESUtils {
     public Key generateKey(byte[] seed) {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG","Crypto");
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
             sr.setSeed(seed);
-            keyGenerator.init(128,sr);
+            keyGenerator.init(128, sr);
             SecretKey secretKey = keyGenerator.generateKey();
             byte[] keyBytes = secretKey.getEncoded();
             return new SecretKeySpec(keyBytes, "AES");

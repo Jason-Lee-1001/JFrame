@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /**
  * A usefully tool to operate file, each FileUtils stands for one folder' operation
+ *
  * @author Jason
  */
 public class FileUtils {

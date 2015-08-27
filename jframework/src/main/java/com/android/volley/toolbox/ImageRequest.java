@@ -164,7 +164,6 @@ public class ImageRequest extends Request<Bitmap> {
 
             // Decode to the nearest power of two scaling factor.
             decodeOptions.inJustDecodeBounds = false;
-            // TODO(ficus): Do we need this or is it okay since API 8 doesn't support it?
             // decodeOptions.inPreferQualityOverSpeed = PREFER_QUALITY_OVER_SPEED;
             decodeOptions.inSampleSize =
                     findBestSampleSize(actualWidth, actualHeight, desiredWidth, desiredHeight);

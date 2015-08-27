@@ -5,13 +5,18 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
+
+import java.io.File;
 
 /**
  * need to be tested
- *
+ * <p/>
  * <p>IntentHelper is designed for opening native application.
  * Such as call phone, open gallery, open settings .....
+ *
  * @author Jason
  */
 public class IntentHelper {
@@ -33,6 +38,7 @@ public class IntentHelper {
      * @param context  Context
      * @param phoneNum The number you wanna dial
      */
+    @SuppressWarnings("ResourceType")
     public static void callPhoneNum(Context context, String phoneNum) {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
@@ -71,6 +77,28 @@ public class IntentHelper {
         }
     }
 
+    public static boolean takePhoto(Activity activity, String dir, String filename, int cmd) {
+        String filePath = dir + filename;
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File cameraDir = new File(dir);
+        LogUtils.d("filePath", filePath);
+        LogUtils.d("cameraDir exist", cameraDir.exists() + "");
+        if (!cameraDir.exists()) {
+            return false;
+        }
+
+        File file = new File(filePath);
+        Uri outputFileUri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+        try {
+            activity.startActivityForResult(intent, cmd);
+        } catch (ActivityNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Go to the gps setting page
      *
@@ -90,6 +118,32 @@ public class IntentHelper {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void sendEmail(Context context, String email, String subject, String content) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("plain/text");
+            String address[] = new String[]{email};
+            if (!TextUtils.isEmpty(subject)) {
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            }
+            if (!TextUtils.isEmpty(content)) {
+                intent.putExtra(Intent.EXTRA_TEXT, content);
+            }
+            intent.putExtra(Intent.EXTRA_EMAIL, address);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showTextActionShare(Context context, String title, String content) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/*");
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+        Intent choose = Intent.createChooser(intent, title);
+        context.startActivity(choose);
     }
 
 }

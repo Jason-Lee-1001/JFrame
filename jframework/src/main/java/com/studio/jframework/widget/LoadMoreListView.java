@@ -23,6 +23,7 @@ public class LoadMoreListView extends ListView {
             currentScrollState = scrollState;
             isScrollCompleted();
         }
+
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             currentFirstVisibleItem = firstVisibleItem;
@@ -70,7 +71,9 @@ public class LoadMoreListView extends ListView {
     }
 
     public void onLoadMore() {
-        onLoadMoreListener.loadMore();
+        if (onLoadMoreListener != null) {
+            onLoadMoreListener.loadMore();
+        }
         isLoading = false;
     }
 }

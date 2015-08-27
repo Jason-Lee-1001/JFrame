@@ -31,6 +31,7 @@ import java.util.Map;
  * <p>CrashHandler crashHandler = CrashHandler.getInstance();
  * <p>crashHandler.init(getApplicationContext(),"/crash/", "Application crashed, exiting...", new ExceptionOperator(){...});
  * <p>add permission: android.permission.WRITE_EXTERNAL_STORAGE in manifest
+ *
  * @author Jason
  */
 public class CrashHandler implements UncaughtExceptionHandler {

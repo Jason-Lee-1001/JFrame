@@ -13,13 +13,13 @@ import android.widget.RelativeLayout;
 import com.studio.jframework.R;
 import com.studio.jframework.adapter.pager.SimpleViewPagerAdapter;
 import com.studio.jframework.base.BaseAppCompatActivity;
-import com.studio.jframework.widget.AutoScrollViewPager;
+import com.studio.jframework.widget.pager.AutoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015-07-01.
+ * Created by zbb
  */
 public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     private static final String TAG = "BaseGuidelineActivity";
@@ -60,7 +60,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
                 List<View> views = new ArrayList<>();
                 LayoutInflater inflater = LayoutInflater.from(BaseGuidelineActivity.this);
 //                View view = inflater.inflate(R.layout.);
-                return null;
+                return views;
             }
         };
         guideViewPager.setAdapter(guideAdapter);
@@ -71,12 +71,6 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
 
     @Override
     protected void bindEvent() {
-        guideBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                skipSetOnClickListener();
-            }
-        });
         guideViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
@@ -97,6 +91,10 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+    }
+
+    public Button getGuideButton() {
+        return guideBtn;
     }
 
     /**
@@ -157,7 +155,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     /**
      * 设置自动滚动的时间间隔
      *
-     * @param delayTimeInMills
+     * @param delayTimeInMills 要设置的毫秒时间
      */
     protected void setAutoScrollTime(int delayTimeInMills) {
         guideViewPager.setInterval(delayTimeInMills);
@@ -166,7 +164,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     /**
      * 获取自动滚动的时间间隔
      *
-     * @return long
+     * @return long 返回间隔时间
      */
     protected long getAutoScrollTime() {
         return guideViewPager.getInterval();
@@ -191,7 +189,7 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     /**
      * 获取当前自动滚动的模式
      *
-     * @return
+     * @return 返回是否开启自动滚动模式
      */
     protected boolean getAutoMode() {
         return guideViewPager.isCycle();
@@ -200,13 +198,8 @@ public abstract class BaseGuidelineActivity extends BaseAppCompatActivity {
     /**
      * 传入引导界面的图片
      *
-     * @return
+     * @return 返回给父类的成员List
      */
     protected abstract List<Integer> setBackgrounds();
-
-    /**
-     * 设置点击跳转
-     */
-    protected abstract void skipSetOnClickListener();
 
 }

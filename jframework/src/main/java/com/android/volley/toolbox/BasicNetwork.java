@@ -85,10 +85,10 @@ public class BasicNetwork implements Network {
         while (true) {
             HttpResponse httpResponse = null;
             byte[] responseContents = null;
-            Map<String, String> responseHeaders = new HashMap<String, String>();
+            Map<String, String> responseHeaders = new HashMap<>();
             try {
                 // Gather headers.
-                Map<String, String> headers = new HashMap<String, String>();
+                Map<String, String> headers = new HashMap<>();
                 addCacheHeaders(headers, request.getCacheEntry());
                 httpResponse = mHttpStack.performRequest(request, headers);
                 StatusLine statusLine = httpResponse.getStatusLine();
@@ -157,7 +157,6 @@ public class BasicNetwork implements Network {
                         attemptRetryOnException("redirect",
                                 request, new AuthFailureError(networkResponse));
                     } else {
-                        // TODO: Only throw ServerError for 5xx status codes.
                         throw new ServerError(networkResponse);
                     }
                 } else {
@@ -258,7 +257,7 @@ public class BasicNetwork implements Network {
      * Converts Headers[] to Map<String, String>.
      */
     private static Map<String, String> convertHeaders(Header[] headers) {
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
         for (int i = 0; i < headers.length; i++) {
             result.put(headers[i].getName(), headers[i].getValue());
         }

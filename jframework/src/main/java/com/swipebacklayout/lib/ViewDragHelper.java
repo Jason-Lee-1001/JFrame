@@ -488,11 +488,7 @@ public class ViewDragHelper {
 
     /**
      * Enable edge tracking for the selected edges of the parent view. The
-     * callback's
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeTouched(int, int)}
-     * and
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#onEdgeDragStarted(int, int)}
-     * methods will only be invoked for edges for which edge tracking has been
+     * callback's methods will only be invoked for edges for which edge tracking has been
      * enabled.
      *
      * @param edgeFlags Combination of edge flags describing the edges to watch
@@ -1014,7 +1010,6 @@ public class ViewDragHelper {
             // Count backwards - let topmost views consume scroll distance
             // first.
             for (int i = count - 1; i >= 0; i--) {
-                // TODO: Add versioned support here for transformed views.
                 // This will not work for transformed views in Honeycomb+
                 final View child = group.getChildAt(i);
                 if (x + scrollX >= child.getLeft()
@@ -1534,18 +1529,12 @@ public class ViewDragHelper {
      * otherwise
      */
     public boolean isViewUnder(View view, int x, int y) {
-        if (view == null) {
-            return false;
-        }
-        return x >= view.getLeft() && x < view.getRight() && y >= view.getTop()
-                && y < view.getBottom();
+        return view != null && x >= view.getLeft() && x < view.getRight() && y >= view.getTop() && y < view.getBottom();
     }
 
     /**
      * Find the topmost child under the given point within the parent view's
      * coordinate system. The child order is determined using
-     * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#getOrderedChildIndex(int)}
-     * .
      *
      * @param x X position to test in the parent's coordinate system
      * @param y Y position to test in the parent's coordinate system

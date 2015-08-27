@@ -11,9 +11,10 @@ import android.telephony.TelephonyManager;
  * <p/>
  * NetworkUtils is used to operate network relative stuff
  * Such as GPS, Wifi, Mobile network, Bluetooth
+ *
  * @author Jason
  */
-public class NetwrokUtils {
+public class NetworkUtils {
 
     /**
      * Check if the network is available
@@ -69,6 +70,7 @@ public class NetwrokUtils {
 
     /**
      * Get the name of the provider
+     *
      * @param context Context
      * @return The name of the provider, will return null if no Sim card detected
      */
@@ -93,6 +95,7 @@ public class NetwrokUtils {
 
     /**
      * Get the network type, will return wifi, 2G, 3G, LTE or null if the system can't judge the type
+     *
      * @param context Context
      * @return The network type now you are using
      */

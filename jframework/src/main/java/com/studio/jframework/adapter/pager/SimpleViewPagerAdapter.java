@@ -20,6 +20,7 @@ abstract public class SimpleViewPagerAdapter<T> extends PagerAdapter {
 
     /**
      * Bind data to the view, and return a list of all the page's views
+     *
      * @param data A collection of the data that is going to be inflated in the view
      * @return A list of all the page's views
      */
@@ -43,6 +44,6 @@ abstract public class SimpleViewPagerAdapter<T> extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeViewAt(position);
+        container.removeView(mViews.get(position));
     }
 }

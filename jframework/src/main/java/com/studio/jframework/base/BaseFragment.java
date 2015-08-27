@@ -1,6 +1,5 @@
 package com.studio.jframework.base;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 
 /**
  * Base class for the fragment
+ *
  * @author Jason
  */
 public abstract class BaseFragment extends Fragment {
@@ -33,6 +33,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mFragmentView = inflater.inflate(setLayout(), container, false);
+        findViews(mFragmentView);
+        initialization();
+        bindEvent();
         onCreateView();
         return mFragmentView;
     }
@@ -43,11 +46,6 @@ public abstract class BaseFragment extends Fragment {
      * @return The layout resource id of the file
      */
     protected abstract int setLayout();
-
-    /**
-     * The main job should be done here
-     */
-    protected abstract void onCreateView();
 
     /**
      * Do find views in onCreateView()
@@ -63,6 +61,11 @@ public abstract class BaseFragment extends Fragment {
      * Do bind event in onCreateView()
      */
     protected abstract void bindEvent();
+
+    /**
+     * The main job should be done here
+     */
+    protected abstract void onCreateView();
 
     /**
      * Hide the soft keyboard
@@ -83,17 +86,6 @@ public abstract class BaseFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);
         imm.showSoftInput(view, 0);
-    }
-
-    /**
-     * Easy to dismiss the specify dialog
-     *
-     * @param dialog The dialog you want to dismiss
-     */
-    protected void dismissDialog(Dialog dialog) {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
     }
 
     /**

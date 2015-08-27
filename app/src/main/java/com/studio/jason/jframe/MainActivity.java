@@ -21,7 +21,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.studio.jframework.base.BaseAppCompatActivity;
 import com.studio.jframework.network.volley.VolleyController;
 import com.studio.jframework.network.volley.VolleyErrorHelper;
-import com.studio.jframework.network.volley.VolleyRequest;
+import com.studio.jframework.network.volley.VolleyStringRequest;
 import com.studio.jframework.utils.AESUtils;
 import com.studio.jframework.utils.ExitAppUtils;
 import com.studio.jframework.utils.LogUtils;
@@ -61,12 +61,12 @@ public class MainActivity extends BaseAppCompatActivity {
         getResources().getDisplayMetrics();
         Resources.getSystem().getDisplayMetrics();
         aesUtils = new AESUtils();
-        drawable = getResources().getDrawable(R.drawable.color1);
+//        drawable = getResources().getDrawable(R.drawable.color1);
         drawable.setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         dialog = LayoutInflater.from(this).inflate(R.layout.dialog, null, false);
         DialogCreator creator = new DialogCreator();
 //        dialogInstance = creator.createNormalDialog(MainActivity.this,dialog, DialogCreator.Position.TOP);
-        dialogInstance = creator.createProgressDialog(this, DialogCreator.Position.TOP, Color.GREEN, "loading");
+//        dialogInstance = creator.createProgressDialog(this, DialogCreator.Position.TOP, Color.GREEN, "loading");
         Toast.makeText(this, SizeUtils.convertDp2Px(this, 100) + "", Toast.LENGTH_LONG).show();
     }
 
@@ -101,7 +101,7 @@ public class MainActivity extends BaseAppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VolleyRequest request = new VolleyRequest("https://www.baidu.com/", null, new Response.Listener<String>() {
+                VolleyStringRequest request = new VolleyStringRequest("https://www.baidu.com/", null, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         LogUtils.d(TAG, response);
@@ -137,6 +137,7 @@ public class MainActivity extends BaseAppCompatActivity {
 //                yy = aesUtils.decryptToBytes(key1,aesUtils.toByte(enc));
 //                LogUtils.e(TAG, new String(yy));
                 dialogInstance.show();
+
             }
         });
     }
