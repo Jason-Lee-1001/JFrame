@@ -16,7 +16,7 @@ public class RegularExpUtils {
      * @param mail The email address string
      * @return True if the string is email address, false otherwise
      */
-    public static boolean checkMail(String mail) {
+    public static boolean isMail(String mail) {
         boolean flag;
         try {
             String check = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
@@ -35,7 +35,7 @@ public class RegularExpUtils {
      * @param mobile The mobile number string
      * @return True if the string is mobile number, false otherwise
      */
-    public static boolean checkMobile(String mobile) {
+    public static boolean isMobile(String mobile) {
         return mobile.matches("^[1][3,5,8,4,7]+\\d{9}");
     }
 

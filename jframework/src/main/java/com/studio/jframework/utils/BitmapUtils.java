@@ -1,10 +1,13 @@
 package com.studio.jframework.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.view.View;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -157,15 +160,42 @@ public class BitmapUtils {
         return inSampleSize;
     }
 
-
-    //ThumbnailUtils
+    /**
+     * Create thumbnail with the specify bitmap
+     *
+     * @param bitmap The origin bitmap
+     * @param width  The width of the thumbnail
+     * @param height The height of the thumbnail
+     * @return The thumbnail
+     */
+    public static Bitmap getBitmapThumbnail(Bitmap bitmap, int width, int height) {
+        return ThumbnailUtils.extractThumbnail(bitmap, width, height);
+    }
 
     /**
-     * @param bitmap
-     * @return
+     * Get the screen shot by the view
+     *
+     * @param view The view to be capture screen shot
+     * @return Bitmap of the view' screen shot
      */
-    public static Bitmap getBitmapThumbnail(Bitmap bitmap) {
-        return null;
+    public static Bitmap getScreenShotByView(View view) {
+        if (view == null) {
+            return null;
+        }
+        view.setDrawingCacheEnabled(true);
+        return view.getDrawingCache();
+    }
+
+    /**
+     * Get the screen shot of whole screen
+     *
+     * @param activity Activity
+     * @return Bitmap that captured
+     */
+    public static Bitmap getScreenShot(Activity activity) {
+        View decorView = activity.getWindow().getDecorView();
+        decorView.setDrawingCacheEnabled(true);
+        return decorView.getDrawingCache();
     }
 
 }

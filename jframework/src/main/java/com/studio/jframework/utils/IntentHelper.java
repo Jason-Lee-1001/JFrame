@@ -77,7 +77,16 @@ public class IntentHelper {
         }
     }
 
-    public static boolean takePhoto(Activity activity, String dir, String filename, int cmd) {
+    /**
+     * Launch camera and take a picture
+     *
+     * @param activity Activity
+     * @param dir      The dir to store the picture
+     * @param filename The file name of the picture
+     * @param code     The code used in startActivityForResult
+     * @return True if the camera start successfully, false otherwise
+     */
+    public static boolean takePhoto(Activity activity, String dir, String filename, int code) {
         String filePath = dir + filename;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -92,7 +101,7 @@ public class IntentHelper {
         Uri outputFileUri = Uri.fromFile(file);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
         try {
-            activity.startActivityForResult(intent, cmd);
+            activity.startActivityForResult(intent, code);
         } catch (ActivityNotFoundException e) {
             return false;
         }
@@ -120,6 +129,14 @@ public class IntentHelper {
         }
     }
 
+    /**
+     * Open the email client and send email
+     *
+     * @param context Context
+     * @param email   The email address
+     * @param subject The email receiver
+     * @param content The email content
+     */
     public static void sendEmail(Context context, String email, String subject, String content) {
         try {
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -138,10 +155,16 @@ public class IntentHelper {
         }
     }
 
+    /**
+     * Show the action share dialog
+     *
+     * @param context Context
+     * @param title   The title that show in share action chooser
+     * @param content The content you wanna share
+     */
     public static void showTextActionShare(Context context, String title, String content) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/*");
-        intent.putExtra(Intent.EXTRA_TEXT, content);
+        intent.setType("text/*").putExtra(Intent.EXTRA_TEXT, content);
         Intent choose = Intent.createChooser(intent, title);
         context.startActivity(choose);
     }

@@ -17,15 +17,13 @@ import com.studio.jframework.widget.progressbar.MaterialProgressBar;
  */
 public class DialogCreator {
 
-    public static enum Type {
-        PROGRESS, ALARM, NORMAL
-    }
-
     public static enum Position {
         BOTTOM, CENTER, TOP
     }
 
-    public DialogCreator() {
+    public static Dialog createNormalDialog(Context context, int resId, Position position) {
+        View view = LayoutInflater.from(context).inflate(resId, null, false);
+        return createNormalDialog(context, view, position);
     }
 
     public static Dialog createNormalDialog(Context context, View view, Position position) {
