@@ -91,7 +91,6 @@ public class IndexableListView extends ListView {
 			});
 		}
 		mGestureDetector.onTouchEvent(ev);
-		
 		return super.onTouchEvent(ev);
 	}
 

@@ -16,6 +16,14 @@ import android.telephony.TelephonyManager;
  */
 public class NetworkUtils {
 
+    public static enum Provider {
+        NON, CMCC, CUCC, CTCC
+    }
+
+    public static enum NetType {
+        NON, WIFI, GPRS, WCDMA, LTE
+    }
+
     /**
      * Check if the network is available
      *
@@ -72,25 +80,25 @@ public class NetworkUtils {
      * Get the name of the provider
      *
      * @param context Context
-     * @return The name of the provider, will return null if no Sim card detected
+     * @return The provider, will return NON if no Sim card detected
      */
-    public static String getProvider(Context context) {
-        String ProvidersName = "";
+    public static Provider getProvider(Context context) {
         String IMSI;
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         IMSI = telephonyManager.getSubscriberId();
         // The first 3 IMSI nums 460 stand for nation code China
         // 00,02 stands for China Mobile, 01 stands for China Unicom, 03 stands for China Telecom
         if (IMSI == null)
-            return ProvidersName;
+            return Provider.NON;
         if (IMSI.startsWith("46000") || IMSI.startsWith("46002")) {
-            ProvidersName = "中国移动";
+            return Provider.CMCC;
         } else if (IMSI.startsWith("46001")) {
-            ProvidersName = "中国联通";
+            return Provider.CUCC;
         } else if (IMSI.startsWith("46003")) {
-            ProvidersName = "中国电信";
+            return Provider.CTCC;
+        } else {
+            return Provider.NON;
         }
-        return ProvidersName;
     }
 
     /**
@@ -99,25 +107,25 @@ public class NetworkUtils {
      * @param context Context
      * @return The network type now you are using
      */
-    public static String getNetworkType(Context context) {
-        String type = "";
+    public static NetType getNetworkType(Context context) {
+        NetType type = null;
         ConnectivityManager connectMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connectMgr.getActiveNetworkInfo();
         if (info == null) {
-            type = "null";
+            type = NetType.NON;
         } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {
-            type = "wifi";
+            type = NetType.WIFI;
         } else if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
             int subType = info.getSubtype();
             if (subType == TelephonyManager.NETWORK_TYPE_CDMA || subType == TelephonyManager.NETWORK_TYPE_GPRS
                     || subType == TelephonyManager.NETWORK_TYPE_EDGE) {
-                type = "2G";
+                type = NetType.GPRS;
             } else if (subType == TelephonyManager.NETWORK_TYPE_UMTS || subType == TelephonyManager.NETWORK_TYPE_HSDPA
                     || subType == TelephonyManager.NETWORK_TYPE_EVDO_A || subType == TelephonyManager.NETWORK_TYPE_EVDO_0
                     || subType == TelephonyManager.NETWORK_TYPE_EVDO_B) {
-                type = "3G";
+                type = NetType.WCDMA;
             } else if (subType == TelephonyManager.NETWORK_TYPE_LTE) {
-                type = "LTE";
+                type = NetType.LTE;
             }
         }
         return type;

@@ -151,6 +151,12 @@ public class PackageUtils {
         }
     }
 
+    /**
+     * Get the meta data
+     *
+     * @param context Context
+     * @return A bundle contains metadata
+     */
     public static Bundle getMetaData(Context context) {
         PackageManager manager = context.getPackageManager();
         try {
@@ -162,6 +168,13 @@ public class PackageUtils {
         return null;
     }
 
+    /**
+     * Get the app name by the pid
+     *
+     * @param context Context
+     * @param pID     The pid of the process
+     * @return The app name
+     */
     public static String getAppName(Context context, int pID) {
         String processName = null;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
