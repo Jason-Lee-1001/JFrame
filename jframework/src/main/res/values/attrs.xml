@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--SwipeBackLayoutStyle-->
     <declare-styleable name="SwipeBackLayout">
         <attr name="edge_size" format="dimension" />
         <attr name="edge_flag">
@@ -12,13 +14,17 @@
         <attr name="shadow_right" format="reference" />
         <attr name="shadow_bottom" format="reference" />
     </declare-styleable>
+    <attr name="SwipeBackLayoutStyle" format="reference" />
 
-
+    <!--CircleImageView-->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>
 
+    <!--SlideMenu-->
+    <declare-styleable name="SlideMenu">
+        <attr name="rightPadding" format="dimension" />
+    </declare-styleable>
 
-    <attr name="SwipeBackLayoutStyle" format="reference" />
 </resources>

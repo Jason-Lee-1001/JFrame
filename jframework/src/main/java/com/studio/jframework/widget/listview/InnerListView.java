@@ -1,4 +1,4 @@
-package com.studio.jframework.widget;
+package com.studio.jframework.widget.listview;
 
 import android.content.Context;
 import android.util.AttributeSet;
