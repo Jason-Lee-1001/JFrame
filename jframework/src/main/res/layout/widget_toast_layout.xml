@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="#a5000000"
     android:gravity="center"
-    android:id="@+id/toast_container"
-    android:orientation="horizontal">
+    android:id="@+id/toast_container">
 
     <ImageView
         android:id="@+id/icon"

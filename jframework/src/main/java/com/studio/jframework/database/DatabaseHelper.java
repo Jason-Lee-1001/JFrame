@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "xxx.db";
     private static final int DB_VERSION = 1;
-    private static final String SQL_CREATE = "create table";
+    private static final String SQL_CREATE = "create table if not exist";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

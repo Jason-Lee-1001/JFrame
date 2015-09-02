@@ -123,15 +123,15 @@ public class SlideMenu extends HorizontalScrollView {
 
         float scale = l * 1.0f / mMenuWidth;
         //use property animation
-        mMenu.setTranslationX(mMenuWidth * scale);
+//        mMenu.setTranslationX(mMenuWidth * scale);
 
         //---------------add scale animation---------------------
 
         float menuScale = 1.0f - 0.3f * scale;
-        float menuAlpha = 0.6f + 0.4f * (1 - scale);
+        float menuAlpha = 0.5f + 0.5f * (1 - scale);
         float contentScale = 0.7f + 0.3f * scale;
 
-        //mMenu.setTranslationX(mMenuWidth * scale * 0.7f);
+        mMenu.setTranslationX(mMenuWidth * scale * 0.7f);
         mMenu.setScaleX(menuScale);
         mMenu.setScaleY(menuScale);
         mMenu.setAlpha(menuAlpha);

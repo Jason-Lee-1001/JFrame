@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" useUTFGuessing="false" native2AsciiForPropertiesFiles="false" defaultCharsetForPropertiesFiles="UTF-8">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/color.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/adapter/list/CommonAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/adapter/list/ViewHolder.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/base/CommonApplication.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/base/impl/BaseGuidelineActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/graphic/FastBlur.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/BitmapUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jframework/src/main/java/com/studio/jframework/utils/HttpUtils.java" charset="UTF-8" />

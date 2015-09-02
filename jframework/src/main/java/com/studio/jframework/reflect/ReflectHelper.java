@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ReflectHelper {
+
     public static Object getField(Object paramObject, Class<?> paramClass, String paramString) throws NoSuchFieldException {
         if ((paramObject == null) || (paramClass == null) || (paramString == null))
             throw new IllegalArgumentException("parameter can not be null!");
