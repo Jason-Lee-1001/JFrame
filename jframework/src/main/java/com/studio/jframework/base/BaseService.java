@@ -14,7 +14,7 @@ public abstract class BaseService extends Service {
     @Override
     public abstract IBinder onBind(Intent intent);
 
-    public static void addTask(Task task){
+    public synchronized static void addTask(Task task){
 //        task.execute();
     }
 }

@@ -3,8 +3,8 @@ package com.studio.application;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.studio.application.request.GetLyric;
 import com.studio.jframework.base.BaseService;
+import com.studio.jframework.network.Task;
 
 import de.greenrobot.event.EventBus;
 
@@ -24,7 +24,7 @@ public class CoreService extends BaseService {
         return null;
     }
 
-    public void onEvent(GetLyric task){
+    public void onEvent(Task task){
         task.execute();
     }
 

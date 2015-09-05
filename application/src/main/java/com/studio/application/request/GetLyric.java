@@ -1,10 +1,8 @@
 package com.studio.application.request;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import com.studio.jframework.database.DatabaseHelper;
 import com.studio.jframework.network.Task;
 import com.studio.jframework.utils.LogUtils;
 
@@ -27,9 +25,9 @@ public class GetLyric extends Task {
         Bundle bundle = new Bundle();
         bundle.putString("GetLyric", response);
         EventBus.getDefault().post(bundle);
-        DatabaseHelper helper = new DatabaseHelper(mContext);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        db.execSQL("create table "+getType()+" if not exist");
+//        DatabaseHelper helper = new DatabaseHelper(mContext);
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//        db.execSQL("create table "+getType()+" if not exist");
     }
 
     @Override

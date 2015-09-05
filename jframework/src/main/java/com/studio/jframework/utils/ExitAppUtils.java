@@ -1,6 +1,7 @@
 package com.studio.jframework.utils;
 
 import android.app.Activity;
+import android.app.Service;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public class ExitAppUtils {
 
     //The container to store activities
     private List<WeakReference<Activity>> mActivityList = new LinkedList<>();
+    private List<WeakReference<Service>> mServiceList = new LinkedList<>();
     private static ExitAppUtils INSTANCE;
 
     private ExitAppUtils() {
@@ -45,6 +47,16 @@ public class ExitAppUtils {
     }
 
     /**
+     * Add the service to the container
+     * invoke in onCreate()
+     *
+     * @param service The service instance to be stored
+     */
+    public void addService(Service service) {
+        mServiceList.add(new WeakReference<>(service));
+    }
+
+    /**
      * Remove the activity from the container
      * invoke in onDestroy()
      *
@@ -55,7 +67,17 @@ public class ExitAppUtils {
     }
 
     /**
-     * The method will finish all the activities in the container
+     * Remove the service from the container
+     * invoke in onDestroy()
+     *
+     * @param service The service instance to be removed
+     */
+    public void removeService(Service service) {
+        mServiceList.remove(new WeakReference<>(service));
+    }
+
+    /**
+     * The method will terminate all the activities and services in the container
      */
     public void exit() {
         for (WeakReference<Activity> activity : mActivityList) {
@@ -63,9 +85,18 @@ public class ExitAppUtils {
                 activity.get().finish();
             }
         }
+        for (WeakReference<Service> service : mServiceList) {
+            if (service.get() != null) {
+                service.get().stopSelf();
+            }
+        }
         if (mActivityList != null) {
             mActivityList.clear();
             mActivityList = null;
+        }
+        if (mServiceList != null) {
+            mServiceList.clear();
+            mServiceList = null;
         }
         System.exit(0);
     }

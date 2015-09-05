@@ -80,10 +80,10 @@ public class CrashHandler implements UncaughtExceptionHandler {
     public void init(Context context, String filePath, String showMessage, boolean isDebug, ExceptionOperator operator) {
         this.isDebug = isDebug;
         exceptionOperator = operator;
-        if (filePath != null && !filePath.equals("")) {
+        if (!TextUtils.isEmpty(filePath)) {
             crashFilePath = filePath;
         }
-        if (showMessage != null && !showMessage.equals("")) {
+        if (!TextUtils.isEmpty(showMessage)) {
             this.showMessage = showMessage;
         }
         mContext = context;

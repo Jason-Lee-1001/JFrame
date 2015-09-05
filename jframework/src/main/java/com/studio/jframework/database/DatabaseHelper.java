@@ -9,17 +9,24 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static DatabaseHelper INSTANCE;
     private static final String DB_NAME = "xxx.db";
     private static final int DB_VERSION = 1;
     private static final String SQL_CREATE = "create table if not exist";
 
-    public DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+    }
+
+    public synchronized static DatabaseHelper getInstance(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = new DatabaseHelper(context);
+        }
+        return INSTANCE;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE);
     }
 
     @Override
