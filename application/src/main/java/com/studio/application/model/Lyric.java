@@ -10,21 +10,15 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Lyric implements Parcelable{
 
-    public static final String AID = "aid";
-    public static final String ARTIST_ID = "artist_id";
-    public static final String SID = "sid";
-    public static final String LRC = "lrc";
-    public static final String SONG = "song";
-
-    @SerializedName(AID)
+    @SerializedName("aid")
     private int albumId;
-    @SerializedName(ARTIST_ID)
+    @SerializedName("artist_id")
     private int artistId;
-    @SerializedName(SID)
+    @SerializedName("sid")
     private int songId;
-    @SerializedName(LRC)
+    @SerializedName("lrc")
     private String lrcUrl;
-    @SerializedName(SONG)
+    @SerializedName("song")
     private String songName;
 
     public Lyric() {

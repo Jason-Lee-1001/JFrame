@@ -1,4 +1,4 @@
-package com.studio.jframework.animation;
+package com.studio.jframework.animation.pager;
 
 import android.annotation.SuppressLint;
 import android.support.v4.view.ViewPager;

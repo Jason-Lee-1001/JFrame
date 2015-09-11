@@ -18,11 +18,13 @@ import java.util.Map;
  */
 public abstract class Task {
 
+    public static final String TAG = "Task";
+
     protected Context mContext;
     private String mType;
     private String mTag;
     private Map<String, String> mParams;
-    private int mRetryCount;
+    private int mRetryCount = 0;
     private boolean mCache = false;
 
     public Task(Context context, String type, String tag, Map<String, String> params, int retryCount, boolean cache) {
@@ -32,6 +34,13 @@ public abstract class Task {
         mParams = params;
         mRetryCount = retryCount;
         mCache = cache;
+    }
+
+    public Task(Context context, String type, String tag, Map<String, String> params) {
+        mContext = context;
+        mType = type;
+        mTag = tag;
+        mParams = params;
     }
 
     public String getType() {

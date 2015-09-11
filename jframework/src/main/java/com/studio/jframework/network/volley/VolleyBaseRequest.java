@@ -20,27 +20,28 @@ public abstract class VolleyBaseRequest {
     protected String mUrl;
     protected int mRetryCount = 0;
 
-    public VolleyBaseRequest(Context context, String tag, int retryCount) {
+    public VolleyBaseRequest(Context context, Map<String, String> params, String url, String tag, int retryCount) {
         mContext = context;
+        mParams = params;
         mTag = tag;
+        mUrl = url;
         mRetryCount = retryCount;
     }
 
-    public VolleyBaseRequest(Context context, int retryCount) {
-        this(context, null, retryCount);
+    public VolleyBaseRequest(Context context, Map<String, String> params, String url, int retryCount) {
+        this(context, params, url, null, retryCount);
     }
 
-    public VolleyBaseRequest(Context context) {
-        this(context, null, 0);
+    public VolleyBaseRequest(Context context, Map<String, String> params, String url) {
+        this(context, params, url, 0);
     }
 
     public abstract void succeed(String response);
 
     public abstract void failed(String response);
 
-    public void sendRequest(final Map<String, String> params, final String url) {
+    public void sendRequest(final Map<String, String> params) {
         this.mParams = params;
-        this.mUrl = url;
         VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, mUrl, mParams, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -51,7 +52,7 @@ public abstract class VolleyBaseRequest {
             public void onErrorResponse(VolleyError error) {
                 failed(VolleyErrorHelper.getMessage(error));
                 if (mRetryCount > 0) {
-                    sendRequest(params, url);
+                    sendRequest(params);
                     mRetryCount--;
                 }
             }

@@ -2,8 +2,27 @@ package com.studio.jframework.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 public class ReflectHelper {
+
+    public static HashMap<String, Class> getFieldAndType(String classPath) {
+        try {
+            HashMap<String, Class> fieldMap = new HashMap<>();
+            Class cls = Class.forName(classPath);
+            Field[] fields = cls.getDeclaredFields();
+            for (Field fld : fields) {
+                fieldMap.put(fld.getName(), fld.getType());
+//                System.out.println("field name = " + fld.getName());
+//                System.out.println("class = " + fld.getDeclaringClass());
+//                System.out.println("type = " + fld.getType());
+            }
+            return fieldMap;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static Object getField(Object paramObject, Class<?> paramClass, String paramString) throws NoSuchFieldException {
         if ((paramObject == null) || (paramClass == null) || (paramString == null))

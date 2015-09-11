@@ -80,14 +80,13 @@ public class IndexableListView extends ListView {
 			mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
 				@Override
-				public boolean onFling(MotionEvent e1, MotionEvent e2,
-						float velocityX, float velocityY) {
+				public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 					// If fling happens, index bar shows
-					if (mScroller != null)
+					if (mScroller != null) {
 						mScroller.show();
+					}
 					return super.onFling(e1, e2, velocityX, velocityY);
 				}
-				
 			});
 		}
 		mGestureDetector.onTouchEvent(ev);

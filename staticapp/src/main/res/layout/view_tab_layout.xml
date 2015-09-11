@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gery" />
+
+    <RadioGroup
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:checked="true"
+            android:paddingTop="10dp"
+            android:id="@+id/tab_community"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_dashboard"
+            android:gravity="center"
+            android:text="First"
+            android:textSize="12sp"
+            android:textColor="@color/theme_color" />
+
+        <RadioButton
+            android:id="@+id/tab_library"
+            android:paddingTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_headset"
+            android:gravity="center"
+            android:text="Second"
+            android:textSize="12sp"
+            android:textColor="@color/theme_color" />
+
+        <RadioButton
+            android:id="@+id/tab_search"
+            android:paddingTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_event"
+            android:gravity="center"
+            android:text="Third"
+            android:textSize="12sp"
+            android:textColor="@color/theme_color" />
+
+        <RadioButton
+            android:id="@+id/tab_personal"
+            android:paddingTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_forum"
+            android:gravity="center"
+            android:text="Forth"
+            android:textSize="12sp"
+            android:textColor="@color/theme_color" />
+    </RadioGroup>
+
+</LinearLayout>

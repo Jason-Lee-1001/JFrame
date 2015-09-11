@@ -9,7 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SectionIndexer;
 
+import com.studio.application.model.Lyric;
 import com.studio.application.request.GetLyric;
+import com.studio.jframework.database.DatabaseHelper;
+import com.studio.jframework.database.TableConstructor;
 import com.studio.jframework.network.Task;
 import com.studio.jframework.widget.listview.IndexableListView;
 import com.studio.jframework.widget.listview.StringMatcher;
@@ -104,6 +107,11 @@ public class IndexableListViewActivity extends ActionBarActivity {
                 EventBus.getDefault().post(task);
             }
         });
+
+
+        TableConstructor constructor = new TableConstructor(DatabaseHelper.getInstance(this));
+        constructor.create(Lyric.class);
+
     }
     
     private class ContentAdapter extends ArrayAdapter<String> implements SectionIndexer {

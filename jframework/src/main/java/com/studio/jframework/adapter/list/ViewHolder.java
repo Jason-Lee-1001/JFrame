@@ -1,7 +1,6 @@
 package com.studio.jframework.adapter.list;
 
 import android.content.Context;
-import android.text.Editable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +77,7 @@ public final class ViewHolder {
      * @param text   要设置的文字
      * @return 返回当前ViewHolder对象
      */
-    public ViewHolder setTextByString(int viewId, Editable text) {
+    public ViewHolder setTextByString(int viewId, CharSequence text) {
         TextView textView = getView(viewId);
         textView.setText(text);
         return this;

@@ -1,4 +1,4 @@
-package com.studio.jframework.animation;
+package com.studio.jframework.animation.pager;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

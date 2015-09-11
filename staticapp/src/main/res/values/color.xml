@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_gery">#e6e6e6</color>
+    <color name="theme_color">#dc2f2f</color>
+
+    <color name="accent">#e2c457</color>
+    <color name="primary">#b11338</color>
+    <color name="primary_dark">#870a31</color>
+    <color name="high_light">#e2e2e2</color>
+</resources>

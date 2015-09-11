@@ -25,6 +25,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return INSTANCE;
     }
 
+    public synchronized SQLiteDatabase getDatabase(){
+        return INSTANCE.getWritableDatabase();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
     }
