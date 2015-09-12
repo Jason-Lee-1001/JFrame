@@ -16,7 +16,8 @@
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_fir">
         <item
             android:id="@+id/nav_home"
             android:icon="@mipmap/ic_dashboard"
@@ -38,9 +39,11 @@
     <item android:title="Sub items">
         <menu>
             <item
+                android:id="@+id/sub_fir"
                 android:icon="@mipmap/ic_dashboard"
                 android:title="Sub item 1" />
             <item
+                android:id="@+id/sub_sec"
                 android:icon="@mipmap/ic_forum"
                 android:title="Sub item 2" />
         </menu>

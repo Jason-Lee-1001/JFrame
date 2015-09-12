@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#555">
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
+    android:background="@color/primary">
 
    <!--<com.kaistart.android.widget.FullScreenVideoView
         android:id="@+id/login_vv"
@@ -72,7 +74,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.100000024dp"
+                android:layout_height="1px"
                 android:background="@color/white" />
 
             <RelativeLayout
@@ -113,7 +115,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.100000024dp"
+                android:layout_height="1px"
                 android:background="@color/white" />
 
             <Button
@@ -150,15 +152,15 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.100000024dp"
+                    android:layout_height="1px"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@color/white" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="或使用第三方账户登录"
                     android:textColor="#ffe1e1e1"
@@ -166,7 +168,7 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.100000024dp"
+                    android:layout_height="1px"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@color/white" />
@@ -175,8 +177,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp"
-                android:layout_marginTop="7dp">
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:onClick="onClick"

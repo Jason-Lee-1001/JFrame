@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+
+import com.studio.jframework.adapter.recyclerview.CommonRvAdapter;
+import com.studio.jframework.adapter.recyclerview.RvViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +93,7 @@ public class Test extends AppCompatActivity {
         strings.add("abc18");
         strings.add("abc19");
         strings.add("abc20");
-        view.setAdapter(new CommonRecyclerAdapter<String>(this, strings) {
+        view.setAdapter(new CommonRvAdapter<String>(this, strings) {
             @Override
             public int setItemLayout(int type) {
                 if (type == 0) {
@@ -102,7 +104,7 @@ public class Test extends AppCompatActivity {
             }
 
             @Override
-            public void inflateContent(RecyclerHolder holder, int position, String s) {
+            public void inflateContent(RvViewHolder holder, int position, String s) {
                 holder.setTextByString(R.id.textView, s);
             }
 
@@ -118,8 +120,8 @@ public class Test extends AppCompatActivity {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 //        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL));
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL));
         }
 }

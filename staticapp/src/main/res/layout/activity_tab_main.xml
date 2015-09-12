@@ -5,12 +5,12 @@
     android:id="@+id/main"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -23,6 +23,11 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
+
+    <Button
+        android:text="asdfljk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.studio.jframework.widget.pager.NoSlidingViewPager
         android:id="@+id/content_container"

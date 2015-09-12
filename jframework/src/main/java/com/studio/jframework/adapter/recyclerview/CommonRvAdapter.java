@@ -57,11 +57,6 @@ public abstract class CommonRvAdapter<T> extends RecyclerView.Adapter<RvViewHold
 //        }
 //    }
 
-//    @Override
-//    public int getViewTypeCount() {
-//        return 2;
-//    }
-
     @Override
     public long getItemId(int position) {
         return super.getItemId(position);
@@ -79,6 +74,6 @@ public abstract class CommonRvAdapter<T> extends RecyclerView.Adapter<RvViewHold
 
     @Override
     public void onBindViewHolder(RvViewHolder holder, int position) {
-        inflateContent(holder, position, (T)getItem(position));
+        inflateContent(holder, position, getItem(position));
     }
 }

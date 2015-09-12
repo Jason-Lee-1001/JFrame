@@ -102,6 +102,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_discussion:
                 Snackbar.make(drawerLayout,"discussion", Snackbar.LENGTH_LONG).show();
                 break;
+
+            case R.id.sub_fir:
+                Snackbar.make(drawerLayout,"fir", Snackbar.LENGTH_LONG).show();
+                break;
+
+            case R.id.sub_sec:
+                Snackbar.make(drawerLayout,"sec", Snackbar.LENGTH_LONG).show();
+                break;
         }
         LogUtils.d("menu id", "menu id:" + menuItem.getItemId() + " group id:" + menuItem.getGroupId());
         drawerLayout.closeDrawers();

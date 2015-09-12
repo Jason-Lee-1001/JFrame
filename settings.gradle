@@ -1,1 +1,1 @@
-include ':jframework', ':application', ':staticapp'
+include ':staticapp', ':application', ':jframework'
