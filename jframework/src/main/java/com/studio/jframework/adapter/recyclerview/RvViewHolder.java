@@ -20,6 +20,10 @@ public final class RvViewHolder extends RecyclerView.ViewHolder {
         this.mView = itemView;
     }
 
+    public View getRootView(){
+        return this.mView;
+    }
+
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {

@@ -1,12 +1,17 @@
 package com.example.administrator.staticapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.studio.jframework.adapter.recyclerview.CommonRvAdapter;
 import com.studio.jframework.adapter.recyclerview.RvViewHolder;
+import com.studio.jframework.widget.itemdecoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +19,11 @@ import java.util.List;
 /**
  * Created by Jason
  */
-public class Test extends AppCompatActivity {
+public class Test extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView view;
+    private List<String> strings;
+    private Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +31,7 @@ public class Test extends AppCompatActivity {
         setContentView(R.layout.test);
         view = (RecyclerView) findViewById(R.id.recycler);
         setupRecyclerView(view);
-        List<String> strings = new ArrayList<>();
+        strings = new ArrayList<>();
         strings.add("abc1");
         strings.add("abc2");
         strings.add("abc3");
@@ -93,35 +100,67 @@ public class Test extends AppCompatActivity {
         strings.add("abc18");
         strings.add("abc19");
         strings.add("abc20");
-        view.setAdapter(new CommonRvAdapter<String>(this, strings) {
-            @Override
-            public int setItemLayout(int type) {
-                if (type == 0) {
-                    return R.layout.test_item;
-                } else {
-                    return R.layout.test_item2;
-                }
-            }
-
-            @Override
-            public void inflateContent(RvViewHolder holder, int position, String s) {
-                holder.setTextByString(R.id.textView, s);
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                if (position % 2 == 1) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        });
+        mAdapter = new Adapter(this, strings);
+        view.setAdapter(mAdapter);
+        view.setItemAnimator(new DefaultItemAnimator());
+        view.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        /*自定义itemdecoration，在style的主题下添加一句<item name="android:listDivider">@drawable/divider</item>*/
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
 //        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add:
+                add(1);
+                break;
+            case R.id.remove:
+                remove(2);
+                break;
         }
+    }
+
+    private void add(int position){
+        strings.add(position, "aidid");
+        mAdapter.notifyItemInserted(position);
+    }
+
+    private void remove(int position){
+        strings.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }
+
+    private class Adapter extends CommonRvAdapter<String> {
+        public Adapter(Context context, List<String> data) {
+            super(context, data);
+        }
+
+        @Override
+        public int setItemLayout(int type) {
+            if (type == 0) {
+                return R.layout.test_item;
+            } else {
+                return R.layout.test_item2;
+            }
+        }
+
+        @Override
+        public void inflateContent(RvViewHolder holder, int position, String s) {
+            holder.setTextByString(R.id.textView, s);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position % 2 == 1) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    }
 }
