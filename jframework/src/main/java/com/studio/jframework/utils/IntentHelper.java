@@ -169,4 +169,17 @@ public class IntentHelper {
         context.startActivity(choose);
     }
 
+    /**
+     * Install an app by apk file
+     *
+     * @param context Context
+     * @param apkFile The apk file
+     */
+    public static void installApp(Context context, File apkFile){
+        Intent install = new Intent(Intent.ACTION_VIEW);
+        install.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(install);
+    }
+
 }

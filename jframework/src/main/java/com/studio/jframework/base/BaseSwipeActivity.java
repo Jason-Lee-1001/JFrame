@@ -26,6 +26,7 @@ public abstract class BaseSwipeActivity extends SwipeBackActivity {
     @Override
     final protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ExitAppUtils.getInstance().addActivity(this);
         if (!onRestoreState(savedInstanceState)) {
             if (savedInstanceState != null) {
                 savedInstanceState.clear();
@@ -38,7 +39,6 @@ public abstract class BaseSwipeActivity extends SwipeBackActivity {
         initialization();
         bindEvent();
         doMoreInOnCreate();
-        ExitAppUtils.getInstance().addActivity(this);
     }
 
     /**
@@ -52,7 +52,8 @@ public abstract class BaseSwipeActivity extends SwipeBackActivity {
     protected abstract boolean onRestoreState(Bundle paramSavedState);
 
     /**
-     * Invoke setContentView(int layoutId) here, you may call setTheme(int resId) first
+     * Invoke setContentView(int layoutId) here, if you wanna customize theme
+     * invoke setTheme(int resId) first
      */
     protected abstract void setContentView();
 

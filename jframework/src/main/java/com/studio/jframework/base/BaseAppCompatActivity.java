@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.studio.jframework.R;
 import com.studio.jframework.ui.SystemBarTintManager;
 import com.studio.jframework.utils.ExitAppUtils;
 
@@ -20,6 +24,10 @@ import com.studio.jframework.utils.ExitAppUtils;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
+    protected static final short MODE_NONE = 0;
+    protected static final short MODE_UP = 1;
+    protected static final short MODE_MENU = 2;
+
     /**
      * Perform initialization of all fragments and loaders
      *
@@ -27,6 +35,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      */
     @Override
     final protected void onCreate(Bundle savedInstanceState) {
+        ExitAppUtils.getInstance().addActivity(this);
         if (!onRestoreState(savedInstanceState)) {
             if (savedInstanceState != null) {
                 savedInstanceState.clear();
@@ -40,7 +49,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         initialization();
         bindEvent();
         doMoreInOnCreate();
-        ExitAppUtils.getInstance().addActivity(this);
     }
 
     /**
@@ -116,6 +124,35 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setNavigationBarTintEnabled(true);
             tintManager.setTintColor(getResources().getColor(colorId));
+        }
+    }
+
+    protected void setupToolBar(int toolBarId, CharSequence title, int mode) {
+        setupToolBar(toolBarId, title, null, mode);
+    }
+
+    protected void setupToolBar(int toolBarId, CharSequence title, CharSequence subTitle, int mode) {
+        Toolbar toolbar = (Toolbar) findViewById(toolBarId);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            switch (mode) {
+                case MODE_NONE:
+                    break;
+                case MODE_MENU:
+                    actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                    break;
+                case MODE_UP:
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                    break;
+            }
+            if (!TextUtils.isEmpty(title)) {
+                actionBar.setTitle(title);
+            }
+            if (!TextUtils.isEmpty(subTitle)) {
+                actionBar.setSubtitle(subTitle);
+            }
         }
     }
 

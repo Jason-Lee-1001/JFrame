@@ -13,59 +13,44 @@ public class PreferencesUtils {
     private SharedPreferences mPreference;
     private SharedPreferences.Editor editor;
 
-    private String fileName = "AppPref";
+    private String fileName;
 
-    private PreferencesUtils(Context context) {
+    private PreferencesUtils(Context context, String fileName) {
+        this.fileName = fileName;
         mContext = context.getApplicationContext();
-        mPreference = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        mPreference = context.getSharedPreferences(this.fileName, Context.MODE_PRIVATE);
+        editor = mPreference.edit();
     }
 
-    public static PreferencesUtils getInstance(Context context) {
+    public static PreferencesUtils getInstance(Context context, String fileName) {
         if (INSTANCE == null) {
-            INSTANCE = new PreferencesUtils(context);
+            INSTANCE = new PreferencesUtils(context, fileName);
         }
         return INSTANCE;
     }
 
     public SharedPreferences.Editor putString(String key, String value) {
-        if (editor == null) {
-            editor = mPreference.edit();
-        }
         return editor.putString(key, value);
     }
 
     public SharedPreferences.Editor putInt(String key, int value) {
-        if (editor == null) {
-            editor = mPreference.edit();
-        }
         return editor.putInt(key, value);
     }
 
     public SharedPreferences.Editor putLong(String key, long value) {
-        if (editor == null) {
-            editor = mPreference.edit();
-        }
         return editor.putLong(key, value);
     }
 
     public SharedPreferences.Editor putFloat(String key, float value) {
-        if (editor == null) {
-            editor = mPreference.edit();
-        }
         return editor.putFloat(key, value);
     }
 
     public SharedPreferences.Editor putBoolean(String key, boolean value) {
-        if (editor == null) {
-            editor = mPreference.edit();
-        }
         return editor.putBoolean(key, value);
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-        this.mPreference = mContext.getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        this.editor = mPreference.edit();
+    public void apply(){
+        this.editor.apply();
     }
 
     public String getString(String key, String defValue) {

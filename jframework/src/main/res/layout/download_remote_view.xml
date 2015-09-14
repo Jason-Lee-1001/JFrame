@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="正在下载"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:id="@+id/remote_progress_bar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message"
+        android:layout_marginTop="13dp"
+        android:focusable="true"
+        android:max="100"
+        android:maxHeight="10dp"
+        android:minHeight="10dp"
+        android:progressDrawable="@drawable/progress_bar" />
+
+</RelativeLayout>

@@ -16,22 +16,30 @@
 
 package com.example.administrator.staticapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-public class DetailActivity extends AppCompatActivity {
+import com.studio.jframework.base.BaseAppCompatActivity;
+
+public class DetailActivity extends BaseAppCompatActivity{
 
     public static final String EXTRA_NAME = "cheese_name";
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected boolean onRestoreState(Bundle paramSavedState) {
+        return false;
+    }
+
+    @Override
+    protected void setContentView() {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
@@ -49,10 +57,34 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void findViews() {
+
+    }
+
+    @Override
+    protected void initialization() {
+
+    }
+
+    @Override
+    protected void bindEvent() {
+
+    }
+
+    @Override
+    protected void doMoreInOnCreate() {
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+
+            case R.id.action_settings:
+                startActivity(new Intent(this, DetailActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -68,4 +100,20 @@ public class DetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.sample_actions, menu);
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true).setMessage("This is a message").setTitle("Title").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        }).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).create().show();
+    }
+
 }
