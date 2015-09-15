@@ -1,0 +1,22 @@
+1、授权登录
+   <1>SSO授权登录的时候,activity中必须在onActivityResult调用mSsoHandler.authorizeCallBack后WeiboAuthListener回调才会被执行；
+   <2>Web授权登录的时候,必须AndroidManifest中注册授权页面,如下
+      <activity
+      android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+      android:configChanges="keyboardHidden|orientation"
+      android:windowSoftInputMode="adjustResize"
+      android:exported="false" >
+      </activity>
+
+2、分享
+    <1>分享的图片大小不能超多32kb
+    <2>分享前,需要在接受消息的Activity唤起微博主程序类,声明对应的Action:ACTION_SDK_REQ_ACTIVITY,如下
+    <activity
+    android:name="com.sina.weibo.sdk.demo.WBShareActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait" >
+    <intent-filter>
+    <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+    <category android:name="android.intent.category.DEFAULT" />
+    </intent-filter>
+    </activity>

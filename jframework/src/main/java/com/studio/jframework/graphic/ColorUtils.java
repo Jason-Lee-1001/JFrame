@@ -1,13 +1,10 @@
-package com.studio.jframework.utils;
+package com.studio.jframework.graphic;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.view.ViewCompat;
 import android.util.TypedValue;
-import android.view.View;
 
-public class UIUtils {
-
+public class ColorUtils {
 
     public static int lighterColor(int color, float factor) {
         int red = (int) ((Color.red(color) * (1 - factor) / 255 + factor) * 255);
@@ -36,35 +33,11 @@ public class UIUtils {
         return 0;
     }
 
-    /**
-     * helper method to get the color by attr (which is defined in the style) or by resource.
-     *
-     * @param ctx
-     * @param attr
-     * @param res
-     * @return
-     */
     public static int getThemeColorFromAttrOrRes(Context ctx, int attr, int res) {
         int color = getThemeColor(ctx, attr);
         if (color == 0) {
             color = ctx.getResources().getColor(res);
         }
         return color;
-    }
-
-    public static void clearAnimator(View v) {
-        ViewCompat.setAlpha(v, 1);
-        ViewCompat.setScaleY(v, 1);
-        ViewCompat.setScaleX(v, 1);
-        ViewCompat.setTranslationY(v, 0);
-        ViewCompat.setTranslationX(v, 0);
-        ViewCompat.setRotation(v, 0);
-        ViewCompat.setRotationY(v, 0);
-        ViewCompat.setRotationX(v, 0);
-        // @TODO https://code.google.com/p/android/issues/detail?id=80863
-        // ViewCompat.setPivotY(v, v.getMeasuredHeight() / 2);
-        v.setPivotY(v.getMeasuredHeight() / 2);
-        ViewCompat.setPivotX(v, v.getMeasuredWidth() / 2);
-        ViewCompat.animate(v).setInterpolator(null);
     }
 }
