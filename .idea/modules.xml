@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/JFrame.iml" filepath="$PROJECT_DIR$/JFrame.iml" />
       <module fileurl="file://$PROJECT_DIR$/application/application.iml" filepath="$PROJECT_DIR$/application/application.iml" />
       <module fileurl="file://$PROJECT_DIR$/jframework/jframework.iml" filepath="$PROJECT_DIR$/jframework/jframework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/social/social.iml" filepath="$PROJECT_DIR$/social/social.iml" />
       <module fileurl="file://$PROJECT_DIR$/staticapp/staticapp.iml" filepath="$PROJECT_DIR$/staticapp/staticapp.iml" />
     </modules>
   </component>

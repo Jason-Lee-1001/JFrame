@@ -27,4 +27,11 @@
         <attr name="rightPadding" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="TasksCompletedView">
+        <attr name="radius" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="circleColor" format="color" />
+        <attr name="ringColor" format="color" />
+    </declare-styleable>
+
 </resources>
