@@ -19,14 +19,23 @@ import com.studio.jframework.R;
  */
 public class UltimateListView extends FrameLayout {
 
-    static enum State {
-        NO_NETWORK,
-        NO_CONTENT,
-        NOTICE
-    }
+    public static final int NO_NETWORK = 0;
+    public static final int NO_CONTENT = 1;
+    public static final int NOTICE = 2;
+    public static final int LOADING = 3;
+
+    public static final int FOOTER_NONE = 0;
+    public static final int FOOTER_LOADING = 1;
+    public static final int FOOTER_NOMORE = 2;
+
+    private Context mContext;
+
+    private boolean mHasLoadingFooter = false;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LoadMoreListView mListView;
+
+    private LoadingFooter mFooter;
 
     private OnItemClickListener mListener;
     private OnRetryClickListener mClickListener;
@@ -42,11 +51,13 @@ public class UltimateListView extends FrameLayout {
 
     public UltimateListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         initView();
     }
 
     public UltimateListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
         initView();
     }
 
@@ -74,6 +85,14 @@ public class UltimateListView extends FrameLayout {
                 }
             }
         });
+    }
+
+    public void setRetryButtonText(CharSequence charSequence) {
+        mEmptyButton.setText(charSequence);
+    }
+
+    public void setEnableRefreshing(boolean enable) {
+        mSwipeRefreshLayout.setEnabled(enable);
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -143,7 +162,7 @@ public class UltimateListView extends FrameLayout {
         }
     }
 
-    public void showEmptyView(State state, String text) {
+    public void showEmptyView(int state, String text) {
         mSwipeRefreshLayout.setVisibility(GONE);
         mEmptyView.setVisibility(VISIBLE);
         switch (state) {
@@ -164,6 +183,34 @@ public class UltimateListView extends FrameLayout {
                 mEmptyText.setText(text);
                 mEmptyButton.setVisibility(GONE);
                 break;
+
+            case LOADING:
+                mEmptyImage.setVisibility(INVISIBLE);
+                mEmptyText.setText(text);
+                mEmptyButton.setVisibility(GONE);
+                break;
+
+        }
+    }
+
+    public void addLoadingFooter() {
+        if (!mHasLoadingFooter) {
+            if (mFooter == null) {
+                mFooter = new LoadingFooter(mContext);
+            }
+            mListView.addFooterView(mFooter);
+            mHasLoadingFooter = true;
+        }
+    }
+
+    public void setLoadingState(int state) {
+        if (mHasLoadingFooter) {
+            if (state == FOOTER_NONE) {
+                mListView.removeFooterView(mFooter);
+                mHasLoadingFooter = false;
+                return;
+            }
+            mFooter.setFooterState(state);
         }
     }
 

@@ -97,6 +97,19 @@ public final class ViewHolder {
     }
 
     /**
+     * 设置指定Id的TextView控件的文字颜色
+     *
+     * @param viewId 控件的Id
+     * @param resId  要设置的资源id
+     * @return 返回当前ViewHolder对象
+     */
+    public ViewHolder setTextColor(int viewId, int resId) {
+        TextView textView = getView(viewId);
+        textView.setTextColor(resId);
+        return this;
+    }
+
+    /**
      * 设置指定Id的View控件的显隐
      *
      * @param viewId     控件的Id

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JFrameWork</string>
+    <string name="loading">Loading...</string>
+    <string name="no_more">No more content</string>
 </resources>
