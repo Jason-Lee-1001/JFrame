@@ -18,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected View mFragmentView;
     protected Context mContext;
+    protected boolean mIsVisible;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,30 @@ public abstract class BaseFragment extends Fragment {
      * The main job should be done here
      */
     protected abstract void onCreateView();
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            mIsVisible = true;
+            onVisible();
+        } else {
+            mIsVisible = false;
+            onInvisible();
+        }
+    }
+
+    /**
+     * This method will be invoked when the fragment is invisible to the user
+     */
+    protected void onInvisible() {
+    }
+
+    /**
+     * This method will be invoked when the fragment is visible to the user
+     */
+    protected void onVisible() {
+    }
 
     /**
      * Hide the soft keyboard
