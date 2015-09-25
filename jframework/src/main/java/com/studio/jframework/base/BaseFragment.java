@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -19,6 +20,7 @@ public abstract class BaseFragment extends Fragment {
     protected View mFragmentView;
     protected Context mContext;
     protected boolean mIsVisible;
+    protected boolean mPrepared;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public abstract class BaseFragment extends Fragment {
         initialization();
         bindEvent();
         onCreateView();
+        mPrepared = true;
         return mFragmentView;
     }
 
@@ -73,7 +76,7 @@ public abstract class BaseFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             mIsVisible = true;
-            onVisible();
+            onVisible(mPrepared);
         } else {
             mIsVisible = false;
             onInvisible();
@@ -88,8 +91,10 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * This method will be invoked when the fragment is visible to the user
+     *
+     * @param prepared When prepared is true, means onCreateView return;
      */
-    protected void onVisible() {
+    protected void onVisible(boolean prepared) {
     }
 
     /**
@@ -100,6 +105,13 @@ public abstract class BaseFragment extends Fragment {
     protected void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * Force to hide the keyboard
+     */
+    protected void forceHideKeyboard() {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     /**

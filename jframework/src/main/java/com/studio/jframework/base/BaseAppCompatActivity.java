@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +29,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected static final short MODE_UP = 1;
     protected static final short MODE_MENU = 2;
 
+    protected FragmentManager mFragmentManager;
+
     /**
      * Perform initialization of all fragments and loaders
      *
@@ -42,6 +47,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             }
         }
         super.onCreate(savedInstanceState);
+        mFragmentManager = getSupportFragmentManager();
         setContentView();
         findViews();
         initialization();
@@ -112,6 +118,22 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /**
+     * Replace a fragment in this activity with animation
+     *
+     * @param mContentId The layout if the fragment to be replaced
+     * @param mFragment  The new fragment to be shown
+     * @param mTag       The tag of the fragment
+     * @param enterAnim  The entry animation
+     * @param exitAnim   The exit animation
+     */
+    protected final void replaceFragments(int mContentId, Fragment mFragment, String mTag, int enterAnim, int exitAnim) {
+        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.setCustomAnimations(enterAnim, exitAnim);
+        mFragmentTransaction.replace(mContentId, mFragment, mTag);
+        mFragmentTransaction.commit();
+    }
+
+    /**
      * A method to set the color of the status bar since kitkat
      *
      * @param colorId The resource id of the color
@@ -125,10 +147,25 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Init the toolbar as the action bar
+     *
+     * @param toolBarId The id of the toolbar component
+     * @param title     The title that show in tool bar
+     * @param mode      Different style of the up indicate button
+     */
     protected void setupToolBar(int toolBarId, CharSequence title, int mode) {
         setupToolBar(toolBarId, title, null, mode);
     }
 
+    /**
+     * Init the toolbar as the action bar
+     *
+     * @param toolBarId The id of the toolbar component
+     * @param title     The title that show in tool bar
+     * @param subTitle  The sub title that show in tool bar
+     * @param mode      Different style of the up indicate button
+     */
     protected void setupToolBar(int toolBarId, CharSequence title, CharSequence subTitle, int mode) {
         Toolbar toolbar = (Toolbar) findViewById(toolBarId);
         setSupportActionBar(toolbar);
@@ -169,6 +206,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    /**
+     * Force to hide the keyboard
+     */
     protected void forceHideKeyboard() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
