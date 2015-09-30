@@ -189,8 +189,12 @@ public class UltimateListView extends FrameLayout {
                 mEmptyText.setText(text);
                 mEmptyButton.setVisibility(GONE);
                 break;
-
         }
+    }
+
+    public void removeEmptyView(){
+        mSwipeRefreshLayout.setVisibility(VISIBLE);
+        mEmptyView.setVisibility(INVISIBLE);
     }
 
     public void addLoadingFooter() {
