@@ -1,8 +1,10 @@
 package com.studio.jframework.widget.listview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,11 +20,6 @@ import com.studio.jframework.R;
  * Created by Jason
  */
 public class UltimateListView extends FrameLayout {
-
-    public static final int NO_NETWORK = 0;
-    public static final int NO_CONTENT = 1;
-    public static final int NOTICE = 2;
-    public static final int LOADING = 3;
 
     public static final int FOOTER_NONE = 0;
     public static final int FOOTER_LOADING = 1;
@@ -50,18 +47,34 @@ public class UltimateListView extends FrameLayout {
     }
 
     public UltimateListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mContext = context;
-        initView();
+        this(context, attrs, 0);
     }
 
     public UltimateListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        initView();
+        initView(context, attrs, defStyleAttr);
     }
 
-    private void initView() {
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+        int dividerHeight = 1;
+        int dividerDrawable = 0;
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.UltimateListView, defStyleAttr, 0);
+        int n = a.getIndexCount();
+
+        for (int i = 0; i < n; i++) {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.UltimateListView_dividerHeight) {
+                dividerHeight = a.getDimensionPixelSize(attr,
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, context.getResources().getDisplayMetrics()));
+            }
+            if (attr == R.styleable.UltimateListView_dividerDrawable) {
+                dividerDrawable = a.getResourceId(R.styleable.UltimateListView_dividerDrawable, R.drawable.divider_drawable);
+            }
+        }
+        //array should be release
+        a.recycle();
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.common_listview_layout, this);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
@@ -85,6 +98,10 @@ public class UltimateListView extends FrameLayout {
                 }
             }
         });
+        if (dividerDrawable != 0) {
+            mListView.setDivider(getResources().getDrawable(dividerDrawable));
+        }
+        mListView.setDividerHeight(dividerHeight);
     }
 
     public void setRetryButtonText(CharSequence charSequence) {
@@ -99,6 +116,10 @@ public class UltimateListView extends FrameLayout {
         return mSwipeRefreshLayout;
     }
 
+    public void postRefresh(Runnable runnable) {
+        mSwipeRefreshLayout.post(runnable);
+    }
+
     public LoadMoreListView getListView() {
         return mListView;
     }
@@ -110,6 +131,11 @@ public class UltimateListView extends FrameLayout {
     public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
         mSwipeRefreshLayout.setEnabled(true);
         mSwipeRefreshLayout.setOnRefreshListener(listener);
+        setLoadingState(FOOTER_NONE);
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        mSwipeRefreshLayout.setRefreshing(refreshing);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -130,6 +156,10 @@ public class UltimateListView extends FrameLayout {
         });
     }
 
+    public void setImageClickListener(OnClickListener listener) {
+        mEmptyView.setOnClickListener(listener);
+    }
+
     public void setOnLoadMoreListener(LoadMoreListView.OnLoadMoreListener listener) {
         mListView.setOnLoadMoreListener(listener);
     }
@@ -146,53 +176,28 @@ public class UltimateListView extends FrameLayout {
         mListView.addHeaderView(view);
     }
 
-    public void addOneOnlyHeader(View view, boolean selectable) {
-        if (mListView.getHeaderViewsCount() == 0) {
-            mListView.addHeaderView(view, null, selectable);
-        }
+    public void addHeader(View view, boolean selectable) {
+        mListView.addHeaderView(view, null, selectable);
     }
 
     public void addFooter(View view) {
         mListView.addFooterView(view);
     }
 
-    public void addOneOnlyFooter(View view, boolean selectable) {
-        if (mListView.getFooterViewsCount() == 0) {
-            mListView.addFooterView(view, null, selectable);
-        }
+    public void addFooter(View view, boolean selectable) {
+        mListView.addFooterView(view, null, selectable);
     }
 
-    public void showEmptyView(int state, String text) {
+    public void showEmptyImage(int imageResId, String text) {
         mSwipeRefreshLayout.setVisibility(GONE);
         mEmptyView.setVisibility(VISIBLE);
-        switch (state) {
-            case NO_NETWORK:
-                mEmptyImage.setVisibility(View.VISIBLE);
-                mEmptyText.setText(text);
-                mEmptyButton.setVisibility(View.VISIBLE);
-                break;
-
-            case NO_CONTENT:
-                mEmptyImage.setVisibility(VISIBLE);
-                mEmptyText.setText(text);
-                mEmptyButton.setVisibility(VISIBLE);
-                break;
-
-            case NOTICE:
-                mEmptyImage.setVisibility(INVISIBLE);
-                mEmptyText.setText(text);
-                mEmptyButton.setVisibility(GONE);
-                break;
-
-            case LOADING:
-                mEmptyImage.setVisibility(INVISIBLE);
-                mEmptyText.setText(text);
-                mEmptyButton.setVisibility(GONE);
-                break;
-        }
+        mEmptyImage.setVisibility(VISIBLE);
+        mEmptyImage.setImageResource(imageResId);
+        mEmptyText.setText(text);
+        mEmptyButton.setVisibility(GONE);
     }
 
-    public void removeEmptyView(){
+    public void removeEmptyView() {
         mSwipeRefreshLayout.setVisibility(VISIBLE);
         mEmptyView.setVisibility(INVISIBLE);
     }
@@ -202,7 +207,7 @@ public class UltimateListView extends FrameLayout {
             if (mFooter == null) {
                 mFooter = new LoadingFooter(mContext);
             }
-            mListView.addFooterView(mFooter);
+            mListView.addFooterView(mFooter.getView());
             mHasLoadingFooter = true;
         }
     }
@@ -210,11 +215,16 @@ public class UltimateListView extends FrameLayout {
     public void setLoadingState(int state) {
         if (mHasLoadingFooter) {
             if (state == FOOTER_NONE) {
-                mListView.removeFooterView(mFooter);
+                if (mListView.getFooterViewsCount() == 0){
+                    mHasLoadingFooter = false;
+                    return;
+                }
+                mListView.removeFooterView(mFooter.getView());
                 mHasLoadingFooter = false;
                 return;
             }
             mFooter.setFooterState(state);
+            addLoadingFooter();
         }
     }
 

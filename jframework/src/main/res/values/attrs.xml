@@ -26,6 +26,11 @@
     <declare-styleable name="SlideMenu">
         <attr name="rightPadding" format="dimension" />
     </declare-styleable>
+    <!--UltimateListView-->
+    <declare-styleable name="UltimateListView">
+        <attr name="dividerHeight" format="dimension" />
+        <attr name="dividerDrawable" format="reference" />
+    </declare-styleable>
 
     <declare-styleable name="TasksCompletedView">
         <attr name="radius" format="dimension" />

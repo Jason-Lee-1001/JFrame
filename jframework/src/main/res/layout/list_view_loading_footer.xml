@@ -5,9 +5,9 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <TextView
+    <ProgressBar
         android:id="@+id/loading_progress"
-        android:background="@drawable/abc_btn_radio_to_on_mtrl_015"
+        android:indeterminateDrawable="@drawable/abc_btn_radio_to_on_mtrl_015"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

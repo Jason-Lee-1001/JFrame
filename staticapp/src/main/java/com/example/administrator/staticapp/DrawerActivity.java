@@ -1,5 +1,6 @@
 package com.example.administrator.staticapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -104,11 +105,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 break;
 
             case R.id.sub_fir:
-                Snackbar.make(drawerLayout,"fir", Snackbar.LENGTH_LONG).show();
+                startService(new Intent(DrawerActivity.this, BackgroundService.class));
+                finish();
                 break;
 
             case R.id.sub_sec:
-                Snackbar.make(drawerLayout,"sec", Snackbar.LENGTH_LONG).show();
+                startActivity(new Intent(this, DetailActivity.class));
                 break;
         }
         LogUtils.d("menu id", "menu id:" + menuItem.getItemId() + " group id:" + menuItem.getGroupId());

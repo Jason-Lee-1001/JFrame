@@ -1,9 +1,9 @@
 package com.studio.jframework.widget.listview;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.studio.jframework.R;
@@ -11,45 +11,37 @@ import com.studio.jframework.R;
 /**
  * Created by Jason
  */
-public class LoadingFooter extends View {
+public class LoadingFooter{
 
-    private TextView mProgress;
+    private ProgressBar mProgress;
     private TextView mText;
 
+    private View mFooterView;
+
     public static final int FOOTER_LOADING = 1;
-    public static final int FOOTER_NOMORE = 2;
+    public static final int FOOTER_NO_MORE = 2;
 
     public LoadingFooter(Context context) {
-        this(context, null);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mFooterView = inflater.inflate(R.layout.list_view_loading_footer, null);
+        mProgress = (ProgressBar)mFooterView.findViewById(R.id.loading_progress);
+        mText = (TextView)mFooterView.findViewById(R.id.loading_text);
     }
 
-    public LoadingFooter(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView();
-    }
-
-    public LoadingFooter(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.list_view_loading_footer, null);
-        mProgress = (TextView)view.findViewById(R.id.loading_progress);
-        mText = (TextView)view.findViewById(R.id.loading_text);
+    public View getView(){
+        return mFooterView;
     }
 
     public void setFooterState(int state){
         switch (state){
             case FOOTER_LOADING:
                 mProgress.setBackgroundResource(R.drawable.abc_btn_radio_to_on_mtrl_015);
-                mText.setText(getResources().getString(R.string.loading));
+                mText.setText("正在加载中...");
                 break;
 
-            case FOOTER_NOMORE:
+            case FOOTER_NO_MORE:
                 mProgress.setBackgroundResource(0);
-                mText.setText(getResources().getString(R.string.no_more));
+                mText.setText("没有更多内容...");
                 break;
         }
     }

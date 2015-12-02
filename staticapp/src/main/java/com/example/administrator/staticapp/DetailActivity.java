@@ -26,9 +26,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.studio.jframework.base.BaseAppCompatActivity;
+import com.studio.jframework.base.BaseSwipeActivity;
 
-public class DetailActivity extends BaseAppCompatActivity{
+public class DetailActivity extends BaseSwipeActivity{
 
     public static final String EXTRA_NAME = "cheese_name";
 
