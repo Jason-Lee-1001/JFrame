@@ -1,22 +1,39 @@
 package com.swipebacklayout.lib.app;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.studio.jframework.base.BaseAppCompatActivity;
 import com.swipebacklayout.lib.SwipeBackLayout;
 import com.swipebacklayout.lib.Utils;
 
 
-public class SwipeBackActivity extends AppCompatActivity implements SwipeBackActivityBase {
+public abstract class BaseSwipeActivity extends BaseAppCompatActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    abstract protected boolean onRestoreState(Bundle paramSavedState);
+
+    @Override
+    final protected void setContentView(){
         mHelper = new SwipeBackActivityHelper(this);
         mHelper.onActivityCreate();
+        setContentViewLayout();
     }
+
+    abstract protected void setContentViewLayout();
+
+    @Override
+    abstract protected void findViews();
+
+    @Override
+    abstract protected void initialization();
+
+    @Override
+    abstract protected void bindEvent();
+
+    @Override
+    abstract protected void doMoreInOnCreate();
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

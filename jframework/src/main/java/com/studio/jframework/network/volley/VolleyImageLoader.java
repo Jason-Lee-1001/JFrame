@@ -16,6 +16,7 @@ import java.lang.ref.WeakReference;
 public class VolleyImageLoader {
 
     public static ImageLoader mImageLoader;
+    private ImageLoader.ImageContainer mImageContainer;
     private static VolleyImageLoader INSTANCE;
 
     private VolleyImageLoader(Context context) {
@@ -33,7 +34,7 @@ public class VolleyImageLoader {
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(placeHolder);
         } else {
-            mImageLoader.get(url, new ImageLoader.ImageListener() {
+            mImageContainer = mImageLoader.get(url, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     Bitmap bitmap = response.getBitmap();
@@ -48,6 +49,34 @@ public class VolleyImageLoader {
                     imageView.setImageResource(placeHolder);
                 }
             }, maxWidth, maxHeight);
+        }
+    }
+
+    public void showImage(final ImageView imageView, String url, final int placeHolder) {
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageResource(placeHolder);
+        } else {
+            mImageContainer = mImageLoader.get(url, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    Bitmap bitmap = response.getBitmap();
+                    WeakReference<Bitmap> weakReference = new WeakReference<>(bitmap);
+                    if (weakReference.get() != null) {
+                        imageView.setImageBitmap(weakReference.get());
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    imageView.setImageResource(placeHolder);
+                }
+            });
+        }
+    }
+
+    public void cancelRequest() {
+        if (mImageContainer != null) {
+            mImageContainer.cancelRequest();
         }
     }
 }

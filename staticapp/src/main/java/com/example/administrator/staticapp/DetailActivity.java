@@ -26,7 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.studio.jframework.base.BaseSwipeActivity;
+import com.swipebacklayout.lib.app.BaseSwipeActivity;
 
 public class DetailActivity extends BaseSwipeActivity{
 
@@ -39,7 +39,7 @@ public class DetailActivity extends BaseSwipeActivity{
     }
 
     @Override
-    protected void setContentView() {
+    protected void setContentViewLayout() {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();

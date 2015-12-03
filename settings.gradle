@@ -1,1 +1,1 @@
-include ':staticapp', ':application', ':jframework', ':javatestlibrary'
+include ':staticapp', ':jframework'

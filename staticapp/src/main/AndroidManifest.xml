@@ -7,6 +7,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme2"
         android:label="@string/app_name" >
         <activity
             android:name=".DrawerActivity"
@@ -19,10 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TabActivity"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".DetailActivity"
-            android:theme="@style/AppTheme2"/>
+        <activity android:name=".TabActivity"/>
+        <activity android:name=".DetailActivity"/>
         <service android:name=".BackgroundService" />
     </application>
 

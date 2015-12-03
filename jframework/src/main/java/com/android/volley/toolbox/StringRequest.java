@@ -38,8 +38,7 @@ public class StringRequest extends Request<String> {
      * @param listener      Listener to receive the String response
      * @param errorListener Error listener, or null to ignore errors
      */
-    public StringRequest(int method, String url, Listener<String> listener,
-                         ErrorListener errorListener) {
+    public StringRequest(int method, String url, Listener<String> listener, ErrorListener errorListener) {
         super(method, url, errorListener);
         mListener = listener;
     }

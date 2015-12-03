@@ -11,11 +11,6 @@ import com.studio.jframework.utils.PackageUtils;
  */
 abstract public class CommonApplication extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
     /**
      * Put your package name in this method and return
      *
