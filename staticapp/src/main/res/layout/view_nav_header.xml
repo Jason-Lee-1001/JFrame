@@ -12,7 +12,6 @@
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_launcher"
         android:text="Username"
         android:id="@+id/header_text"
         android:gravity="center_vertical"

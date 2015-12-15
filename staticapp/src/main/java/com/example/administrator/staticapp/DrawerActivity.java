@@ -33,7 +33,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         headerText = (TextView) findViewById(R.id.header_text);
-        headerText.setText("User");
+        headerText.setText("Hero");
 
         setupToolbar();
         setupNavigationView();

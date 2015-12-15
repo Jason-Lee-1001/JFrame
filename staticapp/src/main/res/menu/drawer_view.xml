@@ -41,11 +41,11 @@
             <item
                 android:id="@+id/sub_fir"
                 android:icon="@mipmap/ic_dashboard"
-                android:title="Sub item 1" />
+                android:title="Quit" />
             <item
                 android:id="@+id/sub_sec"
                 android:icon="@mipmap/ic_forum"
-                android:title="Sub item 2" />
+                android:title="New Activity" />
         </menu>
     </item>
 
