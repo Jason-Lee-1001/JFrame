@@ -9,23 +9,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.studio.jframework.network.base.NetworkCallback;
+import com.studio.jframework.network.impl.HttpRequester;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Base class for the fragment
  *
  * @author Jason
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements NetworkCallback {
 
     protected View mFragmentView;
     protected Context mContext;
     protected boolean mIsVisible;
     protected boolean mPrepared;
+    protected HttpRequester mRequester;
+    protected Toast mSingleToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        mRequester = new HttpRequester(this);
+        mSingleToast = Toast.makeText(mContext, "", Toast.LENGTH_LONG);
     }
 
     @Override
@@ -98,6 +109,37 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
+     * Easy way to show a toast
+     *
+     * @param message The message you want to toast
+     */
+    protected void showToast(String message) {
+        mSingleToast.setText(message);
+        mSingleToast.show();
+    }
+
+    /**
+     * Show the progress dialog, the fragment should be inside BaseAppCompatActivity and visible
+     *
+     * @param message    The message in the dialog
+     * @param cancelable Determine whether the dialog is cancelable
+     */
+    protected void showProgressDialog(String message, boolean cancelable) {
+        if (mIsVisible && mContext instanceof BaseAppCompatActivity) {
+            ((BaseAppCompatActivity) mContext).showProgressDialog(message, cancelable);
+        }
+    }
+
+    /**
+     * Dismiss the progress dialog, the fragment should be inside BaseAppCompatActivity and visible
+     */
+    protected void dismissProgressDialog() {
+        if (mIsVisible && mContext instanceof BaseAppCompatActivity) {
+            ((BaseAppCompatActivity) mContext).dismissProgressDialog();
+        }
+    }
+
+    /**
      * Hide the soft keyboard
      *
      * @param view One of the views in the current window
@@ -137,5 +179,35 @@ public abstract class BaseFragment extends Fragment {
             intent.putExtras(paramBundle);
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onFinish(String method) {
+
+    }
+
+    @Override
+    public void onFailed(int code, String method, String msg, JSONObject object) {
+
+    }
+
+    @Override
+    public void onGetListObjectSuccess(String method, JSONArray listArray) {
+
+    }
+
+    @Override
+    public void onGetDataObjectSuccess(String method, JSONObject dataObject) {
+
+    }
+
+    @Override
+    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject) {
+
+    }
+
+    @Override
+    public void onStart(String method) {
+
     }
 }

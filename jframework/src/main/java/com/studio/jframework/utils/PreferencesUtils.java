@@ -11,7 +11,7 @@ public class PreferencesUtils {
     private static PreferencesUtils INSTANCE;
     private Context mContext;
     private SharedPreferences mPreference;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences.Editor mEditor;
 
     private String fileName;
 
@@ -19,7 +19,7 @@ public class PreferencesUtils {
         this.fileName = fileName;
         mContext = context.getApplicationContext();
         mPreference = context.getSharedPreferences(this.fileName, Context.MODE_PRIVATE);
-        editor = mPreference.edit();
+        mEditor = mPreference.edit();
     }
 
     public static PreferencesUtils getInstance(Context context, String fileName) {
@@ -30,27 +30,27 @@ public class PreferencesUtils {
     }
 
     public SharedPreferences.Editor putString(String key, String value) {
-        return editor.putString(key, value);
+        return mEditor.putString(key, value);
     }
 
     public SharedPreferences.Editor putInt(String key, int value) {
-        return editor.putInt(key, value);
+        return mEditor.putInt(key, value);
     }
 
     public SharedPreferences.Editor putLong(String key, long value) {
-        return editor.putLong(key, value);
+        return mEditor.putLong(key, value);
     }
 
     public SharedPreferences.Editor putFloat(String key, float value) {
-        return editor.putFloat(key, value);
+        return mEditor.putFloat(key, value);
     }
 
     public SharedPreferences.Editor putBoolean(String key, boolean value) {
-        return editor.putBoolean(key, value);
+        return mEditor.putBoolean(key, value);
     }
 
     public void apply(){
-        this.editor.apply();
+        this.mEditor.apply();
     }
 
     public String getString(String key, String defValue) {

@@ -195,4 +195,21 @@ public class PackageUtils {
         }
         return processName;
     }
+
+    /**
+     * Get current process name
+     *
+     * @param context Context
+     * @return The name of the current process
+     */
+    public static String getCurrentProcessName(Context context) {
+        ActivityManager actMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appList = actMgr.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo info : appList) {
+            if (info.pid == android.os.Process.myPid()) {
+                return info.processName;
+            }
+        }
+        return "";
+    }
 }

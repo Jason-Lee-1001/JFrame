@@ -1,5 +1,6 @@
 package com.studio.jframework.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -13,23 +14,34 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.studio.jframework.R;
+import com.studio.jframework.network.base.NetworkCallback;
+import com.studio.jframework.network.impl.HttpRequester;
 import com.studio.jframework.ui.SystemBarTintManager;
 import com.studio.jframework.utils.ExitAppUtils;
+import com.studio.jframework.widget.dialog.DialogCreator;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Base class for the activity
  *
  * @author Jason
  */
-public abstract class BaseAppCompatActivity extends AppCompatActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity implements NetworkCallback {
 
     protected static final short MODE_NONE = 0;
     protected static final short MODE_UP = 1;
     protected static final short MODE_MENU = 2;
 
+    protected Dialog mProgressDialog;
+
     protected FragmentManager mFragmentManager;
+    protected HttpRequester mRequester;
+    private Toast mSingleToast;
 
     /**
      * Perform initialization of all fragments and loaders
@@ -48,6 +60,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
+        mRequester = new HttpRequester(this);
+        mSingleToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
         setContentView();
         findViews();
         initialization();
@@ -81,7 +95,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected abstract void initialization();
 
     /**
-     * Do bind event, such set event listener
+     * Do bind event, such as setup listener
      */
     protected abstract void bindEvent();
 
@@ -101,6 +115,45 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         intentForPackage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intentForPackage);
         finish();
+    }
+
+    /**
+     * Easy way to show a toast
+     *
+     * @param message The message you want to toast
+     */
+    protected void showToast(String message) {
+        mSingleToast.setText(message);
+        mSingleToast.show();
+    }
+
+    /**
+     * Show the progress dialog
+     *
+     * @param message    The message in the dialog
+     * @param cancelable Determine whether the dialog is cancelable
+     */
+    protected void showProgressDialog(String message, boolean cancelable) {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
+        mProgressDialog = DialogCreator.createNoDimProgressDialog(this, message);
+        mProgressDialog.setCancelable(cancelable);
+        mProgressDialog.show();
+    }
+
+    /**
+     * Dismiss the progress dialog
+     */
+    protected void dismissProgressDialog() {
+        try {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -231,5 +284,35 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ExitAppUtils.getInstance().removeActivity(this);
+    }
+
+    @Override
+    public void onStart(String method) {
+
+    }
+
+    @Override
+    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject) {
+
+    }
+
+    @Override
+    public void onGetDataObjectSuccess(String method, JSONObject dataObject) {
+
+    }
+
+    @Override
+    public void onGetListObjectSuccess(String method, JSONArray listArray) {
+
+    }
+
+    @Override
+    public void onFailed(int code, String method, String msg, JSONObject object) {
+
+    }
+
+    @Override
+    public void onFinish(String method) {
+
     }
 }

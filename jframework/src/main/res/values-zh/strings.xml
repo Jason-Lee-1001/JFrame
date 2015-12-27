@@ -1,4 +1,3 @@
 <resources>
-    <string name="loading">正在加载...</string>
-    <string name="no_more">加载完毕，没有更多内容了</string>
+    <string name="crash_occur_toast">抱歉，程序意外出错，即将退出</string>
 </resources>

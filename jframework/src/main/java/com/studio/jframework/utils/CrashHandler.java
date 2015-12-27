@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class CrashHandler implements UncaughtExceptionHandler {
 
-    public static final String TAG = "CrashHandler";
+    public static final String TAG = CrashHandler.class.getSimpleName();
 
     //Default path to save crash file
     private static String crashFilePath = "Crash";
@@ -47,9 +47,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
     public String showMessage = null;
     private Context mContext;
     private UncaughtExceptionHandler mDefaultHandler;
-    private Map<String, String> crashInfo = new HashMap<>();
-    private ExceptionOperator exceptionOperator;
-    private boolean isDebug = false;
+    private Map<String, String> mCrashInfo = new HashMap<>();
+    private ExceptionOperator mExceptionOperator;
+    private boolean mIsDebug = false;
 
     private CrashHandler() {
     }
@@ -78,8 +78,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
      *                    in this method if you want to handle the exception by yourself
      */
     public void init(Context context, String filePath, String showMessage, boolean isDebug, ExceptionOperator operator) {
-        this.isDebug = isDebug;
-        exceptionOperator = operator;
+        this.mIsDebug = isDebug;
+        mExceptionOperator = operator;
         if (!TextUtils.isEmpty(filePath)) {
             crashFilePath = filePath;
         }
@@ -98,7 +98,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread thread, Throwable exception) {
         boolean isHandle = handleException(exception);
-        if (isDebug) {
+        if (mIsDebug) {
             mDefaultHandler.uncaughtException(thread, exception);
         }
         if (!isHandle && mDefaultHandler != null) {
@@ -106,8 +106,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         } else {
             try {
                 Thread.sleep(2500);
-                if (exceptionOperator != null) {
-                    exceptionOperator.onExceptionThrows();
+                if (mExceptionOperator != null) {
+                    mExceptionOperator.onExceptionThrows();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -123,7 +123,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                if (showMessage != null && !isDebug) {
+                if (showMessage != null && !mIsDebug) {
                     Toast.makeText(mContext, showMessage, Toast.LENGTH_LONG).show();
                 }
                 Looper.loop();
@@ -148,9 +148,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
-                crashInfo.put("versionName", versionName);
-                crashInfo.put("versionCode", versionCode);
-                crashInfo.put("currentTime", formatter.format(new Date(System.currentTimeMillis())));
+                mCrashInfo.put("versionName", versionName);
+                mCrashInfo.put("versionCode", versionCode);
+                mCrashInfo.put("currentTime", formatter.format(new Date(System.currentTimeMillis())));
             }
         } catch (NameNotFoundException e) {
             e.printStackTrace();
@@ -159,7 +159,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
-                crashInfo.put(field.getName(), field.get(null).toString());
+                mCrashInfo.put(field.getName(), field.get(null).toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -174,7 +174,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     private boolean saveCrashInfo2File(Throwable ex) {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : crashInfo.entrySet()) {
+        for (Map.Entry<String, String> entry : mCrashInfo.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             sb.append(key).append("=").append(value).append("\n");
@@ -220,7 +220,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     public static String getCrashInfo() {
         String info = null;
         String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + crashFilePath + File.separator + "crash.log";
+                + File.separator + crashFilePath + File.separator + "crash.txt";
         File f = new File(filePath);
         if (f.exists()) {
             StringBuilder log = new StringBuilder();
@@ -249,7 +249,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     public static void deleteLogFile() {
         String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + crashFilePath + File.separator + "crash.log";
+                + File.separator + crashFilePath + File.separator + "crash.txt";
         File f = new File(filePath);
         if (f.exists()) {
             LogUtils.i(TAG, f.delete() ? "Deleted" : "Not delete");

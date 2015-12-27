@@ -65,15 +65,15 @@ public class DialogCreator {
         switch (position) {
             case BOTTOM:
                 style = R.style.BottomDialog;
-                view = LayoutInflater.from(context).inflate(R.layout.progress_dialog_layout, null, false);
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_progress_material, null, false);
                 break;
             case CENTER:
                 style = R.style.CenterDialog;
-                view = LayoutInflater.from(context).inflate(R.layout.center_progress_dialog_layout, null, false);
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_center_progress, null, false);
                 break;
             case TOP:
                 style = R.style.TopDialog;
-                view = LayoutInflater.from(context).inflate(R.layout.progress_dialog_layout, null, false);
+                view = LayoutInflater.from(context).inflate(R.layout.dialog_progress_material, null, false);
                 break;
         }
         MaterialProgressBar progressBar = (MaterialProgressBar) view.findViewById(R.id.progress);
@@ -97,6 +97,23 @@ public class DialogCreator {
                 params.gravity = Gravity.TOP;
                 break;
         }
+        params.width = SizeUtils.getScreenWidth(context);
+        dialog.getWindow().setAttributes(params);
+        return dialog;
+    }
+
+    public static Dialog createNoDimProgressDialog(Context context, String message) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_no_dim_translant, null, false);
+        MaterialProgressBar progressBar = (MaterialProgressBar) view.findViewById(R.id.progress);
+        progressBar.setBackgroundColor(0xffffffff);
+        TextView textView = (TextView) view.findViewById(R.id.message);
+        textView.setText(message);
+        int style = R.style.NoDimCenterDialog;
+        Dialog dialog = new Dialog(context, style);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.gravity = Gravity.CENTER;
         params.width = SizeUtils.getScreenWidth(context);
         dialog.getWindow().setAttributes(params);
         return dialog;
