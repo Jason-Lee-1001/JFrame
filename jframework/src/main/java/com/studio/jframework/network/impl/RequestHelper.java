@@ -39,7 +39,7 @@ public class RequestHelper {
      * @param context Context
      * @param method  调用的接口名
      */
-    public static void resolveEvent(Context context, String method) {
+    public static synchronized void resolveEvent(Context context, String method) {
 
     }
 
@@ -49,7 +49,7 @@ public class RequestHelper {
      * @param context Context
      * @param code    服务器返回的错误码 例如4006
      */
-    public static void resolveResponseCode(Context context, int code) {
+    public static synchronized void resolveResponseCode(Context context, int code) {
 
     }
 
@@ -59,7 +59,7 @@ public class RequestHelper {
      * @param context Context
      * @param code    Http status code 例如404，502等
      */
-    public static void resolveHttpStatusCode(Context context, int code) {
+    public static synchronized void resolveHttpStatusCode(Context context, int code) {
 
     }
 
@@ -70,7 +70,7 @@ public class RequestHelper {
      * @return 解析的状态码
      * @throws JSONException
      */
-    public static int parseStatus(JSONObject object) throws JSONException {
+    public static synchronized int parseStatus(JSONObject object) throws JSONException {
         return object.getInt(STATUS);
     }
 
@@ -81,7 +81,7 @@ public class RequestHelper {
      * @return 解析的错误码
      * @throws JSONException
      */
-    public static int parseCode(JSONObject object) throws JSONException {
+    public static synchronized int parseCode(JSONObject object) throws JSONException {
         return object.getInt(CODE);
     }
 
@@ -91,7 +91,7 @@ public class RequestHelper {
      * @param object 服务器返回的完整JSONObject
      * @return data代表的JSONObject
      */
-    public static JSONObject parseData(JSONObject object) {
+    public static synchronized JSONObject parseData(JSONObject object) {
         return object.optJSONObject(DATA);
     }
 
@@ -101,7 +101,7 @@ public class RequestHelper {
      * @param object 服务器返回的完整JSONObject
      * @return list所代表的JSONArray
      */
-    public static JSONArray parseList(JSONObject object) {
+    public static synchronized JSONArray parseList(JSONObject object) {
         return parseData(object).optJSONArray(LIST);
     }
 
@@ -112,7 +112,7 @@ public class RequestHelper {
      * @return msg字符串
      * @throws JSONException
      */
-    public static String parseMsg(JSONObject object) throws JSONException {
+    public static synchronized String parseMsg(JSONObject object) throws JSONException {
         return parseData(object).getString(MSG);
     }
 

@@ -21,7 +21,6 @@ public class HttpRequester extends BaseRequester {
 
     public static final String TAG = HttpRequester.class.getSimpleName();
 
-
     public HttpRequester(NetworkCallback callback) {
         super(callback);
     }
@@ -70,8 +69,8 @@ public class HttpRequester extends BaseRequester {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 LogUtils.e(TAG, responseString);
-                mCallback.onFailed(statusCode, method, NETWORK_ERROR, null);
                 RequestHelper.resolveHttpStatusCode(context, statusCode);
+                mCallback.onFailed(statusCode, method, NETWORK_ERROR, null);
             }
 
             @Override
