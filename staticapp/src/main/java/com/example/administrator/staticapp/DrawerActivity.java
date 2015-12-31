@@ -18,6 +18,7 @@ import com.studio.jframework.base.BaseAppCompatActivity;
 import com.studio.jframework.network.base.AsyncRequestCreator;
 import com.studio.jframework.utils.LogUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -162,39 +163,39 @@ public class DrawerActivity extends BaseAppCompatActivity implements
         return true;
     }
 
-    @Override
-    public void onStart(String method) {
-        LogUtils.d("onStart", method);
-        showToast("onStart");
-        showProgressDialog("加载中，请稍候...", true);
-    }
+//    @Override
+//    public void onStart(String method) {
+//        LogUtils.d("onStart", method);
+//        showToast("onStart");
+//        showProgressDialog("加载中，请稍候...", true);
+//    }
 
-//    @Override
-//    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject) {
-//        switch (method) {
-//            case "placeOrder":
-//                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + wholeObject.toString());
-//                break;
-//        }
-//    }
+    @Override
+    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject) {
+        switch (method) {
+            case "placeOrder":
+                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + wholeObject.toString());
+                break;
+        }
+    }
 //
-//    @Override
-//    public void onGetDataObjectSuccess(String method, JSONObject dataObject) {
-//        switch (method) {
-//            case "placeOrder":
-//                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + dataObject.toString());
-//                break;
-//        }
-//    }
+    @Override
+    public void onGetDataObjectSuccess(String method, JSONObject dataObject) {
+        switch (method) {
+            case "placeOrder":
+                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + dataObject.toString());
+                break;
+        }
+    }
 //
-//    @Override
-//    public void onGetListObjectSuccess(String method, JSONArray listArray) {
-//        switch (method) {
-//            case "placeOrder":
-//                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + listArray.toString());
-//                break;
-//        }
-//    }
+    @Override
+    public void onGetListObjectSuccess(String method, JSONArray listArray) {
+        switch (method) {
+            case "placeOrder":
+                LogUtils.d("onGetWholeObjectSuccess", method + " -- " + listArray.toString());
+                break;
+        }
+    }
 
     @Override
     public void onFailed(int code, String method, String msg, JSONObject object) {

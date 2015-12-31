@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * @author Jason
+ * Created by Jason
+ * 用于简单的ViewPager的数据显示
  */
 abstract public class SimpleViewPagerAdapter<T> extends PagerAdapter {
 
@@ -19,10 +20,10 @@ abstract public class SimpleViewPagerAdapter<T> extends PagerAdapter {
     }
 
     /**
-     * Bind data to the view, and return a list of all the page's views
+     * 将数据绑定到View中, 将放回ViewPager中所有View的List集合
      *
-     * @param data A collection of the data that is going to be inflated in the view
-     * @return A list of all the page's views
+     * @param data 准备用于显示到ViewPager中的数据源
+     * @return List装载的所有ViewPager的View
      */
     abstract public List<View> inflateContent(List<T> data);
 

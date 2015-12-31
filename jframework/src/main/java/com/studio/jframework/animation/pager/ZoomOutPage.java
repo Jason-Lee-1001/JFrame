@@ -4,7 +4,8 @@ import android.annotation.SuppressLint;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+@Deprecated
+public class ZoomOutPage implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;
 
@@ -28,9 +29,7 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
             view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
 
-            view.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE)
-                    / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
-
+            view.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE) / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
         } else {
             view.setAlpha(0);
         }

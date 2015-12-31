@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Jason
+ * 使用方法见CommonAdapter
  */
 public abstract class CommonRvAdapter<T> extends RecyclerView.Adapter<RvViewHolder> {
 

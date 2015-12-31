@@ -20,7 +20,7 @@ public final class RvViewHolder extends RecyclerView.ViewHolder {
         this.mView = itemView;
     }
 
-    public View getRootView(){
+    public View getRootView() {
         return this.mView;
     }
 
