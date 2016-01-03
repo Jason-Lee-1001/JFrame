@@ -26,6 +26,11 @@ public class AsyncRequestCreator {
         mClient.setResponseTimeout(responseTimeout);
     }
 
+    /**
+     * 返回请求类，使用这种方式共用同一个对象
+     *
+     * @return AsyncHttpClient
+     */
     public static AsyncHttpClient getClient() {
         return mClient;
     }

@@ -2,15 +2,15 @@ package com.studio.jframework.network.impl;
 
 import android.content.Context;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.studio.jframework.network.base.AsyncRequestCreator;
 import com.studio.jframework.network.base.BaseRequester;
 import com.studio.jframework.network.base.NetworkCallback;
 import com.studio.jframework.utils.LogUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -40,35 +40,36 @@ public class HttpRequester extends BaseRequester {
                 RequestHelper.resolveEvent(context, method);
 
                 try {
-                    JSONObject response = new JSONObject(result);
+                    JsonObject response = new JsonParser().parse(result).getAsJsonObject();
                     int status = RequestHelper.parseStatus(response);
                     int code = RequestHelper.parseCode(response);
                     if (status == 1) {
-                        LogUtils.i(TAG, response.toString());
+                        LogUtils.i(TAG, result);
                         mCallback.onGetWholeObjectSuccess(method, response);
                         if (response.has(RequestHelper.DATA)) {
-                            JSONObject dataObject = RequestHelper.parseData(response);
+                            JsonObject dataObject = RequestHelper.parseData(response);
                             mCallback.onGetDataObjectSuccess(method, dataObject);
                             if (dataObject.has(RequestHelper.LIST)) {
                                 mCallback.onGetListObjectSuccess(method, RequestHelper.parseList(response));
                             }
                         }
                     } else {
-                        LogUtils.w(TAG, response.toString());
+                        LogUtils.w(TAG, result);
                         String msg = RequestHelper.parseMsg(response);
                         //在一下这个类中处理错误码的问题，例如登录超时跳转到登录界面等操作，
                         //强转context为activity可以处理对话框弹出等问题
                         RequestHelper.resolveResponseCode(context, code);
                         mCallback.onFailed(code, method, msg, response);
                     }
-                } catch (JSONException e) {
-                    LogUtils.e(TAG, PARSE_JSON_EXCEPTION_STRING);
+                } catch (JsonSyntaxException e) {
+                    LogUtils.e(TAG, PARSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 LogUtils.e(TAG, responseString);
+                //statusCode为0时表示网路不通
                 RequestHelper.resolveHttpStatusCode(context, statusCode);
                 mCallback.onFailed(statusCode, method, NETWORK_ERROR, null);
             }

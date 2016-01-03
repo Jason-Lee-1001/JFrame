@@ -9,7 +9,7 @@ import com.loopj.android.http.RequestParams;
  */
 public abstract class BaseRequester {
 
-    public static final String PARSE_JSON_EXCEPTION_STRING = "parseJsonError";
+    public static final String PARSE_JSON_EXCEPTION = "parseJsonError";
     public static final String NETWORK_ERROR = "networkError";
 
     protected NetworkCallback mCallback;

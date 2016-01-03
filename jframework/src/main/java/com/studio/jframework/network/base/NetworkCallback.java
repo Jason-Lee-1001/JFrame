@@ -1,23 +1,23 @@
 package com.studio.jframework.network.base;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * Created by Jason
  */
 public interface NetworkCallback {
 
-    public void onStart(String method);
+    void onStart(String method);
 
-    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject);
+    void onGetWholeObjectSuccess(String method, JsonObject wholeObject);
 
-    public void onGetDataObjectSuccess(String method, JSONObject dataObject);
+    void onGetDataObjectSuccess(String method, JsonObject dataObject);
 
-    public void onGetListObjectSuccess(String method, JSONArray listArray);
+    void onGetListObjectSuccess(String method, JsonArray listArray);
 
-    public void onFailed(int code, String method, String msg, JSONObject object);
+    void onFailed(int code, String method, String msg, JsonObject object);
 
-    public void onFinish(String method);
+    void onFinish(String method);
 
 }

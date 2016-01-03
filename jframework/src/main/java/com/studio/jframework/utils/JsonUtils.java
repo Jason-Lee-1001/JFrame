@@ -1,9 +1,12 @@
 package com.studio.jframework.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +14,7 @@ import java.util.List;
  */
 public class JsonUtils {
 
-    /*You may declare a Model like this
+    /*需要自定义字段名但跟服务器返回的字段不相同时，可以用@SerializedName注解
     public class Person{
         public static final String CREATE_AT = "create_at";
 
@@ -22,29 +25,59 @@ public class JsonUtils {
     */
 
     /**
-     * Parse json string to an object
+     * 将Json字符串转为Bean类
      *
-     * @param t      The class you want to cast
-     * @param string Json string to be parsed
-     * @param <T>    Type of the class
-     * @return The desired object that parsed from the string
+     * @param clazz  类型，如City.class
+     * @param string 需要被转化的字符串
+     * @param <T>    类型
+     * @return T指定的类型
      * @throws JsonSyntaxException
      */
-    public static <T> T parseToObject(Class<T> t, String string) throws JsonSyntaxException {
-        return new Gson().fromJson(string, t);
+    public static <T> T parseToObject(Class<T> clazz, String string) throws JsonSyntaxException {
+        return new Gson().fromJson(string, clazz);
     }
 
     /**
-     * Parse json array to a List
+     * 将JsonElement转为Bean类
      *
-     * @param t      The list
-     * @param string Json string to be parsed
-     * @param <T>    Type of the class
-     * @return The desired list that parsed from the string
+     * @param clazz   类型，如City.class
+     * @param element 需要被转化的JsonElement
+     * @param <T>     类型
+     * @return T指定的类型
      * @throws JsonSyntaxException
      */
-    public static <T> List<T> parseToList(Class<T[]> t, String string) throws JsonSyntaxException {
-        return Arrays.asList(new Gson().fromJson(string, t));
+    public static <T> T parseToObject(Class<T> clazz, JsonElement element) throws JsonSyntaxException {
+        return new Gson().fromJson(element, clazz);
     }
 
+    /**
+     * 将Json字符串转为List
+     *
+     * @param clazz  类型，如City.class
+     * @param string 需要被转化的Json字符串
+     * @param <T>    类型
+     * @return T指定的类型构成的list
+     * @throws JsonSyntaxException
+     */
+    public static <T> List<T> parseToList(Class<T> clazz, String string) throws JsonSyntaxException {
+        return parseToList(clazz, new JsonParser().parse(string));
+    }
+
+    /**
+     * 将JsonElement转为List
+     *
+     * @param clazz   类型，如City.class
+     * @param element 需要被转化的JsonElement
+     * @param <T>     类型
+     * @return T指定的类型
+     * @throws JsonSyntaxException
+     */
+    public static <T> List parseToList(Class<T> clazz, JsonElement element) throws JsonSyntaxException {
+        JsonArray array = element.getAsJsonArray();
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++) {
+            list.add(parseToObject(clazz, array.get(i)));
+        }
+        return list;
+    }
 }

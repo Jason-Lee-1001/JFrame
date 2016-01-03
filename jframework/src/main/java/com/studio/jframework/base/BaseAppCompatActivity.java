@@ -16,15 +16,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.studio.jframework.R;
 import com.studio.jframework.network.base.NetworkCallback;
 import com.studio.jframework.network.impl.HttpRequester;
 import com.studio.jframework.ui.SystemBarTintManager;
 import com.studio.jframework.utils.ExitAppUtils;
 import com.studio.jframework.widget.dialog.DialogCreator;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * Base class for the activity
@@ -292,22 +291,22 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onGetWholeObjectSuccess(String method, JSONObject wholeObject) {
+    public void onGetWholeObjectSuccess(String method, JsonObject wholeObject) {
 
     }
 
     @Override
-    public void onGetDataObjectSuccess(String method, JSONObject dataObject) {
+    public void onGetDataObjectSuccess(String method, JsonObject dataObject) {
 
     }
 
     @Override
-    public void onGetListObjectSuccess(String method, JSONArray listArray) {
+    public void onGetListObjectSuccess(String method, JsonArray listArray) {
 
     }
 
     @Override
-    public void onFailed(int code, String method, String msg, JSONObject object) {
+    public void onFailed(int code, String method, String msg, JsonObject object) {
 
     }
 

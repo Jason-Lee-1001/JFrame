@@ -2,11 +2,9 @@ package com.studio.jframework.network.impl;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.loopj.android.http.RequestParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Jason
@@ -25,7 +23,7 @@ public class RequestHelper {
      *
      * @param url    Api地址
      * @param params 请求参数
-     * @return
+     * @return 完整的Api路径
      */
     public static String parseApi(String url, RequestParams params) {
         StringBuilder requestUrl = new StringBuilder(url);
@@ -66,54 +64,51 @@ public class RequestHelper {
     /**
      * 获取status码
      *
-     * @param object 服务器返回的完整JSONObject
+     * @param object 服务器返回的完整JsonObject
      * @return 解析的状态码
-     * @throws JSONException
      */
-    public static synchronized int parseStatus(JSONObject object) throws JSONException {
-        return object.getInt(STATUS);
+    public static synchronized int parseStatus(JsonObject object) {
+        return object.get(STATUS).getAsInt();
     }
 
     /**
      * 获取错误码code
      *
-     * @param object 服务器返回的完整JSONObject
+     * @param object 服务器返回的完整JsonObject
      * @return 解析的错误码
-     * @throws JSONException
      */
-    public static synchronized int parseCode(JSONObject object) throws JSONException {
-        return object.getInt(CODE);
+    public static synchronized int parseCode(JsonObject object) {
+        return object.get(CODE).getAsInt();
     }
 
     /**
-     * 获取data JSONObject
+     * 获取data JsonObject
      *
-     * @param object 服务器返回的完整JSONObject
+     * @param object 服务器返回的完整JsonObject
      * @return data代表的JSONObject
      */
-    public static synchronized JSONObject parseData(JSONObject object) {
-        return object.optJSONObject(DATA);
+    public static synchronized JsonObject parseData(JsonObject object) {
+        return object.get(DATA).getAsJsonObject();
     }
 
     /**
-     * 获取list JSONArray
+     * 获取list JsonArray
      *
-     * @param object 服务器返回的完整JSONObject
-     * @return list所代表的JSONArray
+     * @param object 服务器返回的完整JsonObject
+     * @return list所代表的JsonArray
      */
-    public static synchronized JSONArray parseList(JSONObject object) {
-        return parseData(object).optJSONArray(LIST);
+    public static synchronized JsonArray parseList(JsonObject object) {
+        return parseData(object).get(LIST).getAsJsonArray();
     }
 
     /**
      * 获取msg字符串
      *
-     * @param object 服务器返回的完整JSONObject
+     * @param object 服务器返回的完整JsonObject
      * @return msg字符串
-     * @throws JSONException
      */
-    public static synchronized String parseMsg(JSONObject object) throws JSONException {
-        return parseData(object).getString(MSG);
+    public static synchronized String parseMsg(JsonObject object) {
+        return parseData(object).get(MSG).getAsString();
     }
 
 }

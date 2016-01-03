@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * A usefully tool to operate file, each FileUtils stands for one folder' operation
  *
- * @author Jason
+ * Created by Jason
  */
 public class FileUtils {
 
-    public static final String TAG = "FileUtils";
+    public static final String TAG = FileUtils.class.getSimpleName();
     /**
      * The name of the folder to be operated
      */
